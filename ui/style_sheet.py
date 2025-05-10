@@ -31,10 +31,10 @@ class Ui_styleSheet(object):
 "	font: 10pt \"Segoe UI\";\n"
 "}\n"
 "")
-        self.verticalLayout_7 = QVBoxLayout(styleSheet)
-        self.verticalLayout_7.setSpacing(0)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_7.setContentsMargins(10, 10, 10, 10)
+        self.appMargins = QVBoxLayout(styleSheet)
+        self.appMargins.setSpacing(0)
+        self.appMargins.setObjectName(u"appMargins")
+        self.appMargins.setContentsMargins(10, 10, 10, 10)
         self.bgApp = QFrame(styleSheet)
         self.bgApp.setObjectName(u"bgApp")
         self.bgApp.setFrameShape(QFrame.Shape.StyledPanel)
@@ -484,7 +484,7 @@ class Ui_styleSheet(object):
         self.horizontalLayout_2.addWidget(self.contentBox)
 
 
-        self.verticalLayout_7.addWidget(self.bgApp)
+        self.appMargins.addWidget(self.bgApp)
 
 
         self.retranslateUi(styleSheet)

@@ -1,5 +1,6 @@
 from ui import Ui_MainWindow
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout
+from PySide6.QtCore import Qt
 from .page_style_sheeet import StyleSheet
 
 
@@ -12,3 +13,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(self.style_sheet)
         self.styleSheet.setLayout(layout)
+
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)

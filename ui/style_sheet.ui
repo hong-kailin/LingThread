@@ -20,7 +20,7 @@
 }
 </string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_7">
+  <layout class="QVBoxLayout" name="appMargins">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -939,8 +939,7 @@ QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; bo
          <item>
           <widget class="QFrame" name="contentBottom">
            <property name="styleSheet">
-            <string notr="true">
-</string>
+            <string notr="true"/>
            </property>
            <property name="frameShape">
             <enum>QFrame::Shape::NoFrame</enum>
