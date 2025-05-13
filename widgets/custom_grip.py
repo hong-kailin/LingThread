@@ -34,6 +34,10 @@ class CustomGrip(QWidget):
             self.setGeometry(0, 0, self.parent.width(), 10)
             self.setMaximumHeight(10)
 
+            # GRIPS
+            self.top_left = QSizeGrip(self.wi.top_left)
+            self.top_right = QSizeGrip(self.wi.top_right)
+
             # RESIZE TOP
             def resize_top(event):
                 delta = event.pos()
@@ -126,10 +130,10 @@ class CustomGrip(QWidget):
             self.wi.container_bottom.setGeometry(0, 0, self.width(), 10)
 
         elif hasattr(self.wi, 'leftgrip'):
-            self.wi.leftgrip.setGeometry(0, 0, 10, self.height() - 10)
+            self.wi.leftgrip.setGeometry(0, 0, 10, self.height())
 
         elif hasattr(self.wi, 'rightgrip'):
-            self.wi.rightgrip.setGeometry(0, 0, 10, self.height() - 10)
+            self.wi.rightgrip.setGeometry(0, 0, 10, self.height())
 
 
 class Widgets(object):
@@ -228,7 +232,6 @@ class Widgets(object):
     def right(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(500, 500)
         self.rightgrip = QFrame(Form)
         self.rightgrip.setObjectName(u"right")
         self.rightgrip.setGeometry(QRect(0, 0, 10, 500))

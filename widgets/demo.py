@@ -28,8 +28,8 @@ class FramelessWindow(QWidget):
         """更新手柄位置"""
         self.top_grip.setGeometry(0, 0, self.width(), 10)
         self.bottom_grip.setGeometry(0, self.height() - 10, self.width(), 10)
-        self.left_grip.setGeometry(0, 10, 10, self.height() - 10)
-        self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height() - 10)
+        self.left_grip.setGeometry(0, 10, 10, self.height() - 20)
+        self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height() - 20)
         self.content.setGeometry(0, 0, self.width(), self.height())
 
     def mousePressEvent(self, event):

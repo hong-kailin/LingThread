@@ -51,7 +51,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def resizeEvent(self, event):
         # Update Size Grips
-        self.left_grip.setGeometry(0, 10, 10, self.height())
-        self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height())
+        self.left_grip.setGeometry(0, 10, 10, self.height() - 20)
+        self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height() - 20)
         self.top_grip.setGeometry(0, 0, self.width(), 10)
         self.bottom_grip.setGeometry(0, self.height() - 10, self.width(), 10)
