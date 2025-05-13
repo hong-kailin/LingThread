@@ -10,7 +10,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.setWindowFlags(Qt.FramelessWindowHint)
-        # self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WA_TranslucentBackground)
 
         self.titleRightInfo.installEventFilter(self)
         self.closeAppBtn.clicked.connect(lambda: self.close())
@@ -30,7 +30,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         main_window = self.window()
         if not main_window.isMaximized():
             main_window.showMaximized()
-            self.appMargins.setContentsMargins(0, 0, 0, 0)
             self.maximizeRestoreAppBtn.setToolTip("Restore")
             self.maximizeRestoreAppBtn.setIcon(QIcon(u":/icons/images/icons/icon_restore.png"))
             self.frame_size_grip.hide()
@@ -42,7 +41,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             main_window = self.window()
             main_window.showNormal()
             self.resize(self.width() + 1, self.height() + 1)
-            self.appMargins.setContentsMargins(10, 10, 10, 10)
             self.maximizeRestoreAppBtn.setToolTip("Maximize")
             self.maximizeRestoreAppBtn.setIcon(QIcon(u":/icons/images/icons/icon_maximize.png"))
             self.frame_size_grip.show()

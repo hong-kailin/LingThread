@@ -19,19 +19,18 @@ class FramelessWindow(QWidget):
         self.content.setGeometry(0, 0, 400, 300)
 
         # 下面的代码一定写到self.content = QWidget(self)后面
-        self.top_grip = CustomGrip(self, Qt.TopEdge, disable_color=True)
-        self.bottom_grip = CustomGrip(self, Qt.BottomEdge, disable_color=True)
-        self.left_grip = CustomGrip(self, Qt.LeftEdge, disable_color=True)
-        self.right_grip = CustomGrip(self, Qt.RightEdge, disable_color=True)
+        self.top_grip = CustomGrip(self, Qt.TopEdge, disable_color=False)
+        self.bottom_grip = CustomGrip(self, Qt.BottomEdge, disable_color=False)
+        self.left_grip = CustomGrip(self, Qt.LeftEdge, disable_color=False)
+        self.right_grip = CustomGrip(self, Qt.RightEdge, disable_color=False)
 
     def resizeEvent(self, event):
         """更新手柄位置"""
         self.top_grip.setGeometry(0, 0, self.width(), 10)
         self.bottom_grip.setGeometry(0, self.height() - 10, self.width(), 10)
-        self.left_grip.setGeometry(0, 10, 10, self.height() - 20)
-        self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height() - 20)
+        self.left_grip.setGeometry(0, 10, 10, self.height() - 10)
+        self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height() - 10)
         self.content.setGeometry(0, 0, self.width(), self.height())
-        super().resizeEvent(event)
 
     def mousePressEvent(self, event):
         """实现窗口拖动功能"""

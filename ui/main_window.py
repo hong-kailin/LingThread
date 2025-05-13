@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
         self.appMargins = QVBoxLayout(self.styleSheet)
         self.appMargins.setSpacing(0)
         self.appMargins.setObjectName(u"appMargins")
-        self.appMargins.setContentsMargins(10, 10, 10, 10)
+        self.appMargins.setContentsMargins(0, 0, 0, 0)
         self.bgApp = QFrame(self.styleSheet)
         self.bgApp.setObjectName(u"bgApp")
         self.bgApp.setFrameShape(QFrame.Shape.StyledPanel)
