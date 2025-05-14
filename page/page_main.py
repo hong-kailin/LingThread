@@ -1,6 +1,6 @@
 from ui import Ui_MainWindow
 from PySide6.QtWidgets import QMainWindow
-from PySide6.QtCore import Qt, QEvent, QTimer
+from PySide6.QtCore import Qt, QEvent, QTimer, QPropertyAnimation, QEasingCurve, QParallelAnimationGroup
 from PySide6.QtGui import QIcon
 from widgets import CustomGrip
 
@@ -19,6 +19,74 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.bottom_grip = CustomGrip(self, Qt.BottomEdge, True)
         self.left_grip = CustomGrip(self, Qt.LeftEdge, True)
         self.right_grip = CustomGrip(self, Qt.RightEdge, True)
+
+        def open_close_left_box():
+            self.toggle_left_box(True)
+
+        self.toggleLeftBox.clicked.connect(open_close_left_box)
+        self.extraCloseColumnBtn.clicked.connect(open_close_left_box)
+
+    def toggle_left_box(self, enable):
+        if enable:
+            # GET WIDTH
+            width = self.extraLeftBox.width()
+            widthRightBox = self.extraRightBox.width()
+            maxExtend = 240
+            color = "background-color: rgb(44, 49, 58);"
+            standard = 0
+
+            # GET BTN STYLE
+            style = self.toggleLeftBox.styleSheet()
+
+            # SET MAX WIDTH
+            if width == 0:
+                widthExtended = maxExtend
+                # SELECT BTN
+                self.toggleLeftBox.setStyleSheet(style + color)
+                if widthRightBox != 0:
+                    style = self.settingsTopBtn.styleSheet()
+                    self.settingsTopBtn.setStyleSheet(style.replace("background-color: #ff79c6;", ''))
+            else:
+                widthExtended = standard
+                # RESET BTN
+                self.toggleLeftBox.setStyleSheet(style.replace(color, ''))
+
+        self.start_box_animation(width, widthRightBox, "left")
+
+    def start_box_animation(self, left_box_width, right_box_width, direction):
+        right_width = 0
+        left_width = 0
+
+        # Check values
+        if left_box_width == 0 and direction == "left":
+            left_width = 240
+        else:
+            left_width = 0
+        # Check values
+        if right_box_width == 0 and direction == "right":
+            right_width = 240
+        else:
+            right_width = 0
+
+            # ANIMATION LEFT BOX
+        self.left_box = QPropertyAnimation(self.extraLeftBox, b"minimumWidth")
+        self.left_box.setDuration(500)
+        self.left_box.setStartValue(left_box_width)
+        self.left_box.setEndValue(left_width)
+        self.left_box.setEasingCurve(QEasingCurve.InOutQuart)
+
+        # ANIMATION RIGHT BOX
+        self.right_box = QPropertyAnimation(self.extraRightBox, b"minimumWidth")
+        self.right_box.setDuration(500)
+        self.right_box.setStartValue(right_box_width)
+        self.right_box.setEndValue(right_width)
+        self.right_box.setEasingCurve(QEasingCurve.InOutQuart)
+
+        # GROUP ANIMATION
+        self.group = QParallelAnimationGroup()
+        self.group.addAnimation(self.left_box)
+        self.group.addAnimation(self.right_box)
+        self.group.start()
 
     def eventFilter(self, obj, event):
         if obj == self.titleRightInfo and event.type() == QEvent.MouseButtonDblClick:
