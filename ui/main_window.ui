@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>964</width>
-    <height>572</height>
+    <width>1005</width>
+    <height>682</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -69,6 +69,9 @@ background-position: left center;
 	background-position: centered;
 	background-repeat: no-repeat;
 }
+
+#left_title_label { font: 63 12pt &quot;Segoe UI Semibold&quot;; }
+#left_description_label { font: 8pt &quot;Segoe UI&quot;; color: rgb(189, 147, 249); }
 </string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -109,7 +112,7 @@ background-position: left center;
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>4</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -117,23 +120,59 @@ background-position: left center;
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item alignment="Qt::AlignmentFlag::AlignVCenter">
-       <widget class="QLabel" name="logo_label">
+      <item>
+       <widget class="QWidget" name="widget" native="true">
         <property name="minimumSize">
          <size>
-          <width>60</width>
-          <height>45</height>
+          <width>0</width>
+          <height>50</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>60</width>
-          <height>45</height>
+          <width>16777215</width>
+          <height>50</height>
          </size>
         </property>
-        <property name="text">
-         <string/>
-        </property>
+        <widget class="QLabel" name="logo_label">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>5</y>
+           <width>42</width>
+           <height>42</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="left_title_label">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>5</y>
+           <width>160</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>LingThread</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="left_description_label">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>25</y>
+           <width>160</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Program / English Study App</string>
+         </property>
+        </widget>
        </widget>
       </item>
       <item>
@@ -241,7 +280,7 @@ background-position: left center;
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>16777215</height>
+          <height>45</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -276,7 +315,7 @@ background-position: left center;
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>16777215</height>
+          <height>45</height>
          </size>
         </property>
         <property name="styleSheet">

@@ -23,7 +23,7 @@ class Ui_main_window(object):
     def setupUi(self, main_window):
         if not main_window.objectName():
             main_window.setObjectName(u"main_window")
-        main_window.resize(964, 572)
+        main_window.resize(1005, 682)
         main_window.setMinimumSize(QSize(920, 530))
         main_window.setStyleSheet(u"QWidget{\n"
 "	color: rgb(221, 221, 221);\n"
@@ -75,6 +75,9 @@ class Ui_main_window(object):
 "	background-position: centered;\n"
 "	background-repeat: no-repeat;\n"
 "}\n"
+"\n"
+"#left_title_label { font: 63 12pt \"Segoe UI Semibold\"; }\n"
+"#left_description_label { font: 8pt \"Segoe UI\"; color: rgb(189, 147, 249); }\n"
 "")
         self.horizontalLayout = QHBoxLayout(main_window)
         self.horizontalLayout.setSpacing(0)
@@ -87,13 +90,22 @@ class Ui_main_window(object):
         self.verticalLayout_2 = QVBoxLayout(self.left_sider_bar)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(0, 4, 0, 0)
-        self.logo_label = QLabel(self.left_sider_bar)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.widget = QWidget(self.left_sider_bar)
+        self.widget.setObjectName(u"widget")
+        self.widget.setMinimumSize(QSize(0, 50))
+        self.widget.setMaximumSize(QSize(16777215, 50))
+        self.logo_label = QLabel(self.widget)
         self.logo_label.setObjectName(u"logo_label")
-        self.logo_label.setMinimumSize(QSize(60, 45))
-        self.logo_label.setMaximumSize(QSize(60, 45))
+        self.logo_label.setGeometry(QRect(10, 5, 42, 42))
+        self.left_title_label = QLabel(self.widget)
+        self.left_title_label.setObjectName(u"left_title_label")
+        self.left_title_label.setGeometry(QRect(70, 5, 160, 20))
+        self.left_description_label = QLabel(self.widget)
+        self.left_description_label.setObjectName(u"left_description_label")
+        self.left_description_label.setGeometry(QRect(70, 25, 160, 16))
 
-        self.verticalLayout_2.addWidget(self.logo_label, 0, Qt.AlignmentFlag.AlignVCenter)
+        self.verticalLayout_2.addWidget(self.widget)
 
         self.hide_btn = QPushButton(self.left_sider_bar)
         self.hide_btn.setObjectName(u"hide_btn")
@@ -132,7 +144,7 @@ class Ui_main_window(object):
         self.exit_btn = QPushButton(self.left_sider_bar)
         self.exit_btn.setObjectName(u"exit_btn")
         self.exit_btn.setMinimumSize(QSize(60, 45))
-        self.exit_btn.setMaximumSize(QSize(16777215, 16777215))
+        self.exit_btn.setMaximumSize(QSize(16777215, 45))
         self.exit_btn.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-x.png);")
 
         self.verticalLayout_2.addWidget(self.exit_btn)
@@ -144,7 +156,7 @@ class Ui_main_window(object):
         self.about_btn = QPushButton(self.left_sider_bar)
         self.about_btn.setObjectName(u"about_btn")
         self.about_btn.setMinimumSize(QSize(60, 45))
-        self.about_btn.setMaximumSize(QSize(16777215, 16777215))
+        self.about_btn.setMaximumSize(QSize(16777215, 45))
         self.about_btn.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-arrow-right.png);")
 
         self.verticalLayout_2.addWidget(self.about_btn)
@@ -282,6 +294,8 @@ class Ui_main_window(object):
     def retranslateUi(self, main_window):
         main_window.setWindowTitle(QCoreApplication.translate("main_window", u"Form", None))
         self.logo_label.setText("")
+        self.left_title_label.setText(QCoreApplication.translate("main_window", u"LingThread", None))
+        self.left_description_label.setText(QCoreApplication.translate("main_window", u"Program / English Study App", None))
         self.hide_btn.setText(QCoreApplication.translate("main_window", u"Hide", None))
         self.home_btn.setText(QCoreApplication.translate("main_window", u"Home", None))
         self.new_btn.setText(QCoreApplication.translate("main_window", u"New", None))
