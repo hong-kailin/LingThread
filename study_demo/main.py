@@ -17,4 +17,4 @@ if __name__ == '__main__':
     login_pane_.show_register_pane_signal.connect(show_register_pane)
 
     login_pane_.show()
-    app.exec_()
+    app.exec()

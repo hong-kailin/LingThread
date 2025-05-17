@@ -1,1 +1,1 @@
-from .page_main import MainWindow
+from .main_window_page import MainWindowPage
