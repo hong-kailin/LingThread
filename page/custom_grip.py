@@ -6,6 +6,14 @@ from PySide6.QtWidgets import QWidget, QSizeGrip
 class CustomCornerGrip(QSizeGrip):
     def __init__(self, parent=None, position=None):
         super().__init__(parent)
+        if position != "RightBottom":
+            self.setStyleSheet("""
+                QSizeGrip {
+                    background-color: transparent;  
+                    width: 16px;                  
+                    height: 16px;
+                }
+            """)
         if position == "LeftTop":
             self.setGeometry(0, 0, 10, 10)
             self.setCursor(QCursor(Qt.SizeFDiagCursor))
