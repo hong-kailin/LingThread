@@ -1,5 +1,5 @@
 import sys
-from page import MainWindowPage, CustomGrip
+from page import MainWindowPage
 from PySide6.QtWidgets import QApplication, QWidget
 
 if __name__ == "__main__":

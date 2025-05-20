@@ -1,5 +1,5 @@
 from ui import Ui_main_window
-from .custom_grip import CustomGrip
+from .custom_grip import CustomEdgeGrip, CustomCornerGrip
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
                                QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, Signal
@@ -12,10 +12,15 @@ class MainWindowPage(QWidget, Ui_main_window):
         # self.setAttribute(Qt.WA_TranslucentBackground)
         self.setupUi(self)
 
-        self.left_grip = CustomGrip(self, Qt.LeftEdge)
-        self.right_grip = CustomGrip(self, Qt.RightEdge)
-        self.top_grip = CustomGrip(self, Qt.TopEdge)
-        self.bottom_grip = CustomGrip(self, Qt.BottomEdge)
+        self.left_grip = CustomEdgeGrip(self, Qt.LeftEdge)
+        self.right_grip = CustomEdgeGrip(self, Qt.RightEdge)
+        self.top_grip = CustomEdgeGrip(self, Qt.TopEdge)
+        self.bottom_grip = CustomEdgeGrip(self, Qt.BottomEdge)
+
+        self.left_top_grip = CustomCornerGrip(self, "LeftTop")
+        self.left_bottom_grip = CustomCornerGrip(self, "LeftBottom")
+        self.right_top_grip = CustomCornerGrip(self, "RightTop")
+        self.right_bottom_grip = CustomCornerGrip(self, "RightBottom")
 
         # setting
         self.time_amimation = 500
@@ -39,3 +44,8 @@ class MainWindowPage(QWidget, Ui_main_window):
         self.bottom_grip.setGeometry(10, self.height() - 10, self.width() - 20, 10)
         self.left_grip.setGeometry(0, 10, 10, self.height() - 20)
         self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height() - 20)
+
+        self.left_top_grip.setGeometry(0, 0, 10, 10)
+        self.left_bottom_grip.setGeometry(0, self.height() - 10, 10, 10)
+        self.right_top_grip.setGeometry(self.width() - 10, 0, 10, 10)
+        self.right_bottom_grip.setGeometry(self.width() - 10, self.height() - 10, 10, 10)
