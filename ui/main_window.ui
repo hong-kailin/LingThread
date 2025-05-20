@@ -638,8 +638,57 @@ background-position: left center;
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>maximize_restore_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>main_window</receiver>
+   <slot>maximize_restore()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>946</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1100</x>
+     <y>48</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>close_app_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>main_window</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>992</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1116</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>minimize_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>main_window</receiver>
+   <slot>showMinimized()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>914</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1086</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>show_hide_btn_name()</slot>
+  <slot>maximize_restore()</slot>
  </slots>
 </ui>

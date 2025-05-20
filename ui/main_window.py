@@ -287,6 +287,9 @@ class Ui_main_window(object):
 
         self.retranslateUi(main_window)
         self.hide_btn.clicked["bool"].connect(main_window.show_hide_btn_name)
+        self.maximize_restore_btn.clicked.connect(main_window.maximize_restore)
+        self.close_app_btn.clicked.connect(main_window.close)
+        self.minimize_btn.clicked.connect(main_window.showMinimized)
 
         QMetaObject.connectSlotsByName(main_window)
     # setupUi

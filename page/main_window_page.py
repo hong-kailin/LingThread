@@ -3,6 +3,7 @@ from .custom_grip import CustomEdgeGrip, CustomCornerGrip
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
                                QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, Signal, QEvent, QTimer
+from PySide6.QtGui import QIcon
 
 
 class MainWindowPage(QWidget, Ui_main_window):
@@ -75,6 +76,10 @@ class MainWindowPage(QWidget, Ui_main_window):
 
     def maximize_restore(self):
         if not self.isMaximized():
+            self.maximize_restore_btn.setToolTip("Restore")
+            self.maximize_restore_btn.setIcon(QIcon(u":/icons/images/icons/icon_restore.png"))
             self.showMaximized()
         else:
+            self.maximize_restore_btn.setToolTip("Maximize")
+            self.maximize_restore_btn.setIcon(QIcon(u":/icons/images/icons/icon_maximize.png"))
             self.showNormal()
