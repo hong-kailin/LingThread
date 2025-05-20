@@ -1,13 +1,16 @@
 import sys
 from page import MainWindowPage, LeftBoxPage
-from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindowPage()
-    left_box = LeftBoxPage(window.left_hide_box)
 
-    # window.show_hide_left_box_signal.connect(left_box.show_hide)
+    v_layout = QVBoxLayout(window.left_hide_box)
+    v_layout.setContentsMargins(0, 0, 0, 0)
+    left_box = LeftBoxPage()
+    v_layout.addWidget(left_box)
+    left_box.close_left_box_signal.connect(window.show_hide_left_box)
 
     window.show()
     app.exec()

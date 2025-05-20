@@ -25,24 +25,28 @@
 	font: 10pt &quot;Segoe UI&quot;;
 }
 
+
 #setting_icon {
 	background-image: url(:/icons/images/icons/icon_settings.png);
 	background-position: centered;
 	background-repeat: no-repeat;
 }
-
+#widget{
+	background-color:rgb(189, 147, 249);
+}
 #left_box{
 	background-color:rgb(63, 114, 175);
 }
 
 
+
 /* Extra Top Menus */
 #widget_2 .QPushButton {
+background-color:rgb(63, 114, 175);
 background-position: left center;
     background-repeat: no-repeat;
 	border: none;
 	border-left: 22px solid transparent;
-	background-color:transparent;
 	text-align: left;
 	padding-left: 44px;
 }
@@ -54,6 +58,7 @@ background-position: left center;
 	color: rgb(255, 255, 255);
 }
 
+
 #widget .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }
 #widget .QPushButton:hover { background-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; }
 #widget .QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; border-radius: 4px; }
@@ -61,23 +66,12 @@ background-position: left center;
 
 QTextEdit {
 	background-color: rgb(63, 114, 175);
-	border-radius: 5px;
 	padding: 10px;
 	selection-color: rgb(255, 255, 255);
 	selection-background-color: rgb(255, 121, 198);
 }
-QTextEdit  QScrollBar:vertical {
-    width: 8px;
- }
-QTextEdit  QScrollBar:horizontal {
-    height: 8px;
- }
-QTextEdit:hover {
-	border: 2px solid rgb(64, 71, 88);
-}
-QTextEdit:focus {
-	border: 2px solid rgb(91, 101, 124);
-}</string>
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -117,7 +111,7 @@ QTextEdit:focus {
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -216,7 +210,7 @@ QTextEdit:focus {
          <string notr="true">background-image: url(:/icons/images/icons/cil-house.png);</string>
         </property>
         <property name="text">
-         <string>tutorial link</string>
+         <string>Tutorial Link</string>
         </property>
        </widget>
       </item>
@@ -238,7 +232,7 @@ QTextEdit:focus {
          <string notr="true">background-image: url(:/icons/images/icons/cil-lightbulb.png);</string>
         </property>
         <property name="text">
-         <string>code link</string>
+         <string>Code Link</string>
         </property>
        </widget>
       </item>
@@ -260,12 +254,24 @@ QTextEdit:focus {
          <string notr="true">background-image: url(:/icons/images/icons/cil-chat-bubble.png);</string>
         </property>
         <property name="text">
-         <string>wechat qrcode</string>
+         <string>Wechat Qrcode</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QTextEdit" name="textEdit">
+       <widget class="QTextEdit" name="text_edit">
+        <property name="frameShape">
+         <enum>QFrame::Shape::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Sunken</enum>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="lineWrapMode">
+         <enum>QTextEdit::LineWrapMode::WidgetWidth</enum>
+        </property>
         <property name="markdown">
          <string>**PyDracula**
 
@@ -303,6 +309,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#ff79c6;&quot;&gt;Convert QRC&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#ffffff;&quot;&gt;pyside6-rcc resources.qrc -o resources_rc.py&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
+        <property name="textInteractionFlags">
+         <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
+        </property>
        </widget>
       </item>
      </layout>
@@ -313,5 +322,25 @@ li.checked::marker { content: &quot;\2612&quot;; }
  <resources>
   <include location="../resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>left_box</receiver>
+   <slot>close_left_box()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>219</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>396</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>close_left_box()</slot>
+ </slots>
 </ui>

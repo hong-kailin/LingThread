@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-    QSizePolicy, QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QTextEdit, QVBoxLayout,
+    QWidget)
 import resources_rc
 
 class Ui_left_box(object):
@@ -30,24 +31,28 @@ class Ui_left_box(object):
 "	font: 10pt \"Segoe UI\";\n"
 "}\n"
 "\n"
+"\n"
 "#setting_icon {\n"
 "	background-image: url(:/icons/images/icons/icon_settings.png);\n"
 "	background-position: centered;\n"
 "	background-repeat: no-repeat;\n"
 "}\n"
-"\n"
+"#widget{\n"
+"	background-color:rgb(189, 147, 249);\n"
+"}\n"
 "#left_box{\n"
 "	background-color:rgb(63, 114, 175);\n"
 "}\n"
 "\n"
 "\n"
+"\n"
 "/* Extra Top Menus */\n"
 "#widget_2 .QPushButton {\n"
+"background-color:rgb(63, 114, 175);\n"
 "background-position: left center;\n"
 "    background-repeat: no-repeat;\n"
 "	border: none;\n"
 "	border-left: 22px solid transparent;\n"
-"	background-color:transparent;\n"
 "	text-align: left;\n"
 "	padding-left: 44px;\n"
 "}\n"
@@ -59,31 +64,21 @@ class Ui_left_box(object):
 "	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
+"\n"
 "#widget .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
-"#widget .QPushButton:hover { background-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; "
-                        "}\n"
+"#widget .QPushButton:hover { "
+                        "background-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; }\n"
 "#widget .QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; border-radius: 4px; }\n"
 "\n"
 "\n"
 "QTextEdit {\n"
 "	background-color: rgb(63, 114, 175);\n"
-"	border-radius: 5px;\n"
 "	padding: 10px;\n"
 "	selection-color: rgb(255, 255, 255);\n"
 "	selection-background-color: rgb(255, 121, 198);\n"
 "}\n"
-"QTextEdit  QScrollBar:vertical {\n"
-"    width: 8px;\n"
-" }\n"
-"QTextEdit  QScrollBar:horizontal {\n"
-"    height: 8px;\n"
-" }\n"
-"QTextEdit:hover {\n"
-"	border: 2px solid rgb(64, 71, 88);\n"
-"}\n"
-"QTextEdit:focus {\n"
-"	border: 2px solid rgb(91, 101, 124);\n"
-"}")
+"\n"
+"")
         self.verticalLayout = QVBoxLayout(left_box)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -96,7 +91,7 @@ class Ui_left_box(object):
         self.horizontalLayout = QHBoxLayout(self.widget)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 10, 0)
+        self.horizontalLayout.setContentsMargins(10, 0, 10, 0)
         self.setting_icon = QLabel(self.widget)
         self.setting_icon.setObjectName(u"setting_icon")
         self.setting_icon.setMinimumSize(QSize(20, 20))
@@ -152,16 +147,22 @@ class Ui_left_box(object):
 
         self.verticalLayout_2.addWidget(self.wechat_qrcode)
 
-        self.textEdit = QTextEdit(self.widget_2)
-        self.textEdit.setObjectName(u"textEdit")
+        self.text_edit = QTextEdit(self.widget_2)
+        self.text_edit.setObjectName(u"text_edit")
+        self.text_edit.setFrameShape(QFrame.Shape.NoFrame)
+        self.text_edit.setFrameShadow(QFrame.Shadow.Sunken)
+        self.text_edit.setLineWidth(1)
+        self.text_edit.setLineWrapMode(QTextEdit.LineWrapMode.WidgetWidth)
+        self.text_edit.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
-        self.verticalLayout_2.addWidget(self.textEdit)
+        self.verticalLayout_2.addWidget(self.text_edit)
 
 
         self.verticalLayout.addWidget(self.widget_2)
 
 
         self.retranslateUi(left_box)
+        self.pushButton.clicked.connect(left_box.close_left_box)
 
         QMetaObject.connectSlotsByName(left_box)
     # setupUi
@@ -171,10 +172,10 @@ class Ui_left_box(object):
         self.setting_icon.setText("")
         self.label_2.setText(QCoreApplication.translate("left_box", u"  Left Box", None))
         self.pushButton.setText("")
-        self.tutorial_link.setText(QCoreApplication.translate("left_box", u"tutorial link", None))
-        self.code_link.setText(QCoreApplication.translate("left_box", u"code link", None))
-        self.wechat_qrcode.setText(QCoreApplication.translate("left_box", u"wechat qrcode", None))
-        self.textEdit.setMarkdown(QCoreApplication.translate("left_box", u"**PyDracula**\n"
+        self.tutorial_link.setText(QCoreApplication.translate("left_box", u"Tutorial Link", None))
+        self.code_link.setText(QCoreApplication.translate("left_box", u"Code Link", None))
+        self.wechat_qrcode.setText(QCoreApplication.translate("left_box", u"Wechat Qrcode", None))
+        self.text_edit.setMarkdown(QCoreApplication.translate("left_box", u"**PyDracula**\n"
 "\n"
 "An interface created using Python and PySide (support for PyQt), and with\n"
 "colors based on the Dracula theme created by Zeno Rocha.\n"
@@ -192,7 +193,7 @@ class Ui_left_box(object):
 "pyside6-rcc resources.qrc -o resources_rc.py\n"
 "\n"
 "", None))
-        self.textEdit.setHtml(QCoreApplication.translate("left_box", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.text_edit.setHtml(QCoreApplication.translate("left_box", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
