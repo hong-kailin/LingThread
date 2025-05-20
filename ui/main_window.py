@@ -290,6 +290,7 @@ class Ui_main_window(object):
         self.maximize_restore_btn.clicked.connect(main_window.maximize_restore)
         self.close_app_btn.clicked.connect(main_window.close)
         self.minimize_btn.clicked.connect(main_window.showMinimized)
+        self.about_btn.clicked.connect(main_window.show_hide_left_box)
 
         QMetaObject.connectSlotsByName(main_window)
     # setupUi

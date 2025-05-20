@@ -686,9 +686,26 @@ background-position: left center;
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>about_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>main_window</receiver>
+   <slot>show_hide_left_box()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>37</x>
+     <y>649</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>33</x>
+     <y>752</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>show_hide_btn_name()</slot>
   <slot>maximize_restore()</slot>
+  <slot>show_hide_left_box()</slot>
  </slots>
 </ui>

@@ -7,6 +7,7 @@ from PySide6.QtGui import QIcon
 
 
 class MainWindowPage(QWidget, Ui_main_window):
+
     def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.FramelessWindowHint)
@@ -83,3 +84,17 @@ class MainWindowPage(QWidget, Ui_main_window):
             self.maximize_restore_btn.setToolTip("Maximize")
             self.maximize_restore_btn.setIcon(QIcon(u":/icons/images/icons/icon_maximize.png"))
             self.showNormal()
+
+    def show_hide_left_box(self):
+        self.animation = QPropertyAnimation(self.left_hide_box, b"minimumWidth")
+        self.animation.setDuration(self.time_amimation)
+        if self.left_hide_box.width() == 0:
+            self.animation.setStartValue(0)
+            self.animation.setEndValue(240)
+
+        else:
+            self.animation.setStartValue(240)
+            self.animation.setEndValue(0)
+        self.animation.setEasingCurve(QEasingCurve.InOutQuart)
+        self.animation.start()
+
