@@ -18,7 +18,7 @@ class CustomCornerGrip(QSizeGrip):
         elif position == "RightBottom":
             self.setGeometry(parent.width() - 10, parent.height() - 10, 10, 10)
             self.setCursor(QCursor(Qt.SizeBDiagCursor))
-        self.setStyleSheet("background-color: green;")
+        # self.setStyleSheet("background-color: green;")
 
 
 class CustomEdgeGrip(QWidget):
@@ -37,8 +37,8 @@ class CustomEdgeGrip(QWidget):
         elif position == Qt.RightEdge:
             self.setGeometry(parent.width() - 10, 10, 10, parent.height() - 20)
             self.setCursor(QCursor(Qt.SizeHorCursor))
-        self.setStyleSheet("background-color: red;")
-        self.setAttribute(Qt.WA_StyledBackground, True)
+        # self.setStyleSheet("background-color: red;")
+        # self.setAttribute(Qt.WA_StyledBackground, True)
 
     def mouseMoveEvent(self, event):
         delta = event.pos()

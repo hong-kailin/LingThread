@@ -2,7 +2,7 @@ from ui import Ui_main_window
 from .custom_grip import CustomEdgeGrip, CustomCornerGrip
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
                                QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
-from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, Signal
+from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, Signal, QEvent, QTimer
 
 
 class MainWindowPage(QWidget, Ui_main_window):
@@ -24,6 +24,29 @@ class MainWindowPage(QWidget, Ui_main_window):
 
         # setting
         self.time_amimation = 500
+
+        self.set_top_line_behavior()
+
+    def set_top_line_behavior(self):
+        def press_window(event):
+            self.grag_pos = event.globalPos()
+
+        def move_window(event):
+            # IF MAXIMIZED CHANGE TO NORMAL
+            if self.isMaximized():
+                self.maximize_restore()
+            # MOVE WINDOW
+            if event.buttons() == Qt.LeftButton:
+                self.move(self.pos() + event.globalPos() - self.grag_pos)
+                self.grag_pos = event.globalPos()
+
+        def double_click_maximize_restore(event):
+            if event.type() == QEvent.MouseButtonDblClick:
+                QTimer.singleShot(250, lambda: self.maximize_restore())
+
+        self.top_line.mousePressEvent = press_window
+        self.top_line.mouseMoveEvent = move_window
+        self.top_line.mouseDoubleClickEvent = double_click_maximize_restore
 
     def show_hide_btn_name(self, flag):
         if flag:
@@ -49,3 +72,9 @@ class MainWindowPage(QWidget, Ui_main_window):
         self.left_bottom_grip.setGeometry(0, self.height() - 10, 10, 10)
         self.right_top_grip.setGeometry(self.width() - 10, 0, 10, 10)
         self.right_bottom_grip.setGeometry(self.width() - 10, self.height() - 10, 10, 10)
+
+    def maximize_restore(self):
+        if not self.isMaximized():
+            self.showMaximized()
+        else:
+            self.showNormal()
