@@ -1,5 +1,5 @@
 import sys
-from page import MainWindowPage, LeftBoxPage, NewWindowPage
+from page import MainWindowPage, LeftBoxPage, NewDialogPage
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 
 if __name__ == "__main__":
@@ -11,11 +11,11 @@ if __name__ == "__main__":
     left_box = LeftBoxPage()
     v_layout.addWidget(left_box)
     left_box.close_left_box_signal.connect(window.show_hide_left_box)
-    new_window = None
 
     def create_new_english_note():
-        new_window = NewWindowPage()
-        new_window.show()
+        new_window = NewDialogPage(window)
+        if new_window.exec():
+            print("===")
 
     window.create_new_english_note_signal.connect(create_new_english_note)
     window.show()

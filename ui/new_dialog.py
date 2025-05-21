@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'new_window.ui'
+## Form generated from reading UI file 'new_dialog.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.0
 ##
@@ -15,18 +15,18 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QHBoxLayout,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QSpacerItem, QVBoxLayout, QWidget)
 
-class Ui_new_window(object):
-    def setupUi(self, new_window):
-        if not new_window.objectName():
-            new_window.setObjectName(u"new_window")
-        new_window.resize(530, 360)
-        new_window.setMinimumSize(QSize(530, 360))
-        new_window.setMaximumSize(QSize(530, 360))
-        new_window.setStyleSheet(u"#cover_label{\n"
+class Ui_new_dialog(object):
+    def setupUi(self, new_dialog):
+        if not new_dialog.objectName():
+            new_dialog.setObjectName(u"new_dialog")
+        new_dialog.resize(530, 360)
+        new_dialog.setMinimumSize(QSize(530, 360))
+        new_dialog.setMaximumSize(QSize(530, 360))
+        new_dialog.setStyleSheet(u"#cover_label{\n"
 "	border: 5px dashed rgb(37,47,82);\n"
 "}\n"
 "\n"
@@ -36,7 +36,7 @@ class Ui_new_window(object):
 "}\n"
 "\n"
 "\n"
-"#new_window{\n"
+"#new_dialog{\n"
 "	background-color:rgb(63, 114, 175);\n"
 "}\n"
 "\n"
@@ -64,13 +64,14 @@ class Ui_new_window(object):
 "	background-color: rgb(189, 147, 249);\n"
 "	color: rgb(255, 255, 255);\n"
 "}")
-        self.verticalLayout_2 = QVBoxLayout(new_window)
-        self.verticalLayout_2.setSpacing(6)
+        new_dialog.setModal(True)
+        self.verticalLayout_2 = QVBoxLayout(new_dialog)
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(9, 0, -1, 0)
+        self.verticalLayout_2.setContentsMargins(9, 0, 9, 0)
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.cover_label = QLabel(new_window)
+        self.cover_label = QLabel(new_dialog)
         self.cover_label.setObjectName(u"cover_label")
         self.cover_label.setMinimumSize(QSize(200, 300))
         self.cover_label.setMaximumSize(QSize(200, 300))
@@ -79,7 +80,7 @@ class Ui_new_window(object):
 
         self.horizontalLayout_5.addWidget(self.cover_label, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignVCenter)
 
-        self.frame = QFrame(new_window)
+        self.frame = QFrame(new_dialog)
         self.frame.setObjectName(u"frame")
         self.frame.setFrameShape(QFrame.Shape.NoFrame)
         self.frame.setFrameShadow(QFrame.Shadow.Raised)
@@ -143,20 +144,22 @@ class Ui_new_window(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout_5)
 
 
-        self.retranslateUi(new_window)
+        self.retranslateUi(new_dialog)
+        self.cancel_btn.clicked.connect(new_dialog.close)
+        self.comfirm_btn.clicked.connect(new_dialog.accept)
 
-        QMetaObject.connectSlotsByName(new_window)
+        QMetaObject.connectSlotsByName(new_dialog)
     # setupUi
 
-    def retranslateUi(self, new_window):
-        new_window.setWindowTitle(QCoreApplication.translate("new_window", u"Form", None))
-        self.cover_label.setText(QCoreApplication.translate("new_window", u"Click to select the cover image", None))
+    def retranslateUi(self, new_dialog):
+        new_dialog.setWindowTitle(QCoreApplication.translate("new_dialog", u"Dialog", None))
+        self.cover_label.setText(QCoreApplication.translate("new_dialog", u"Click to select the cover image", None))
         self.lineEdit.setText("")
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("new_window", u"Name:", None))
+        self.lineEdit.setPlaceholderText(QCoreApplication.translate("new_dialog", u"Name:", None))
         self.lineEdit_2.setText("")
-        self.lineEdit_2.setPlaceholderText(QCoreApplication.translate("new_window", u"Author:", None))
+        self.lineEdit_2.setPlaceholderText(QCoreApplication.translate("new_dialog", u"Author:", None))
         self.lineEdit_3.setText("")
-        self.cancel_btn.setText(QCoreApplication.translate("new_window", u"Cancel", None))
-        self.comfirm_btn.setText(QCoreApplication.translate("new_window", u"Comfirm", None))
+        self.cancel_btn.setText(QCoreApplication.translate("new_dialog", u"Cancel", None))
+        self.comfirm_btn.setText(QCoreApplication.translate("new_dialog", u"Comfirm", None))
     # retranslateUi
 
