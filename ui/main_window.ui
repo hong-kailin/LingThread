@@ -524,7 +524,13 @@ background-position: left center;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="main_page" native="true"/>
+       <widget class="QWidget" name="main_page" native="true">
+        <property name="styleSheet">
+         <string notr="true">background-image: url(:/images/images/images/LingThread_logo_382x369.png);
+background-position: center;
+background-repeat: no-repeat;</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QWidget" name="bottom_line" native="true">

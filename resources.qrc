@@ -262,6 +262,7 @@
     <file>images/icons/icon_settings.png</file>
   </qresource>
   <qresource prefix="images">
+    <file>images/images/LingThread_logo_382x369.png</file>
     <file>images/images/LingThread_logo_42.png</file>
     <file>images/images/LingThread_logo.png</file>
     <file>images/images/LingThread_ori.png</file>

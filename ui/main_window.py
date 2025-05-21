@@ -241,6 +241,9 @@ class Ui_main_window(object):
 
         self.main_page = QWidget(self.main_area)
         self.main_page.setObjectName(u"main_page")
+        self.main_page.setStyleSheet(u"background-image: url(:/images/images/images/LingThread_logo_382x369.png);\n"
+"background-position: center;\n"
+"background-repeat: no-repeat;")
 
         self.verticalLayout.addWidget(self.main_page)
 
