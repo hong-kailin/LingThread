@@ -7,6 +7,7 @@ from PySide6.QtGui import QIcon
 
 
 class MainWindowPage(QWidget, Ui_main_window):
+    create_new_english_note_signal = Signal()
 
     def __init__(self):
         super().__init__()
@@ -98,3 +99,5 @@ class MainWindowPage(QWidget, Ui_main_window):
         self.animation.setEasingCurve(QEasingCurve.InOutQuart)
         self.animation.start()
 
+    def create_new_english_note(self):
+        self.create_new_english_note_signal.emit()

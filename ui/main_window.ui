@@ -708,10 +708,27 @@ background-repeat: no-repeat;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>new_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>main_window</receiver>
+   <slot>create_new_english_note()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>31</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-17</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>show_hide_btn_name()</slot>
   <slot>maximize_restore()</slot>
   <slot>show_hide_left_box()</slot>
+  <slot>create_new_english_note()</slot>
  </slots>
 </ui>

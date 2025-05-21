@@ -8,3 +8,4 @@ class NewWindowPage(QWidget, Ui_new_window):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+        self.setWindowFlags(Qt.FramelessWindowHint)

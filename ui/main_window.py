@@ -294,6 +294,7 @@ class Ui_main_window(object):
         self.close_app_btn.clicked.connect(main_window.close)
         self.minimize_btn.clicked.connect(main_window.showMinimized)
         self.about_btn.clicked.connect(main_window.show_hide_left_box)
+        self.new_btn.clicked.connect(main_window.create_new_english_note)
 
         QMetaObject.connectSlotsByName(main_window)
     # setupUi
