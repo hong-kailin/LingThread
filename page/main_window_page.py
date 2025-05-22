@@ -8,6 +8,9 @@ from PySide6.QtGui import QIcon
 
 class MainWindowPage(QWidget, Ui_main_window):
     create_new_english_note_signal = Signal()
+    show_hide_ai_chat_card_signal = Signal()
+    show_hide_word_card_signal = Signal()
+    show_hide_sentence_card_signal = Signal()
 
     def __init__(self):
         super().__init__()
@@ -101,3 +104,12 @@ class MainWindowPage(QWidget, Ui_main_window):
 
     def create_new_english_note(self):
         self.create_new_english_note_signal.emit()
+
+    def show_hide_word_card(self):
+        self.show_hide_word_card_signal.emit()
+
+    def show_hide_sentence_card(self):
+        self.show_hide_sentence_card_signal.emit()
+
+    def show_hide_ai_chat_card(self):
+        self.show_hide_ai_chat_card_signal.emit()

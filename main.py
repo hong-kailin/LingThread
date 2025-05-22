@@ -1,5 +1,5 @@
 import sys
-from page import MainWindowPage, LeftBoxPage, NewDialogPage
+from page import MainWindowPage, LeftBoxPage, NewDialogPage, HomeWindowPage
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 
 if __name__ == "__main__":
@@ -23,7 +23,15 @@ if __name__ == "__main__":
         if new_window.exec():
             print("===")
 
-
     window.create_new_english_note_signal.connect(create_new_english_note)
+
+    v_layout_2 = QVBoxLayout(window.main_page)
+    v_layout_2.setContentsMargins(0, 0, 0, 0)
+    home_page = HomeWindowPage()
+    v_layout_2.addWidget(home_page)
+
+    window.show_hide_word_card_signal.connect(home_page.show_hide_word_card)
+    window.show_hide_sentence_card_signal.connect(home_page.show_hide_sentence_card)
+    window.show_hide_ai_chat_card_signal.connect(home_page.show_hide_ai_chat_card)
     window.show()
     app.exec()

@@ -78,6 +78,17 @@ class Ui_main_window(object):
 "\n"
 "#left_title_label { font: 63 12pt \"Segoe UI Semibold\"; }\n"
 "#left_description_label { font: 8pt \"Segoe UI\"; color: rgb(189, 147, 249); }\n"
+"\n"
+"\n"
+"#main_page {\n"
+"    background-image: url(:/images/images/images/LingThread_logo_382x369.png);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"}\n"
+"\n"
+"#main_page * {\n"
+"    background-image: none;\n"
+"}\n"
 "")
         self.horizontalLayout = QHBoxLayout(main_window)
         self.horizontalLayout.setSpacing(0)
@@ -192,24 +203,44 @@ class Ui_main_window(object):
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
-        self.card_btn = QPushButton(self.top_line)
-        self.card_btn.setObjectName(u"card_btn")
-        self.card_btn.setMinimumSize(QSize(28, 28))
-        self.card_btn.setMaximumSize(QSize(28, 28))
+        self.ai_btn = QPushButton(self.top_line)
+        self.ai_btn.setObjectName(u"ai_btn")
+        self.ai_btn.setMinimumSize(QSize(28, 28))
+        self.ai_btn.setMaximumSize(QSize(28, 28))
         icon = QIcon()
-        icon.addFile(u":/icons/images/icons/cil-closed-captioning.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.card_btn.setIcon(icon)
-        self.card_btn.setIconSize(QSize(20, 20))
+        icon.addFile(u":/icons/images/icons/cil-smile.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.ai_btn.setIcon(icon)
 
-        self.horizontalLayout_2.addWidget(self.card_btn)
+        self.horizontalLayout_2.addWidget(self.ai_btn)
+
+        self.sentence_card_btn = QPushButton(self.top_line)
+        self.sentence_card_btn.setObjectName(u"sentence_card_btn")
+        self.sentence_card_btn.setMinimumSize(QSize(28, 28))
+        self.sentence_card_btn.setMaximumSize(QSize(28, 28))
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/images/icons/cil-medical-cross.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.sentence_card_btn.setIcon(icon1)
+
+        self.horizontalLayout_2.addWidget(self.sentence_card_btn)
+
+        self.word_card_btn = QPushButton(self.top_line)
+        self.word_card_btn.setObjectName(u"word_card_btn")
+        self.word_card_btn.setMinimumSize(QSize(28, 28))
+        self.word_card_btn.setMaximumSize(QSize(28, 28))
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/images/icons/cil-closed-captioning.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.word_card_btn.setIcon(icon2)
+        self.word_card_btn.setIconSize(QSize(20, 20))
+
+        self.horizontalLayout_2.addWidget(self.word_card_btn)
 
         self.minimize_btn = QPushButton(self.top_line)
         self.minimize_btn.setObjectName(u"minimize_btn")
         self.minimize_btn.setMinimumSize(QSize(28, 28))
         self.minimize_btn.setMaximumSize(QSize(28, 28))
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/images/icons/cil-minus.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.minimize_btn.setIcon(icon1)
+        icon3 = QIcon()
+        icon3.addFile(u":/icons/images/icons/cil-minus.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.minimize_btn.setIcon(icon3)
         self.minimize_btn.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_2.addWidget(self.minimize_btn)
@@ -218,9 +249,9 @@ class Ui_main_window(object):
         self.maximize_restore_btn.setObjectName(u"maximize_restore_btn")
         self.maximize_restore_btn.setMinimumSize(QSize(28, 28))
         self.maximize_restore_btn.setMaximumSize(QSize(28, 28))
-        icon2 = QIcon()
-        icon2.addFile(u":/icons/images/icons/icon_maximize.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.maximize_restore_btn.setIcon(icon2)
+        icon4 = QIcon()
+        icon4.addFile(u":/icons/images/icons/icon_maximize.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.maximize_restore_btn.setIcon(icon4)
         self.maximize_restore_btn.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_2.addWidget(self.maximize_restore_btn)
@@ -229,9 +260,9 @@ class Ui_main_window(object):
         self.close_app_btn.setObjectName(u"close_app_btn")
         self.close_app_btn.setMinimumSize(QSize(28, 28))
         self.close_app_btn.setMaximumSize(QSize(28, 28))
-        icon3 = QIcon()
-        icon3.addFile(u":/icons/images/icons/icon_close.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.close_app_btn.setIcon(icon3)
+        icon5 = QIcon()
+        icon5.addFile(u":/icons/images/icons/icon_close.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.close_app_btn.setIcon(icon5)
         self.close_app_btn.setIconSize(QSize(20, 20))
 
         self.horizontalLayout_2.addWidget(self.close_app_btn)
@@ -241,9 +272,7 @@ class Ui_main_window(object):
 
         self.main_page = QWidget(self.main_area)
         self.main_page.setObjectName(u"main_page")
-        self.main_page.setStyleSheet(u"background-image: url(:/images/images/images/LingThread_logo_382x369.png);\n"
-"background-position: center;\n"
-"background-repeat: no-repeat;")
+        self.main_page.setStyleSheet(u"")
 
         self.verticalLayout.addWidget(self.main_page)
 
@@ -295,6 +324,9 @@ class Ui_main_window(object):
         self.minimize_btn.clicked.connect(main_window.showMinimized)
         self.about_btn.clicked.connect(main_window.show_hide_left_box)
         self.new_btn.clicked.connect(main_window.create_new_english_note)
+        self.word_card_btn.clicked.connect(main_window.show_hide_word_card)
+        self.sentence_card_btn.clicked.connect(main_window.show_hide_sentence_card)
+        self.ai_btn.clicked.connect(main_window.show_hide_ai_chat_card)
 
         QMetaObject.connectSlotsByName(main_window)
     # setupUi
@@ -311,7 +343,9 @@ class Ui_main_window(object):
         self.exit_btn.setText(QCoreApplication.translate("main_window", u"Exit", None))
         self.about_btn.setText(QCoreApplication.translate("main_window", u"About", None))
         self.label_2.setText(QCoreApplication.translate("main_window", u"  LingThread - Learning is a process from disorder to order.", None))
-        self.card_btn.setText("")
+        self.ai_btn.setText("")
+        self.sentence_card_btn.setText("")
+        self.word_card_btn.setText("")
         self.minimize_btn.setText("")
         self.maximize_restore_btn.setText("")
         self.close_app_btn.setText("")
