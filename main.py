@@ -12,10 +12,17 @@ if __name__ == "__main__":
     v_layout.addWidget(left_box)
     left_box.close_left_box_signal.connect(window.show_hide_left_box)
 
+
     def create_new_english_note():
         new_window = NewDialogPage(window)
+
+        def teeee(a, b, c, d):
+            print(a, b, c, d)
+
+        new_window.create_new_project_signal.connect(teeee)
         if new_window.exec():
             print("===")
+
 
     window.create_new_english_note_signal.connect(create_new_english_note)
     window.show()

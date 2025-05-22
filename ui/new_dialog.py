@@ -88,27 +88,26 @@ class Ui_new_dialog(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.lineEdit = QLineEdit(self.frame)
-        self.lineEdit.setObjectName(u"lineEdit")
-        self.lineEdit.setMinimumSize(QSize(0, 40))
-        self.lineEdit.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft)
+        self.name_edit = QLineEdit(self.frame)
+        self.name_edit.setObjectName(u"name_edit")
+        self.name_edit.setMinimumSize(QSize(0, 40))
+        self.name_edit.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft)
 
-        self.verticalLayout.addWidget(self.lineEdit)
+        self.verticalLayout.addWidget(self.name_edit)
 
-        self.lineEdit_2 = QLineEdit(self.frame)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
-        self.lineEdit_2.setMinimumSize(QSize(0, 40))
-        self.lineEdit_2.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft)
+        self.author_edit = QLineEdit(self.frame)
+        self.author_edit.setObjectName(u"author_edit")
+        self.author_edit.setMinimumSize(QSize(0, 40))
+        self.author_edit.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft)
 
-        self.verticalLayout.addWidget(self.lineEdit_2)
+        self.verticalLayout.addWidget(self.author_edit)
 
-        self.lineEdit_3 = QLineEdit(self.frame)
-        self.lineEdit_3.setObjectName(u"lineEdit_3")
-        self.lineEdit_3.setMinimumSize(QSize(0, 40))
-        self.lineEdit_3.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft)
-        self.lineEdit_3.setReadOnly(True)
+        self.time_label = QLabel(self.frame)
+        self.time_label.setObjectName(u"time_label")
+        self.time_label.setMinimumSize(QSize(0, 60))
+        self.time_label.setMaximumSize(QSize(16777215, 60))
 
-        self.verticalLayout.addWidget(self.lineEdit_3)
+        self.verticalLayout.addWidget(self.time_label)
 
 
         self.verticalLayout_3.addLayout(self.verticalLayout)
@@ -146,7 +145,7 @@ class Ui_new_dialog(object):
 
         self.retranslateUi(new_dialog)
         self.cancel_btn.clicked.connect(new_dialog.close)
-        self.comfirm_btn.clicked.connect(new_dialog.accept)
+        self.comfirm_btn.clicked.connect(new_dialog.create_new_project)
 
         QMetaObject.connectSlotsByName(new_dialog)
     # setupUi
@@ -154,11 +153,11 @@ class Ui_new_dialog(object):
     def retranslateUi(self, new_dialog):
         new_dialog.setWindowTitle(QCoreApplication.translate("new_dialog", u"Dialog", None))
         self.cover_label.setText(QCoreApplication.translate("new_dialog", u"Click to select the cover image", None))
-        self.lineEdit.setText("")
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("new_dialog", u"Name:", None))
-        self.lineEdit_2.setText("")
-        self.lineEdit_2.setPlaceholderText(QCoreApplication.translate("new_dialog", u"Author:", None))
-        self.lineEdit_3.setText("")
+        self.name_edit.setText("")
+        self.name_edit.setPlaceholderText(QCoreApplication.translate("new_dialog", u"Name:", None))
+        self.author_edit.setText("")
+        self.author_edit.setPlaceholderText(QCoreApplication.translate("new_dialog", u"Author:", None))
+        self.time_label.setText("")
         self.cancel_btn.setText(QCoreApplication.translate("new_dialog", u"Cancel", None))
         self.comfirm_btn.setText(QCoreApplication.translate("new_dialog", u"Comfirm", None))
     # retranslateUi
