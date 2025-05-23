@@ -12,12 +12,20 @@ class SplitterAnimationHelper(QObject):
         self.splitter = splitter
         self.start_sizes = []
         self.target_sizes = []
+        self.widget_to_hide = None  # 要隐藏的widget索引
+        self.widget_to_show = None  # 要显示的widget索引
 
     def setStartSizes(self, sizes):
         self.start_sizes = sizes
 
     def setTargetSizes(self, sizes):
         self.target_sizes = sizes
+
+    def setWidgetToHide(self, index):
+        self.widget_to_hide = index
+
+    def setWidgetToShow(self, index):
+        self.widget_to_show = index
 
     def getProgress(self):
         return 0.0
@@ -26,6 +34,15 @@ class SplitterAnimationHelper(QObject):
         # 根据进度计算当前大小
         current_sizes = []
         for i in range(len(self.start_sizes)):
+            # 如果是要隐藏的widget，并且动画接近完成，则完全隐藏
+            if i == self.widget_to_hide and progress > 0.95:
+                current_sizes.append(0)
+                continue
+
+            # 如果是要显示的widget，并且动画刚开始，则先显示
+            if i == self.widget_to_show and progress < 0.05:
+                self.splitter.widget(i).show()
+
             size = self.start_sizes[i] + (self.target_sizes[i] - self.start_sizes[i]) * progress
             current_sizes.append(size)
 
@@ -71,8 +88,9 @@ class MainWindow(QMainWindow):
             else:  # 后三个widget默认隐藏
                 self.visible_states.append(False)
                 self.last_sizes.append(initial_width)
+                widget.hide()  # 真正隐藏widget
 
-        # 设置初始大小 - 第一个widget占据全部宽度，其他为0
+        # 设置初始大小 - 第一个widget占据全部宽度
         initial_sizes = [total_width, 0, 0, 0]
         self.splitter.setSizes(initial_sizes)
 
@@ -97,6 +115,7 @@ class MainWindow(QMainWindow):
         self.animation = QPropertyAnimation(self.animation_helper, b"progress")
         self.animation.setDuration(500)
         self.animation.setEasingCurve(QEasingCurve.InOutCubic)
+        self.animation.finished.connect(self.on_animation_finished)
 
     def toggle_widget(self, widget_index):
         """切换指定索引widget的显示/隐藏状态"""
@@ -117,6 +136,10 @@ class MainWindow(QMainWindow):
             target_sizes[widget_index] = 0  # 目标widget宽度为0
 
             self.buttons[widget_index - 1].setText(f"显示面板 {widget_index + 1}")
+
+            # 设置要隐藏的widget
+            self.animation_helper.setWidgetToHide(widget_index)
+            self.animation_helper.setWidgetToShow(None)
         else:
             # 恢复widget - 只调整第0个widget的大小
             restore_width = self.last_sizes[widget_index]
@@ -127,6 +150,10 @@ class MainWindow(QMainWindow):
 
             self.buttons[widget_index - 1].setText(f"隐藏面板 {widget_index + 1}")
 
+            # 设置要显示的widget
+            self.animation_helper.setWidgetToShow(widget_index)
+            self.animation_helper.setWidgetToHide(None)
+
         # 设置动画
         self.animation_helper.setStartSizes(current_sizes)
         self.animation_helper.setTargetSizes(target_sizes)
@@ -136,6 +163,13 @@ class MainWindow(QMainWindow):
         # 开始动画
         self.animation.start()
         self.visible_states[widget_index] = not self.visible_states[widget_index]
+
+    def on_animation_finished(self):
+        """动画完成后处理"""
+        # 确保widget完全隐藏
+        for i in range(1, 4):
+            if not self.visible_states[i]:
+                self.splitter.widget(i).hide()
 
 
 if __name__ == "__main__":

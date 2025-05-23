@@ -9,6 +9,8 @@ class SplitterAnimationHelper(QObject):
         self.splitter = splitter
         self.start_sizes = []
         self.target_sizes = []
+        self.widget_to_hide = None
+        self.widget_to_show = None
 
     def setStartSizes(self, sizes):
         self.start_sizes = sizes
@@ -16,12 +18,25 @@ class SplitterAnimationHelper(QObject):
     def setTargetSizes(self, sizes):
         self.target_sizes = sizes
 
+    def setWidgetToHide(self, index):
+        self.widget_to_hide = index
+
+    def setWidgetToShow(self, index):
+        self.widget_to_show = index
+
     def getProgress(self):
         return 0.0
 
     def setProgress(self, progress):
         current_sizes = []
         for i in range(len(self.start_sizes)):
+            if i == self.widget_to_hide and progress > 0.95:
+                current_sizes.append(0)
+                continue
+
+            if i == self.widget_to_show and progress < 0.05:
+                self.splitter.widget(i).show()
+
             size = self.start_sizes[i] + (self.target_sizes[i] - self.start_sizes[i]) * progress
             current_sizes.append(size)
 
@@ -36,15 +51,21 @@ class HomeWindowPage(QWidget, Ui_home_widget):
         self.setupUi(self)
         initial_sizes = [100, 0, 0, 0]
         self.visible_states = [True, False, False, False]
+        self.ai_chat_widget.hide()
+        self.word_card_widget.hide()
+        self.sentence_card_widget.hide()
+
         self.splitter.setSizes(initial_sizes)
         self.last_sizes = [100, 200, 200, 200]
 
         self.time_amimation = 500
 
         self.animation_helper = SplitterAnimationHelper(self.splitter)
+
         self.animation = QPropertyAnimation(self.animation_helper, b"progress")
         self.animation.setDuration(500)
         self.animation.setEasingCurve(QEasingCurve.InOutCubic)
+        self.animation.finished.connect(self.on_animation_finished)
 
     def show_hide_card(self, widget_index):
         if self.animation.state() == QPropertyAnimation.Running:
@@ -59,12 +80,18 @@ class HomeWindowPage(QWidget, Ui_home_widget):
             target_sizes = current_sizes.copy()
             target_sizes[0] += target_width
             target_sizes[widget_index] = 0
+
+            self.animation_helper.setWidgetToHide(widget_index)
+            self.animation_helper.setWidgetToShow(None)
         else:
             restore_width = self.last_sizes[widget_index]
 
             target_sizes = current_sizes.copy()
-            target_sizes[0] -= restore_width  # 第0个widget减少宽度
-            target_sizes[widget_index] = restore_width  # 恢复目标widget宽度
+            target_sizes[0] -= restore_width
+            target_sizes[widget_index] = restore_width
+
+            self.animation_helper.setWidgetToShow(widget_index)
+            self.animation_helper.setWidgetToHide(None)
 
         self.animation_helper.setStartSizes(current_sizes)
         self.animation_helper.setTargetSizes(target_sizes)
@@ -73,6 +100,11 @@ class HomeWindowPage(QWidget, Ui_home_widget):
 
         self.animation.start()
         self.visible_states[widget_index] = not self.visible_states[widget_index]
+
+    def on_animation_finished(self):
+        for i in range(1, 4):
+            if not self.visible_states[i]:
+                self.splitter.widget(i).hide()
 
     def show_hide_word_card(self):
         self.show_hide_card(3)
