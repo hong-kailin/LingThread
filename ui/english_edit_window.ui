@@ -49,7 +49,7 @@ QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; bo
         </size>
        </property>
        <property name="readOnly">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -113,5 +113,25 @@ QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; bo
  <resources>
   <include location="../resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>english_edit</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>english_edit_widget</receiver>
+   <slot>show_text_menu()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>363</x>
+     <y>181</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>show_text_menu()</slot>
+ </slots>
 </ui>

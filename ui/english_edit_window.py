@@ -47,7 +47,7 @@ class Ui_english_edit_widget(object):
         self.info_edit.setObjectName(u"info_edit")
         self.info_edit.setMinimumSize(QSize(0, 100))
         self.info_edit.setMaximumSize(QSize(16777215, 100))
-        self.info_edit.setReadOnly(True)
+        self.info_edit.setReadOnly(False)
 
         self.horizontalLayout_2.addWidget(self.info_edit, 0, Qt.AlignmentFlag.AlignBottom)
 
@@ -82,6 +82,7 @@ class Ui_english_edit_widget(object):
 
 
         self.retranslateUi(english_edit_widget)
+        self.english_edit.customContextMenuRequested.connect(english_edit_widget.show_text_menu)
 
         QMetaObject.connectSlotsByName(english_edit_widget)
     # setupUi
