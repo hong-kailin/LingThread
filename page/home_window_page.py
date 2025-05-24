@@ -3,114 +3,35 @@ from PySide6.QtWidgets import QWidget
 from ui import Ui_home_widget
 
 
-class SplitterAnimationHelper(QObject):
-    def __init__(self, splitter, parent=None):
-        super().__init__(parent)
-        self.splitter = splitter
-        self.start_sizes = []
-        self.target_sizes = []
-        self.widget_to_hide = None
-        self.widget_to_show = None
-
-    def setStartSizes(self, sizes):
-        self.start_sizes = sizes
-
-    def setTargetSizes(self, sizes):
-        self.target_sizes = sizes
-
-    def setWidgetToHide(self, index):
-        self.widget_to_hide = index
-
-    def setWidgetToShow(self, index):
-        self.widget_to_show = index
-
-    def getProgress(self):
-        return 0.0
-
-    def setProgress(self, progress):
-        current_sizes = []
-        for i in range(len(self.start_sizes)):
-            if i == self.widget_to_hide and progress > 0.95:
-                current_sizes.append(0)
-                continue
-
-            if i == self.widget_to_show and progress < 0.05:
-                self.splitter.widget(i).show()
-
-            size = self.start_sizes[i] + (self.target_sizes[i] - self.start_sizes[i]) * progress
-            current_sizes.append(size)
-
-        self.splitter.setSizes(current_sizes)
-
-    progress = Property(float, getProgress, setProgress)
-
-
 class HomeWindowPage(QWidget, Ui_home_widget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        initial_sizes = [100, 0, 0, 0]
-        self.visible_states = [True, False, False, False]
+
         self.ai_chat_widget.hide()
         self.word_card_widget.hide()
         self.sentence_card_widget.hide()
 
-        self.splitter.setSizes(initial_sizes)
-        self.last_sizes = [100, 200, 200, 200]
-
-        self.time_amimation = 500
-
-        self.animation_helper = SplitterAnimationHelper(self.splitter)
-
-        self.animation = QPropertyAnimation(self.animation_helper, b"progress")
-        self.animation.setDuration(500)
-        self.animation.setEasingCurve(QEasingCurve.InOutCubic)
-        self.animation.finished.connect(self.on_animation_finished)
+        self.widgets = [self.ai_chat_widget, self.word_card_widget, self.sentence_card_widget]
 
     def show_hide_card(self, widget_index):
-        if self.animation.state() == QPropertyAnimation.Running:
-            return
-
-        current_sizes = self.splitter.sizes()
-
-        if self.visible_states[widget_index]:
-            self.last_sizes[widget_index] = current_sizes[widget_index]
-            target_width = current_sizes[widget_index]
-
-            target_sizes = current_sizes.copy()
-            target_sizes[0] += target_width
-            target_sizes[widget_index] = 0
-
-            self.animation_helper.setWidgetToHide(widget_index)
-            self.animation_helper.setWidgetToShow(None)
+        sizes = self.splitter.sizes()
+        if self.widgets[widget_index].isVisible():
+            self.widgets[widget_index].hide()
+            hided_width = sizes[widget_index]
+            sizes[0] += hided_width
+            sizes[widget_index+1] = 0
         else:
-            restore_width = self.last_sizes[widget_index]
-
-            target_sizes = current_sizes.copy()
-            target_sizes[0] -= restore_width
-            target_sizes[widget_index] = restore_width
-
-            self.animation_helper.setWidgetToShow(widget_index)
-            self.animation_helper.setWidgetToHide(None)
-
-        self.animation_helper.setStartSizes(current_sizes)
-        self.animation_helper.setTargetSizes(target_sizes)
-        self.animation.setStartValue(0.0)
-        self.animation.setEndValue(1.0)
-
-        self.animation.start()
-        self.visible_states[widget_index] = not self.visible_states[widget_index]
-
-    def on_animation_finished(self):
-        for i in range(1, 4):
-            if not self.visible_states[i]:
-                self.splitter.widget(i).hide()
+            self.widgets[widget_index].show()
+            sizes[0] -= 200
+            sizes[widget_index+1] = 200
+        self.splitter.setSizes(sizes)
 
     def show_hide_word_card(self):
-        self.show_hide_card(3)
+        self.show_hide_card(1)
 
     def show_hide_sentence_card(self):
         self.show_hide_card(2)
 
     def show_hide_ai_chat_card(self):
-        self.show_hide_card(1)
+        self.show_hide_card(0)
