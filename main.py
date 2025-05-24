@@ -1,6 +1,6 @@
 import sys
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
-                  HomeWindowPage, EnglishEditWidgetPage)
+                  HomeWindowPage, EnglishEditWidgetPage, ContainerWidgetPage)
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 
 if __name__ == "__main__":
@@ -40,6 +40,11 @@ if __name__ == "__main__":
     v_layout_3.setContentsMargins(0, 0, 0, 0)
     english_edit_page = EnglishEditWidgetPage(home_page.edit_widget)
     v_layout_3.addWidget(english_edit_page)
+
+    v_layout_4 = QVBoxLayout(home_page.word_card_widget)
+    v_layout_4.setContentsMargins(0, 0, 0, 0)
+    container_page = ContainerWidgetPage(home_page.word_card_widget)
+    v_layout_4.addWidget(container_page)
 
     window.show()
     app.exec()
