@@ -6,6 +6,8 @@ from ui import Ui_english_edit_widget
 
 
 class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
+    create_word_card_signal = Signal(str)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
@@ -43,8 +45,10 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
         if not selected_text:
             return
         # create card
+        self.create_word_card_signal.emit(selected_text)
         # ====
         highlight = self.add_highlight(cursor)
+
 
     def add_highlight(self, cursor):
         new_cursor = self.english_edit.textCursor()
