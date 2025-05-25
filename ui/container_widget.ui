@@ -14,7 +14,10 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget {
+   <string notr="true">QScrollArea {
+    background-color: transparent;
+}
+#contents{
     background-color: transparent;
 }</string>
   </property>

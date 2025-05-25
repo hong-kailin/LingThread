@@ -1,0 +1,97 @@
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'word_card.ui'
+##
+## Created by: Qt User Interface Compiler version 6.9.0
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QSizePolicy,
+    QTextEdit, QVBoxLayout, QWidget)
+
+class Ui_word_card(object):
+    def setupUi(self, word_card):
+        if not word_card.objectName():
+            word_card.setObjectName(u"word_card")
+        word_card.resize(271, 351)
+        self.verticalLayout = QVBoxLayout(word_card)
+        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.label = QLabel(word_card)
+        self.label.setObjectName(u"label")
+        self.label.setMinimumSize(QSize(0, 30))
+        self.label.setMaximumSize(QSize(16777215, 30))
+        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout.addWidget(self.label)
+
+        self.widget = QWidget(word_card)
+        self.widget.setObjectName(u"widget")
+        self.verticalLayout_2 = QVBoxLayout(self.widget)
+        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.mean_edit = QTextEdit(self.widget)
+        self.mean_edit.setObjectName(u"mean_edit")
+        self.mean_edit.setMinimumSize(QSize(0, 30))
+
+        self.verticalLayout_2.addWidget(self.mean_edit)
+
+        self.pronunciation_edit = QTextEdit(self.widget)
+        self.pronunciation_edit.setObjectName(u"pronunciation_edit")
+        self.pronunciation_edit.setMinimumSize(QSize(0, 30))
+
+        self.verticalLayout_2.addWidget(self.pronunciation_edit)
+
+        self.mean_remember_edit = QTextEdit(self.widget)
+        self.mean_remember_edit.setObjectName(u"mean_remember_edit")
+        self.mean_remember_edit.setMinimumSize(QSize(0, 30))
+
+        self.verticalLayout_2.addWidget(self.mean_remember_edit)
+
+        self.pronunciation_remember_edit = QTextEdit(self.widget)
+        self.pronunciation_remember_edit.setObjectName(u"pronunciation_remember_edit")
+        self.pronunciation_remember_edit.setMinimumSize(QSize(0, 30))
+
+        self.verticalLayout_2.addWidget(self.pronunciation_remember_edit)
+
+        self.other_edit = QTextEdit(self.widget)
+        self.other_edit.setObjectName(u"other_edit")
+        self.other_edit.setMinimumSize(QSize(0, 30))
+
+        self.verticalLayout_2.addWidget(self.other_edit)
+
+
+        self.verticalLayout.addWidget(self.widget)
+
+
+        self.retranslateUi(word_card)
+        self.mean_edit.textChanged.connect(word_card.mean_height_change)
+        self.pronunciation_edit.textChanged.connect(word_card.pronunciation_height_change)
+        self.mean_remember_edit.textChanged.connect(word_card.mean_remember_height_change)
+        self.pronunciation_remember_edit.textChanged.connect(word_card.pronunciation_remember_height_change)
+        self.other_edit.textChanged.connect(word_card.other_height_change)
+
+        QMetaObject.connectSlotsByName(word_card)
+    # setupUi
+
+    def retranslateUi(self, word_card):
+        word_card.setWindowTitle(QCoreApplication.translate("word_card", u"Frame", None))
+        self.label.setText(QCoreApplication.translate("word_card", u"TextLabel", None))
+        self.mean_edit.setPlaceholderText(QCoreApplication.translate("word_card", u"\u8bf7\u8f93\u5165\u542b\u4e49", None))
+        self.pronunciation_edit.setPlaceholderText(QCoreApplication.translate("word_card", u"\u8bf7\u8f93\u5165\u8bfb\u97f3", None))
+        self.mean_remember_edit.setPlaceholderText(QCoreApplication.translate("word_card", u"\u8bf7\u8f93\u5165\u542b\u4e49\u52a9\u8bb0", None))
+        self.pronunciation_remember_edit.setPlaceholderText(QCoreApplication.translate("word_card", u"\u8bf7\u8f93\u5165\u53d1\u97f3\u52a9\u8bb0", None))
+        self.other_edit.setPlaceholderText(QCoreApplication.translate("word_card", u"\u5176\u4ed6", None))
+    # retranslateUi
+

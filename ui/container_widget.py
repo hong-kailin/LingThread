@@ -23,7 +23,10 @@ class Ui_container(object):
         if not container.objectName():
             container.setObjectName(u"container")
         container.resize(211, 741)
-        container.setStyleSheet(u"QWidget {\n"
+        container.setStyleSheet(u"QScrollArea {\n"
+"    background-color: transparent;\n"
+"}\n"
+"#contents{\n"
 "    background-color: transparent;\n"
 "}")
         self.horizontalLayout = QHBoxLayout(container)
