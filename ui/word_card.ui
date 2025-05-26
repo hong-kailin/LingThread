@@ -15,7 +15,20 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#label{
-	background-color:rgb(37, 250, 82);
+	background-color:rgb(17, 45, 78);
+	border-radius: 5px;
+     margin: 5px;
+     border: 1px solid #dee2e6;
+}
+#mean_edit, 
+#mean_remember_edit, 
+#other_edit, 
+#pronunciation_remember_edit, 
+#pronunciation_edit{
+	background-color:rgb(63,114,175);
+	border-radius: 5px;
+     margin: 5px;
+     border: 1px solid #dee2e6;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -80,7 +93,7 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item>
+      <item alignment="Qt::AlignmentFlag::AlignTop">
        <widget class="QTextEdit" name="mean_edit">
         <property name="minimumSize">
          <size>
@@ -93,7 +106,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignmentFlag::AlignTop">
        <widget class="QTextEdit" name="pronunciation_edit">
         <property name="minimumSize">
          <size>
@@ -106,7 +119,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignmentFlag::AlignTop">
        <widget class="QTextEdit" name="mean_remember_edit">
         <property name="minimumSize">
          <size>
@@ -119,7 +132,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignmentFlag::AlignTop">
        <widget class="QTextEdit" name="pronunciation_remember_edit">
         <property name="minimumSize">
          <size>
@@ -132,7 +145,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignmentFlag::AlignTop">
        <widget class="QTextEdit" name="other_edit">
         <property name="minimumSize">
          <size>

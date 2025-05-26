@@ -8,7 +8,13 @@ class WordCardPage(QFrame, Ui_word_card):
     def __init__(self, parent, word):
         super().__init__(parent)
         self.setupUi(self)
-        self.installEventFilter(self)
+
+        self.other_edit.installEventFilter(self)
+        self.mean_edit.installEventFilter(self)
+        self.pronunciation_edit.installEventFilter(self)
+        self.mean_remember_edit.installEventFilter(self)
+        self.pronunciation_remember_edit.installEventFilter(self)
+
         self.other_edit.hide()
         self.mean_edit.hide()
         self.pronunciation_edit.hide()
@@ -19,7 +25,7 @@ class WordCardPage(QFrame, Ui_word_card):
         self.is_editing = False
 
     def mean_height_change(self):
-        self.height = self.adjust_text_edit_height(self.mean_edit)
+        self.adjust_text_edit_height(self.mean_edit)
 
     def pronunciation_height_change(self):
         self.adjust_text_edit_height(self.pronunciation_edit)
@@ -51,14 +57,22 @@ class WordCardPage(QFrame, Ui_word_card):
         text_edit.setMaximumHeight(new_height)
 
     def eventFilter(self, obj, event):
-        # if obj == self.text_edit:
         if event.type() == QEvent.FocusIn:
-            # self.start_editing()
+            self.start_editing()
             print("FocusIn")
         elif event.type() == QEvent.FocusOut:
-            # self.finish_editing()
+            self.finish_editing()
             print("FocusOut")
         return super().eventFilter(obj, event)
+
+    def start_editing(self):
+        self.is_editing = True
+        self.expand_card(force=True)
+
+    def finish_editing(self):
+        self.is_editing = False
+        if not self.underMouse():
+            self.collapse_card()
 
     def enterEvent(self, event):
         self.expand_card()
@@ -77,7 +91,6 @@ class WordCardPage(QFrame, Ui_word_card):
             self.pronunciation_edit.show()
             self.mean_remember_edit.show()
             self.pronunciation_remember_edit.show()
-            # self.setFixedHeight(200)
 
     def collapse_card(self):
         if self.is_expanded and not self.is_editing:

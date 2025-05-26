@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PySide6.QtWidgets import *
+from PySide6.QtCore import *
+from PySide6.QtGui import *
 
 
 class VocabularyCard(QFrame):
@@ -33,11 +33,19 @@ class VocabularyCard(QFrame):
                 border-bottom: 1px solid #dee2e6;
                 qproperty-alignment: AlignCenter;
             }
+            QLabel#subtitle {
+                font-weight: 500;
+                color: #2c3e50;
+                padding: 4px 8px;
+                font-size: 12px;
+                background: #e9ecef;
+            }
             QTextEdit {
                 border: none;
                 padding: 8px;
                 font-size: 13px;
                 background: white;
+                border-bottom: 1px solid #dee2e6;
             }
         """)
 
@@ -46,11 +54,11 @@ class VocabularyCard(QFrame):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
 
-        # 标题栏（优化显示）
+        # 标题栏
         self.title = QLabel(word)
         self.title.setObjectName("title")
-        self.title.setWordWrap(True)  # 允许自动换行
-        self.title.setMinimumHeight(36)  # 保证两行文字高度
+        self.title.setWordWrap(True)
+        self.title.setMinimumHeight(36)
         self.title.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         layout.addWidget(self.title)
 
@@ -58,14 +66,28 @@ class VocabularyCard(QFrame):
         self.content = QWidget()
         content_layout = QVBoxLayout()
         content_layout.setContentsMargins(0, 0, 0, 0)
-        self.text_edit = QTextEdit()
-        self.text_edit.setPlaceholderText("输入解释或例句...")
-        self.text_edit.setMaximumHeight(120)
 
-        # 焦点事件处理
-        self.text_edit.installEventFilter(self)
+        # 解释部分
+        self.definition_label = QLabel("解释:")
+        self.definition_label.setObjectName("subtitle")
+        self.definition_edit = QTextEdit()
+        self.definition_edit.setPlaceholderText("输入单词解释...")
+        self.definition_edit.setMaximumHeight(80)
+        self.definition_edit.installEventFilter(self)
 
-        content_layout.addWidget(self.text_edit)
+        # 例句部分
+        self.example_label = QLabel("例句:")
+        self.example_label.setObjectName("subtitle")
+        self.example_edit = QTextEdit()
+        self.example_edit.setPlaceholderText("输入例句...")
+        self.example_edit.setMaximumHeight(80)
+        self.example_edit.installEventFilter(self)
+
+        content_layout.addWidget(self.definition_label)
+        content_layout.addWidget(self.definition_edit)
+        content_layout.addWidget(self.example_label)
+        content_layout.addWidget(self.example_edit)
+
         self.content.setLayout(content_layout)
         self.content.hide()
 
@@ -80,7 +102,7 @@ class VocabularyCard(QFrame):
         self.collapse_card()
 
     def eventFilter(self, obj, event):
-        if obj == self.text_edit:
+        if obj in [self.definition_edit, self.example_edit]:
             if event.type() == QEvent.FocusIn:
                 self.start_editing()
             elif event.type() == QEvent.FocusOut:
@@ -91,7 +113,7 @@ class VocabularyCard(QFrame):
         menu = QMenu(self)
         delete_action = menu.addAction("删除卡片")
         delete_action.triggered.connect(self.delete_card)
-        menu.exec_(self.mapToGlobal(pos))
+        menu.exec(self.mapToGlobal(pos))
 
     def delete_card(self):
         self.parent.remove_card(self)
@@ -118,13 +140,13 @@ class VocabularyCard(QFrame):
         if not self.is_expanded or force:
             self.is_expanded = True
             self.content.show()
-            self.setFixedHeight(200)  # 展开高度
+            self.setFixedHeight(260)  # 调整展开高度
 
     def collapse_card(self):
         if self.is_expanded and not self.is_editing:
             self.is_expanded = False
             self.content.hide()
-            self.setFixedHeight(50)  # 折叠高度（保证显示两行文字）
+            self.setFixedHeight(50)  # 折叠高度
 
 
 class MainWindow(QMainWindow):
@@ -194,7 +216,7 @@ class MainWindow(QMainWindow):
             menu = QMenu(self)
             create_action = menu.addAction("创建卡片")
             create_action.triggered.connect(lambda: self.create_card(cursor))
-            menu.exec_(self.text_edit.mapToGlobal(pos))
+            menu.exec(self.text_edit.mapToGlobal(pos))
 
     def create_card(self, cursor):
         selected_text = cursor.selectedText().strip()
@@ -207,7 +229,7 @@ class MainWindow(QMainWindow):
                 card.expand_card(force=True)
                 return
 
-        # 创建新卡片（自动处理长单词）
+        # 创建新卡片
         elided_word = self.elide_text(selected_text, max_length=25)
         card = VocabularyCard(self, elided_word)
         card.word = selected_text  # 保存完整单词
@@ -266,4 +288,4 @@ if __name__ == "__main__":
 
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

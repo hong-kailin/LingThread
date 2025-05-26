@@ -24,7 +24,20 @@ class Ui_word_card(object):
             word_card.setObjectName(u"word_card")
         word_card.resize(279, 321)
         word_card.setStyleSheet(u"#label{\n"
-"	background-color:rgb(37, 250, 82);\n"
+"	background-color:rgb(17, 45, 78);\n"
+"	border-radius: 5px;\n"
+"     margin: 5px;\n"
+"     border: 1px solid #dee2e6;\n"
+"}\n"
+"#mean_edit, \n"
+"#mean_remember_edit, \n"
+"#other_edit, \n"
+"#pronunciation_remember_edit, \n"
+"#pronunciation_edit{\n"
+"	background-color:rgb(63,114,175);\n"
+"	border-radius: 5px;\n"
+"     margin: 5px;\n"
+"     border: 1px solid #dee2e6;\n"
 "}")
         self.verticalLayout = QVBoxLayout(word_card)
         self.verticalLayout.setSpacing(0)
@@ -53,31 +66,31 @@ class Ui_word_card(object):
         self.mean_edit.setObjectName(u"mean_edit")
         self.mean_edit.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_2.addWidget(self.mean_edit)
+        self.verticalLayout_2.addWidget(self.mean_edit, 0, Qt.AlignmentFlag.AlignTop)
 
         self.pronunciation_edit = QTextEdit(self.widget)
         self.pronunciation_edit.setObjectName(u"pronunciation_edit")
         self.pronunciation_edit.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_2.addWidget(self.pronunciation_edit)
+        self.verticalLayout_2.addWidget(self.pronunciation_edit, 0, Qt.AlignmentFlag.AlignTop)
 
         self.mean_remember_edit = QTextEdit(self.widget)
         self.mean_remember_edit.setObjectName(u"mean_remember_edit")
         self.mean_remember_edit.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_2.addWidget(self.mean_remember_edit)
+        self.verticalLayout_2.addWidget(self.mean_remember_edit, 0, Qt.AlignmentFlag.AlignTop)
 
         self.pronunciation_remember_edit = QTextEdit(self.widget)
         self.pronunciation_remember_edit.setObjectName(u"pronunciation_remember_edit")
         self.pronunciation_remember_edit.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_2.addWidget(self.pronunciation_remember_edit)
+        self.verticalLayout_2.addWidget(self.pronunciation_remember_edit, 0, Qt.AlignmentFlag.AlignTop)
 
         self.other_edit = QTextEdit(self.widget)
         self.other_edit.setObjectName(u"other_edit")
         self.other_edit.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_2.addWidget(self.other_edit)
+        self.verticalLayout_2.addWidget(self.other_edit, 0, Qt.AlignmentFlag.AlignTop)
 
 
         self.verticalLayout.addWidget(self.widget)
