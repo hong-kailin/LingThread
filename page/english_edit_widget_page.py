@@ -7,12 +7,19 @@ from ui import Ui_english_edit_widget
 
 class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
     create_word_card_signal = Signal(str)
+    corresponding_word_card_show_signal = Signal(str)
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.highlights = []
+        self.highlight_dict = {}
         self.english_edit.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.english_edit.viewport().installEventFilter(self)
+
+        self.highlight_format = QTextCharFormat()
+        self.highlight_format.setBackground(QColor(255, 245, 157))
+        self.highlight_format.setUnderlineStyle(QTextCharFormat.SingleUnderline)
+        self.highlight_format.setUnderlineColor(QColor(255, 179, 0))
 
     def show_text_menu(self, pos):
         cursor = self.english_edit.textCursor()
@@ -49,21 +56,23 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
         # ====
         highlight = self.add_highlight(cursor)
 
-
     def add_highlight(self, cursor):
         new_cursor = self.english_edit.textCursor()
         new_cursor.setPosition(cursor.selectionStart())
         new_cursor.setPosition(cursor.selectionEnd(), QTextCursor.KeepAnchor)
 
-        format = QTextCharFormat()
-        format.setBackground(QColor(255, 245, 157))
-        format.setUnderlineStyle(QTextCharFormat.SingleUnderline)
-        format.setUnderlineColor(QColor(255, 179, 0))
-
         extra_selection = QTextEdit.ExtraSelection()
-        extra_selection.format = format
+        extra_selection.format = self.highlight_format
         extra_selection.cursor = new_cursor
 
-        self.highlights.append(extra_selection)
-        self.english_edit.setExtraSelections(self.highlights)
+        self.highlight_dict[new_cursor.selectedText().strip()] = extra_selection
+        self.english_edit.setExtraSelections(list(self.highlight_dict.values()))
         return extra_selection
+
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.MouseButtonRelease:
+            cursor = self.english_edit.textCursor()
+            if cursor.hasSelection():
+                selected_text = cursor.selectedText()
+                self.corresponding_word_card_show_signal.emit(selected_text)
+        return super().eventFilter(obj, event)

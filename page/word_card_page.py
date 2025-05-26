@@ -21,6 +21,8 @@ class WordCardPage(QFrame, Ui_word_card):
         self.mean_remember_edit.hide()
         self.pronunciation_remember_edit.hide()
         self.word = word
+        self.label.setText(self.word)
+
         self.is_expanded = False
         self.is_editing = False
 
@@ -59,10 +61,8 @@ class WordCardPage(QFrame, Ui_word_card):
     def eventFilter(self, obj, event):
         if event.type() == QEvent.FocusIn:
             self.start_editing()
-            print("FocusIn")
         elif event.type() == QEvent.FocusOut:
             self.finish_editing()
-            print("FocusOut")
         return super().eventFilter(obj, event)
 
     def start_editing(self):

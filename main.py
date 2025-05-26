@@ -34,6 +34,7 @@ class LingThread:
         v_layout_3.addWidget(english_edit_page)
 
         english_edit_page.create_word_card_signal.connect(self.create_word_card)
+        english_edit_page.corresponding_word_card_show_signal.connect(self.corresponding_word_card_show)
 
         v_layout_4 = QVBoxLayout(home_page.word_card_widget)
         v_layout_4.setContentsMargins(0, 0, 0, 0)
@@ -61,6 +62,10 @@ class LingThread:
         new_window.create_new_project_signal.connect(teeee)
         if new_window.exec():
             print("===")
+
+    def corresponding_word_card_show(self, word):
+        if word in self.card_dict:
+            self.card_dict[word].expand_card()
 
 
 if __name__ == "__main__":
