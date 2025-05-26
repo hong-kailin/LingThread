@@ -3,10 +3,12 @@ from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
                   HomeWindowPage, EnglishEditWidgetPage, ContainerWidgetPage,
                   WordCardPage)
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
+from PySide6.QtCore import Qt
 
 
 class LingThread:
     def __init__(self):
+        self.card_dict = {}
         self.window = MainWindowPage()
 
         v_layout = QVBoxLayout(self.window.left_hide_box)
@@ -35,11 +37,17 @@ class LingThread:
 
         v_layout_4 = QVBoxLayout(home_page.word_card_widget)
         v_layout_4.setContentsMargins(0, 0, 0, 0)
-        container_page = ContainerWidgetPage(home_page.word_card_widget)
-        v_layout_4.addWidget(container_page)
+        word_card_container_page = ContainerWidgetPage(home_page.word_card_widget)
+        v_layout_4.addWidget(word_card_container_page)
+
+        self.word_card_layout = QVBoxLayout()
+        word_card_container_page.contents.setLayout(self.word_card_layout)
+        self.word_card_layout.setAlignment(Qt.AlignTop)
 
     def create_word_card(self, word):
-        print("===", word)
+        card = WordCardPage(self.window, word)
+        self.word_card_layout.addWidget(card)
+        self.card_dict[word] = card
 
     def show(self):
         self.window.show()
@@ -57,8 +65,7 @@ class LingThread:
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # LT = LingThread()
-    # LT.show()
-    card = WordCardPage()
-    card.show()
+    LT = LingThread()
+    LT.show()
+
     app.exec()

@@ -22,13 +22,21 @@ class Ui_word_card(object):
     def setupUi(self, word_card):
         if not word_card.objectName():
             word_card.setObjectName(u"word_card")
-        word_card.resize(271, 351)
+        word_card.resize(279, 321)
+        word_card.setStyleSheet(u"#label{\n"
+"	background-color:rgb(37, 250, 82);\n"
+"}")
         self.verticalLayout = QVBoxLayout(word_card)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.label = QLabel(word_card)
         self.label.setObjectName(u"label")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
         self.label.setMinimumSize(QSize(0, 30))
         self.label.setMaximumSize(QSize(16777215, 30))
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
