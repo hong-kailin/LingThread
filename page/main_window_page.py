@@ -1,7 +1,6 @@
 from ui import Ui_main_window
-from .custom_grip import CustomEdgeGrip, CustomCornerGrip
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-                               QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from module.custom_grip import CustomEdgeGrip, CustomCornerGrip
+from PySide6.QtWidgets import (QWidget)
 from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, Signal, QEvent, QTimer
 from PySide6.QtGui import QIcon
 

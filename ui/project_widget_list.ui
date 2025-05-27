@@ -13,15 +13,14 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#project_list, #project_widget_list {
+    background-color: transparent;
+}</string>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QListWidget" name="project_widget_list">
-     <item>
-      <property name="text">
-       <string>55555</string>
-      </property>
-     </item>
-    </widget>
+    <widget class="QListWidget" name="project_widget_list"/>
    </item>
   </layout>
  </widget>

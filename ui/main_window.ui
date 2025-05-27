@@ -27,7 +27,7 @@
 #main_window{
 	background-color:rgb(17, 45, 78);
 }
-#main_page{
+#main_page, #project_list_page{
 	background-color:rgb(37, 47, 82);
 }
 #bottom_line{

@@ -23,10 +23,12 @@ class Ui_project_list(object):
         if not project_list.objectName():
             project_list.setObjectName(u"project_list")
         project_list.resize(400, 300)
+        project_list.setStyleSheet(u"#project_list, #project_widget_list {\n"
+"    background-color: transparent;\n"
+"}")
         self.horizontalLayout = QHBoxLayout(project_list)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.project_widget_list = QListWidget(project_list)
-        QListWidgetItem(self.project_widget_list)
         self.project_widget_list.setObjectName(u"project_widget_list")
 
         self.horizontalLayout.addWidget(self.project_widget_list)
@@ -39,12 +41,5 @@ class Ui_project_list(object):
 
     def retranslateUi(self, project_list):
         project_list.setWindowTitle(QCoreApplication.translate("project_list", u"Form", None))
-
-        __sortingEnabled = self.project_widget_list.isSortingEnabled()
-        self.project_widget_list.setSortingEnabled(False)
-        ___qlistwidgetitem = self.project_widget_list.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("project_list", u"55555", None));
-        self.project_widget_list.setSortingEnabled(__sortingEnabled)
-
     # retranslateUi
 

@@ -47,7 +47,7 @@ class LingThread:
 
         v_layout_5 = QVBoxLayout(self.window.project_list_page)
         v_layout_5.setContentsMargins(0, 0, 0, 0)
-        self.project_widget_list = ProjectWidgetListPage(self.window.main_page)
+        self.project_widget_list = ProjectWidgetListPage(self.window.project_list_page)
         v_layout_5.addWidget(self.project_widget_list)
         self.window.stacked_widget.setCurrentIndex(2)
 

@@ -1,5 +1,4 @@
 from .main_window_page import MainWindowPage
-from .custom_grip import CustomEdgeGrip, CustomCornerGrip
 from .left_box_page import LeftBoxPage
 from .new_dialog_page import NewDialogPage
 from .home_window_page import HomeWindowPage
