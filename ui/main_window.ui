@@ -581,10 +581,10 @@ background-position: left center;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="main_page" native="true">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
+       <widget class="QStackedWidget" name="stacked_widget">
+        <widget class="QWidget" name="main_page"/>
+        <widget class="QWidget" name="edit_page"/>
+        <widget class="QWidget" name="project_list_page"/>
        </widget>
       </item>
       <item>

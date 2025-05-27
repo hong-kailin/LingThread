@@ -5,11 +5,11 @@ from ui import Ui_left_box
 
 
 class LeftBoxPage(QWidget, Ui_left_box):
-    close_left_box_signal = Signal()
+    show_hide_left_box_signal = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
 
     def close_left_box(self):
-        self.close_left_box_signal.emit()
+        self.show_hide_left_box_signal.emit()

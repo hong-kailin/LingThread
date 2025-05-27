@@ -1,7 +1,7 @@
 import sys
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
                   HomeWindowPage, EnglishEditWidgetPage, ContainerWidgetPage,
-                  WordCardPage)
+                  WordCardPage, ProjectWidgetListPage)
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 from PySide6.QtCore import Qt
 
@@ -15,11 +15,11 @@ class LingThread:
         v_layout.setContentsMargins(0, 0, 0, 0)
         left_box = LeftBoxPage()
         v_layout.addWidget(left_box)
-        left_box.close_left_box_signal.connect(self.window.show_hide_left_box)
+        left_box.show_hide_left_box_signal.connect(self.window.show_hide_left_box)
 
         self.window.create_new_english_note_signal.connect(self.create_new_english_note)
 
-        v_layout_2 = QVBoxLayout(self.window.main_page)
+        v_layout_2 = QVBoxLayout(self.window.edit_page)
         v_layout_2.setContentsMargins(0, 0, 0, 0)
         home_page = HomeWindowPage(self.window.main_page)
         v_layout_2.addWidget(home_page)
@@ -44,6 +44,12 @@ class LingThread:
         self.word_card_layout = QVBoxLayout()
         word_card_container_page.contents.setLayout(self.word_card_layout)
         self.word_card_layout.setAlignment(Qt.AlignTop)
+
+        v_layout_5 = QVBoxLayout(self.window.project_list_page)
+        v_layout_5.setContentsMargins(0, 0, 0, 0)
+        self.project_widget_list = ProjectWidgetListPage(self.window.main_page)
+        v_layout_5.addWidget(self.project_widget_list)
+        self.window.stacked_widget.setCurrentIndex(2)
 
     def create_word_card(self, word):
         card = WordCardPage(self.window, word)

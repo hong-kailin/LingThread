@@ -16,7 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+    QSizePolicy, QSpacerItem, QStackedWidget, QVBoxLayout,
+    QWidget)
 import resources_rc
 
 class Ui_main_window(object):
@@ -270,11 +271,19 @@ class Ui_main_window(object):
 
         self.verticalLayout.addWidget(self.top_line)
 
-        self.main_page = QWidget(self.main_area)
+        self.stacked_widget = QStackedWidget(self.main_area)
+        self.stacked_widget.setObjectName(u"stacked_widget")
+        self.main_page = QWidget()
         self.main_page.setObjectName(u"main_page")
-        self.main_page.setStyleSheet(u"")
+        self.stacked_widget.addWidget(self.main_page)
+        self.edit_page = QWidget()
+        self.edit_page.setObjectName(u"edit_page")
+        self.stacked_widget.addWidget(self.edit_page)
+        self.project_list_page = QWidget()
+        self.project_list_page.setObjectName(u"project_list_page")
+        self.stacked_widget.addWidget(self.project_list_page)
 
-        self.verticalLayout.addWidget(self.main_page)
+        self.verticalLayout.addWidget(self.stacked_widget)
 
         self.bottom_line = QWidget(self.main_area)
         self.bottom_line.setObjectName(u"bottom_line")
