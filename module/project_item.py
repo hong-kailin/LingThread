@@ -2,21 +2,33 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel
 from PySide6.QtCore import Qt, QSize, QByteArray, QBuffer
 from PySide6.QtGui import QColor, QPalette, QPixmap
 import json
+import os
 import base64
 
 
 class Project:
-    def __init__(self, name, author, modified_time, image_path):
+    def __init__(self, name, author, modified_time, image_path: str):
         self.name = name
         self.author = author
         self.modified_time = modified_time
         self.image_size = QSize(60, 90)
         self.pixmap = QPixmap(image_path)
         self.pixmap = self.pixmap.scaled(QSize(60, 90),
-                                       Qt.AspectRatioMode.KeepAspectRatio,
-                                       Qt.TransformationMode.SmoothTransformation)
+                                         Qt.AspectRatioMode.KeepAspectRatio,
+                                         Qt.TransformationMode.SmoothTransformation)
+
+    def __int__(self, name, author, modified_time, image: QPixmap):
+        self.name = name
+        self.author = author
+        self.modified_time = modified_time
+        self.image_size = QSize(60, 90)
+        self.pixmap = image
 
     def save(self, path):
+        json_data = {}
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                json_data = json.load(f)
         image = self.pixmap.toImage()
         byte_array = QByteArray()
         buffer = QBuffer(byte_array)
@@ -24,16 +36,17 @@ class Project:
         image.save(buffer, "PNG")
         base64_data = base64.b64encode(byte_array).decode('utf-8')
 
-        data = {
+        info = {
             "name": self.name,
             "author": self.author,
             "modified_time": self.modified_time,
             "image": base64_data
         }
+        json_data.update({self.name: info})
 
         try:
             with open(path, 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
+                json.dump(json_data, f, ensure_ascii=False, indent=2)
         except Exception as e:
             print(f"保存数据失败: {e}")
 

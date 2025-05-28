@@ -1,10 +1,14 @@
 import sys
+import os
 from module import Project
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
                   HomeWindowPage, EnglishEditWidgetPage, ContainerWidgetPage,
                   WordCardPage, ProjectWidgetListPage)
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
+import json
+import base64
 
 
 class LingThread:
@@ -12,6 +16,8 @@ class LingThread:
         self.setup_ui()
         self.project_list = []
         self.card_dict = {}
+        if os.path.exists("./data/project_items.json"):
+            self.load_project_items()
 
     def setup_ui(self):
         self.window = MainWindowPage()
@@ -55,6 +61,22 @@ class LingThread:
         self.project_widget_list = ProjectWidgetListPage(self.window.project_list_page)
         v_layout_5.addWidget(self.project_widget_list)
         self.window.stacked_widget.setCurrentIndex(2)
+
+    def load_project_items(self):
+        with open("./data/project_items.json", 'r') as f:
+            json_data = json.load(f)
+        for key, value in json_data.items():
+            base64_data = value.get("image", "")
+            image_data = base64.b64decode(base64_data)
+
+            pixmap = QPixmap()
+            pixmap.loadFromData(image_data)
+
+            project = Project(value.get("name"),
+                              value.get("author"),
+                              value.get("modified_time"),
+                              pixmap)
+            self.project_widget_list.add_project(project)
 
     def create_word_card(self, word):
         card = WordCardPage(self.window, word)
