@@ -1,4 +1,5 @@
 import sys
+from module import Project
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
                   HomeWindowPage, EnglishEditWidgetPage, ContainerWidgetPage,
                   WordCardPage, ProjectWidgetListPage)
@@ -8,7 +9,11 @@ from PySide6.QtCore import Qt
 
 class LingThread:
     def __init__(self):
+        self.setup_ui()
+        self.project_list = []
         self.card_dict = {}
+
+    def setup_ui(self):
         self.window = MainWindowPage()
 
         v_layout = QVBoxLayout(self.window.left_hide_box)
@@ -17,7 +22,7 @@ class LingThread:
         v_layout.addWidget(left_box)
         left_box.show_hide_left_box_signal.connect(self.window.show_hide_left_box)
 
-        self.window.create_new_english_note_signal.connect(self.create_new_english_note)
+        self.window.create_new_project_signal.connect(self.create_new_project)
 
         v_layout_2 = QVBoxLayout(self.window.edit_page)
         v_layout_2.setContentsMargins(0, 0, 0, 0)
@@ -59,15 +64,16 @@ class LingThread:
     def show(self):
         self.window.show()
 
-    def create_new_english_note(self):
+    def create_new_project(self):
         new_window = NewDialogPage(self.window)
-
-        def teeee(a, b, c, d):
-            print(a, b, c, d)
-
-        new_window.create_new_project_signal.connect(teeee)
+        new_window.create_new_project_signal.connect(self.add_new_project)
         if new_window.exec():
-            print("===")
+            return
+
+    def add_new_project(self, image_path, name, author, time):
+        print(image_path, name, author, time)
+        project = Project(name, author, time, image_path)
+        self.project_widget_list.add_project(project)
 
     def corresponding_word_card_show(self, word):
         if word in self.card_dict:

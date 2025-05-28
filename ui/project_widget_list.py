@@ -28,6 +28,7 @@ class Ui_project_list(object):
 "}")
         self.horizontalLayout = QHBoxLayout(project_list)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.project_widget_list = QListWidget(project_list)
         self.project_widget_list.setObjectName(u"project_widget_list")
 

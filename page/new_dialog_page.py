@@ -22,7 +22,7 @@ class NewDialogPage(QDialog, Ui_new_dialog):
     def set_function(self):
         self.cover_label.mousePressEvent = self.select_image
 
-        self.time_labe_str = "Creat Time: " + datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.time_labe_str = "Create Time: " + datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.time_label.setText(self.time_labe_str)
         self.time_label.setAlignment(Qt.AlignRight | Qt.AlignBottom)
 

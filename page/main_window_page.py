@@ -6,7 +6,7 @@ from PySide6.QtGui import QIcon
 
 
 class MainWindowPage(QWidget, Ui_main_window):
-    create_new_english_note_signal = Signal()
+    create_new_project_signal = Signal()
     show_hide_ai_chat_card_signal = Signal()
     show_hide_word_card_signal = Signal()
     show_hide_sentence_card_signal = Signal()
@@ -102,7 +102,7 @@ class MainWindowPage(QWidget, Ui_main_window):
         self.animation.start()
 
     def create_new_english_note(self):
-        self.create_new_english_note_signal.emit()
+        self.create_new_project_signal.emit()
 
     def show_hide_word_card(self):
         self.show_hide_word_card_signal.emit()
