@@ -48,7 +48,7 @@ class LingThread:
 
         self.english_edit_page.create_word_card_signal.connect(self.create_word_card)
         self.english_edit_page.corresponding_word_card_show_signal.connect(self.corresponding_word_card_show)
-
+        self.english_edit_page.load_word_card_signal.connect(self.load_word_card)
         v_layout_4 = QVBoxLayout(home_page.word_card_widget)
         v_layout_4.setContentsMargins(0, 0, 0, 0)
         word_card_container_page = ContainerWidgetPage(home_page.word_card_widget)
@@ -89,6 +89,15 @@ class LingThread:
         self.word_card_layout.addWidget(card)
         self.card_dict[word] = card
 
+    def load_word_card(self, word):
+        with open("./data/" + "word_cards.json", 'r') as f:
+            data = json.load(f)
+        info = data[word]
+        card = WordCardPage(self.window, word)
+        card.set_info(info)
+        self.word_card_layout.addWidget(card)
+        self.card_dict[word] = card
+
     def show(self):
         self.window.show()
 
@@ -113,11 +122,18 @@ class LingThread:
         self.english_edit_page.load_project_info(self.cur_project_item)
 
     def save_current_project_info(self):
-        name = self.cur_project_item.data(Qt.UserRole)
-        path = os.path.join(self.save_path, name + ".json")
-        result = self.english_edit_page.to_dict()
-        with open(path, 'w', encoding='utf-8') as f:
-            json.dump(result, f, ensure_ascii=False, indent=2)
+        if self.cur_project_item is not None:
+            name = self.cur_project_item.data(Qt.UserRole)
+            path = os.path.join(self.save_path, name + ".json")
+            result = self.english_edit_page.to_dict()
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(result, f, ensure_ascii=False, indent=2)
+            word_cards_json = {}
+            for word, info in self.card_dict.items():
+                word_cards_json[word] = info.to_dict()
+            path = os.path.join(self.save_path, "word_cards.json")
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(word_cards_json, f, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":

@@ -100,3 +100,20 @@ class WordCardPage(QFrame, Ui_word_card):
             self.pronunciation_edit.hide()
             self.mean_remember_edit.hide()
             self.pronunciation_remember_edit.hide()
+
+    def to_dict(self):
+        return {
+            "word": self.word,
+            "mean": self.mean_edit.toPlainText(),
+            "mean_remember": self.mean_remember_edit.toPlainText(),
+            "pronunciation": self.pronunciation_edit.toPlainText(),
+            "pronunciation_remember": self.pronunciation_remember_edit.toPlainText(),
+            "other": self.other_edit.toPlainText()
+        }
+
+    def set_info(self, info):
+        self.other_edit.setPlainText(info.get("other", ""))
+        self.mean_edit.setPlainText(info.get("mean", ""))
+        self.pronunciation_edit.setPlainText(info.get("pronunciation", ""))
+        self.mean_remember_edit.setPlainText(info.get("mean_remember", ""))
+        self.pronunciation_remember_edit.setPlainText(info.get("pronunciation_remember", ""))

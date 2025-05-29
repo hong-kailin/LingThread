@@ -1,3 +1,5 @@
+import os.path
+
 from PySide6.QtCore import (Qt, QPropertyAnimation, Signal,
                             QEasingCurve, Signal, QEvent, QTimer)
 from PySide6.QtGui import QCursor, QTextCursor, QTextCharFormat, QColor
@@ -9,6 +11,7 @@ import json
 class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
     create_word_card_signal = Signal(str)
     corresponding_word_card_show_signal = Signal(str)
+    load_word_card_signal = Signal(str)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -84,7 +87,7 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
         for key, highlight in self.highlight_dict.items():
             highlight_start = highlight.cursor.selectionStart()
             highlight_end = highlight.cursor.selectionEnd()
-            highlight_list.append([highlight_start, highlight_end])
+            highlight_list.append([key, highlight_start, highlight_end])
 
         return {
             "content": content,
@@ -93,31 +96,21 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
 
     def load_project_info(self, item):
         name = item.data(Qt.UserRole)
-        with open("./data/" + name + ".json", 'r') as f:
-            data = json.load(f)
+        path = "./data/" + name + ".json"
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                data = json.load(f)
 
-        self.english_edit.setPlainText(data.get("content", ""))
+            self.english_edit.setPlainText(data.get("content", ""))
 
-        for highlight in data.get("highlight_list", []):
-            # word = card_data["word"]
-            # definition = card_data["definition"]
-            # example = card_data["example"]
-            #
-            # # 创建卡片
-            # elided_word = self.elide_text(word, max_length=25)
-            # card = VocabularyCard(self, elided_word, definition, example)
-            # card.word = word
-            #
-            # self.card_layout.addWidget(card)
-            # self.cards.append(card)
+            for highlight in data.get("highlight_list", []):
+                word = highlight[0]
+                self.load_word_card_signal.emit(word)
+                cursor = self.english_edit.textCursor()
+                start = highlight[1]
+                end = highlight[2]
 
-            cursor = self.english_edit.textCursor()
-            start = highlight[0]
-            end = highlight[1]
-
-            if 0 <= start <= end <= len(self.english_edit.toPlainText()):
-                cursor.setPosition(start)
-                cursor.setPosition(end, QTextCursor.KeepAnchor)
-                highlight = self.add_highlight(cursor)
-
-
+                if 0 <= start <= end <= len(self.english_edit.toPlainText()):
+                    cursor.setPosition(start)
+                    cursor.setPosition(end, QTextCursor.KeepAnchor)
+                    highlight = self.add_highlight(cursor)
