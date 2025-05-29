@@ -3,6 +3,7 @@ from PySide6.QtCore import (Qt, QPropertyAnimation, Signal,
 from PySide6.QtGui import QCursor, QTextCursor, QTextCharFormat, QColor
 from PySide6.QtWidgets import QWidget, QMenu, QTextEdit
 from ui import Ui_english_edit_widget
+import json
 
 
 class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
@@ -76,3 +77,47 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
                 selected_text = cursor.selectedText()
                 self.corresponding_word_card_show_signal.emit(selected_text)
         return super().eventFilter(obj, event)
+
+    def to_dict(self):
+        highlight_list = []
+        content = self.english_edit.toPlainText()
+        for key, highlight in self.highlight_dict.items():
+            highlight_start = highlight.cursor.selectionStart()
+            highlight_end = highlight.cursor.selectionEnd()
+            highlight_list.append([highlight_start, highlight_end])
+
+        return {
+            "content": content,
+            "highlight_list": highlight_list,
+        }
+
+    def load_project_info(self, item):
+        name = item.data(Qt.UserRole)
+        with open("./data/" + name + ".json", 'r') as f:
+            data = json.load(f)
+
+        self.english_edit.setPlainText(data.get("content", ""))
+
+        for highlight in data.get("highlight_list", []):
+            # word = card_data["word"]
+            # definition = card_data["definition"]
+            # example = card_data["example"]
+            #
+            # # 创建卡片
+            # elided_word = self.elide_text(word, max_length=25)
+            # card = VocabularyCard(self, elided_word, definition, example)
+            # card.word = word
+            #
+            # self.card_layout.addWidget(card)
+            # self.cards.append(card)
+
+            cursor = self.english_edit.textCursor()
+            start = highlight[0]
+            end = highlight[1]
+
+            if 0 <= start <= end <= len(self.english_edit.toPlainText()):
+                cursor.setPosition(start)
+                cursor.setPosition(end, QTextCursor.KeepAnchor)
+                highlight = self.add_highlight(cursor)
+
+

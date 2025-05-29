@@ -110,20 +110,14 @@ class LingThread:
     def open_item_project(self, item):
         self.cur_project_item = item
         self.window.stacked_widget.setCurrentIndex(1)
+        self.english_edit_page.load_project_info(self.cur_project_item)
 
     def save_current_project_info(self):
         name = self.cur_project_item.data(Qt.UserRole)
         path = os.path.join(self.save_path, name + ".json")
-        if os.path.exists(path):
-            with open(path, 'r') as f:
-                json_data = json.load(f)
-        else:
-            json_data = {
-                "content": self.english_edit_page.english_edit.toPlainText(),
-                "hightlights": ["a", "b"]
-            }
-            with open(path, 'w', encoding='utf-8') as f:
-                json.dump(json_data, f, ensure_ascii=False, indent=2)
+        result = self.english_edit_page.to_dict()
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(result, f, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":
