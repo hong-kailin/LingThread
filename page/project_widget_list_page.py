@@ -2,14 +2,17 @@ from ui import Ui_project_list
 from module import ProjectListItem, ProjectGridItem, Project
 from PySide6.QtWidgets import (QFrame, QListWidget, QVBoxLayout, QHBoxLayout,
                                QWidget, QLabel, QListWidgetItem)
-from PySide6.QtCore import QEvent, QSize
+from PySide6.QtCore import QEvent, QSize, Signal, Qt
 
 
 class ProjectWidgetListPage(QWidget, Ui_project_list):
+    item_double_clicked_signal = Signal(QListWidgetItem)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
         self.set_list_mode()
+        self.project_widget_list.itemDoubleClicked.connect(self.on_item_double_clicked)
 
     def set_list_mode(self):
         self.project_widget_list.setViewMode(QListWidget.ListMode)
@@ -62,7 +65,11 @@ class ProjectWidgetListPage(QWidget, Ui_project_list):
     def add_project(self, project):
         item = QListWidgetItem()
         item.setSizeHint(QSize(0, 90))
+        item.setData(Qt.UserRole, project.name)
         self.project_widget_list.addItem(item)
 
         widget = ProjectListItem(project)
         self.project_widget_list.setItemWidget(item, widget)
+
+    def on_item_double_clicked(self, item):
+        self.item_double_clicked_signal.emit(item)

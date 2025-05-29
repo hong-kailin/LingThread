@@ -6,7 +6,7 @@ from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
                   WordCardPage, ProjectWidgetListPage)
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QAction, QShortcut, QKeySequence
 import json
 import base64
 
@@ -15,8 +15,10 @@ class LingThread:
     def __init__(self):
         self.setup_ui()
         self.project_list = []
+        self.cur_project_item = None
         self.card_dict = {}
-        if os.path.exists("./data/project_items.json"):
+        self.save_path = "./data"
+        if os.path.exists(os.path.join(self.save_path, "project_items.json")):
             self.load_project_items()
 
     def setup_ui(self):
@@ -41,11 +43,11 @@ class LingThread:
 
         v_layout_3 = QVBoxLayout(home_page.edit_widget)
         v_layout_3.setContentsMargins(0, 0, 0, 0)
-        english_edit_page = EnglishEditWidgetPage(home_page.edit_widget)
-        v_layout_3.addWidget(english_edit_page)
+        self.english_edit_page = EnglishEditWidgetPage(home_page.edit_widget)
+        v_layout_3.addWidget(self.english_edit_page)
 
-        english_edit_page.create_word_card_signal.connect(self.create_word_card)
-        english_edit_page.corresponding_word_card_show_signal.connect(self.corresponding_word_card_show)
+        self.english_edit_page.create_word_card_signal.connect(self.create_word_card)
+        self.english_edit_page.corresponding_word_card_show_signal.connect(self.corresponding_word_card_show)
 
         v_layout_4 = QVBoxLayout(home_page.word_card_widget)
         v_layout_4.setContentsMargins(0, 0, 0, 0)
@@ -61,6 +63,10 @@ class LingThread:
         self.project_widget_list = ProjectWidgetListPage(self.window.project_list_page)
         v_layout_5.addWidget(self.project_widget_list)
         self.window.stacked_widget.setCurrentIndex(2)
+        self.project_widget_list.item_double_clicked_signal.connect(self.open_item_project)
+
+        shortcut = QShortcut(QKeySequence("Ctrl+S"), self.window)
+        shortcut.activated.connect(self.save_current_project_info)
 
     def load_project_items(self):
         with open("./data/project_items.json", 'r') as f:
@@ -100,6 +106,24 @@ class LingThread:
     def corresponding_word_card_show(self, word):
         if word in self.card_dict:
             self.card_dict[word].expand_card()
+
+    def open_item_project(self, item):
+        self.cur_project_item = item
+        self.window.stacked_widget.setCurrentIndex(1)
+
+    def save_current_project_info(self):
+        name = self.cur_project_item.data(Qt.UserRole)
+        path = os.path.join(self.save_path, name + ".json")
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                json_data = json.load(f)
+        else:
+            json_data = {
+                "content": self.english_edit_page.english_edit.toPlainText(),
+                "hightlights": ["a", "b"]
+            }
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(json_data, f, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":
