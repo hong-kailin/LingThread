@@ -18,6 +18,7 @@ class LingThread:
         self.cur_project_item = None
         self.card_dict = {}
         self.save_path = "./data"
+        self.cur_word = None
         if os.path.exists(os.path.join(self.save_path, "project_items.json")):
             self.load_project_items()
 
@@ -85,6 +86,7 @@ class LingThread:
             self.project_widget_list.add_project(project)
 
     def create_word_card(self, word):
+        self.cur_word = word
         card = WordCardPage(self.window, word)
         self.word_card_layout.addWidget(card)
         self.card_dict[word] = card
@@ -113,8 +115,11 @@ class LingThread:
         self.project_widget_list.add_project(project)
 
     def corresponding_word_card_show(self, word):
+        if self.cur_word is not None:
+            self.card_dict[self.cur_word].collapse_card()
         if word in self.card_dict:
             self.card_dict[word].expand_card()
+            self.cur_word = word
 
     def open_item_project(self, item):
         self.cur_project_item = item
