@@ -52,12 +52,8 @@ class LingThread:
         self.english_edit_page.load_word_card_signal.connect(self.load_word_card)
         v_layout_4 = QVBoxLayout(home_page.word_card_widget)
         v_layout_4.setContentsMargins(0, 0, 0, 0)
-        word_card_container_page = ContainerWidgetPage(home_page.word_card_widget)
-        v_layout_4.addWidget(word_card_container_page)
-
-        self.word_card_layout = QVBoxLayout()
-        word_card_container_page.contents.setLayout(self.word_card_layout)
-        self.word_card_layout.setAlignment(Qt.AlignTop)
+        self.word_card_container_page = ContainerWidgetPage(home_page.word_card_widget)
+        v_layout_4.addWidget(self.word_card_container_page)
 
         v_layout_5 = QVBoxLayout(self.window.project_list_page)
         v_layout_5.setContentsMargins(0, 0, 0, 0)
@@ -88,7 +84,8 @@ class LingThread:
     def create_word_card(self, word):
         self.cur_word = word
         card = WordCardPage(self.window, word)
-        self.word_card_layout.addWidget(card)
+        insert_position = self.word_card_container_page.container_layout.count() - 1
+        self.word_card_container_page.container_layout.insertWidget(insert_position, card)
         self.card_dict[word] = card
 
     def load_word_card(self, word):
@@ -97,7 +94,8 @@ class LingThread:
         info = data[word]
         card = WordCardPage(self.window, word)
         card.set_info(info)
-        self.word_card_layout.addWidget(card)
+        insert_position = self.word_card_container_page.container_layout.count() - 1
+        self.word_card_container_page.container_layout.insertWidget(insert_position, card)
         self.card_dict[word] = card
 
     def show(self):
@@ -120,6 +118,7 @@ class LingThread:
         if word in self.card_dict:
             self.card_dict[word].expand_card()
             self.cur_word = word
+            self.word_card_container_page.scroll_to_card(self.card_dict[word])
 
     def open_item_project(self, item):
         self.cur_project_item = item

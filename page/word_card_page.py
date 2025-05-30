@@ -91,6 +91,11 @@ class WordCardPage(QFrame, Ui_word_card):
             self.pronunciation_edit.show()
             self.mean_remember_edit.show()
             self.pronunciation_remember_edit.show()
+            self.other_height_change()
+            self.mean_height_change()
+            self.mean_remember_height_change()
+            self.pronunciation_height_change()
+            self.pronunciation_remember_height_change()
 
     def collapse_card(self):
         if self.is_expanded and not self.is_editing:
@@ -117,3 +122,4 @@ class WordCardPage(QFrame, Ui_word_card):
         self.pronunciation_edit.setPlainText(info.get("pronunciation", ""))
         self.mean_remember_edit.setPlainText(info.get("mean_remember", ""))
         self.pronunciation_remember_edit.setPlainText(info.get("pronunciation_remember", ""))
+

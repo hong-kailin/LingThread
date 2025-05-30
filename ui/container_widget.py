@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QHBoxLayout,
-    QScrollArea, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QScrollArea,
+    QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_container(object):
     def setupUi(self, container):
@@ -26,13 +26,13 @@ class Ui_container(object):
         container.setStyleSheet(u"QScrollArea {\n"
 "    background-color: transparent;\n"
 "}\n"
-"#contents{\n"
+"#contents, #transparent_space{\n"
 "    background-color: transparent;\n"
 "}")
-        self.horizontalLayout = QHBoxLayout(container)
-        self.horizontalLayout.setSpacing(0)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2 = QVBoxLayout(container)
+        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.scrollArea = QScrollArea(container)
         self.scrollArea.setObjectName(u"scrollArea")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
@@ -47,9 +47,19 @@ class Ui_container(object):
         self.contents = QWidget()
         self.contents.setObjectName(u"contents")
         self.contents.setGeometry(QRect(0, 0, 211, 741))
+        self.container_layout = QVBoxLayout(self.contents)
+        self.container_layout.setSpacing(0)
+        self.container_layout.setObjectName(u"container_layout")
+        self.container_layout.setContentsMargins(0, 0, 0, 0)
+        self.transparent_space = QWidget(self.contents)
+        self.transparent_space.setObjectName(u"transparent_space")
+        self.transparent_space.setMinimumSize(QSize(0, 500))
+
+        self.container_layout.addWidget(self.transparent_space)
+
         self.scrollArea.setWidget(self.contents)
 
-        self.horizontalLayout.addWidget(self.scrollArea)
+        self.verticalLayout_2.addWidget(self.scrollArea)
 
 
         self.retranslateUi(container)

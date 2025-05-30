@@ -145,6 +145,9 @@ class VocabularyCard(QFrame):
             self.is_expanded = True
             self.content.show()
             self.setFixedHeight(260)
+            # 调用父窗口的方法滚动到该卡片
+            # if self.parent:
+            #     self.parent.scroll_to_card(self)
 
     def collapse_card(self):
         if self.is_expanded and not self.is_editing:
@@ -217,13 +220,24 @@ class MainWindow(QMainWindow):
         if obj == self.text_edit.viewport() and event.type() == QEvent.MouseMove:
             pos = event.pos()
             cursor = self.text_edit.cursorForPosition(pos)
+            current_card = None
+
+            # 检查当前鼠标位置是否在某个高亮单词上
             for card in self.cards:
-                if not card.is_editing:
+                if card.highlight:
                     highlight = card.highlight.cursor
                     if highlight.selectionStart() <= cursor.position() <= highlight.selectionEnd():
+                        # 如果找到匹配的卡片，展开它并标记为当前卡片
                         card.expand_card()
-                    elif not card.underMouse():
+                        current_card = card
+                    elif not card.underMouse() and not card.is_editing:
+                        # 其他卡片折叠
                         card.collapse_card()
+
+            # 如果找到了当前卡片，滚动到该卡片
+            if current_card:
+                self.scroll_to_card(current_card)
+
         return super().eventFilter(obj, event)
 
     def show_text_menu(self, pos):
@@ -250,6 +264,7 @@ class MainWindow(QMainWindow):
         card = VocabularyCard(self, elided_word)
         card.word = selected_text  # 保存完整单词
 
+        # 将新卡片添加到布局
         self.card_layout.addWidget(card)
         self.cards.append(card)
 
@@ -292,6 +307,17 @@ class MainWindow(QMainWindow):
             self.cards.remove(card)
             card.deleteLater()
 
+    def scroll_to_card(self, card):
+        """滚动到指定卡片，使其显示在滚动区域的顶部"""
+        if card and card.isVisible():
+            # 获取卡片在布局中的位置
+            card_rect = card.geometry()
+            # 计算需要滚动的距离
+            scroll_pos = card_rect.top() - 5  # 减去一些边距
+
+            # 设置滚动条位置
+            self.card_scroll.verticalScrollBar().setValue(scroll_pos)
+
     def closeEvent(self, event):
         """窗口关闭时保存数据"""
         self.save_data()
@@ -333,6 +359,7 @@ class MainWindow(QMainWindow):
                 card = VocabularyCard(self, elided_word, definition, example)
                 card.word = word
 
+                # 将卡片添加到布局
                 self.card_layout.addWidget(card)
                 self.cards.append(card)
 
