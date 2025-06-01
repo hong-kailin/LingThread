@@ -27,7 +27,7 @@ class Project:
     def save(self, path):
         json_data = {}
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 json_data = json.load(f)
         image = self.pixmap.toImage()
         byte_array = QByteArray()

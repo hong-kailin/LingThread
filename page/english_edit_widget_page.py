@@ -1,11 +1,51 @@
 import os.path
-
+from striprtf.striprtf import rtf_to_text
 from PySide6.QtCore import (Qt, QPropertyAnimation, Signal,
                             QEasingCurve, Signal, QEvent, QTimer)
 from PySide6.QtGui import QCursor, QTextCursor, QTextCharFormat, QColor
-from PySide6.QtWidgets import QWidget, QMenu, QTextEdit
+from PySide6.QtWidgets import QWidget, QMenu, QTextEdit, QFileDialog
 from ui import Ui_english_edit_widget
 import json
+
+
+def split_text_by_line(text, max_length=6000):
+    """
+    按换行符分割文本，并确保每段不超过指定长度
+
+    参数:
+    text (str): 需要分割的原始文本
+    max_length (int): 每段的最大字符数，默认为1500
+
+    返回:
+    list: 分割后的文本段落列表
+    """
+    if not text:
+        return []
+
+    paragraphs = []
+    current_paragraph = ""
+
+    # 按行分割文本
+    lines = text.split('\n')
+
+    for line in lines:
+        # 如果添加当前行后会超过最大长度，则将当前段落添加到结果中并开始新段落
+        if len(current_paragraph) + len(line) + 1 > max_length:  # +1 是为换行符
+            if current_paragraph:  # 避免添加空段落
+                paragraphs.append(current_paragraph)
+            current_paragraph = line
+        else:
+            # 否则将当前行添加到当前段落，并添加换行符
+            if current_paragraph:
+                current_paragraph += '\n' + line
+            else:
+                current_paragraph = line  # 处理第一个段落
+
+    # 添加最后一个段落
+    if current_paragraph:
+        paragraphs.append(current_paragraph)
+
+    return paragraphs
 
 
 class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
@@ -83,34 +123,52 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
 
     def to_dict(self):
         highlight_list = []
-        content = self.english_edit.toPlainText()
+        page_index = 0
         for key, highlight in self.highlight_dict.items():
             highlight_start = highlight.cursor.selectionStart()
             highlight_end = highlight.cursor.selectionEnd()
             highlight_list.append([key, highlight_start, highlight_end])
 
         return {
-            "content": content,
+            "page_index": page_index,
             "highlight_list": highlight_list,
         }
 
     def load_project_info(self, item):
         name = item.data(Qt.UserRole)
         path = "./data/" + name + ".json"
-        if os.path.exists(path):
-            with open(path, 'r') as f:
-                data = json.load(f)
+        if not os.path.exists(path):
+            self.load_rtf_file(path)
 
-            self.english_edit.setPlainText(data.get("content", ""))
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        self.english_edit.setPlainText(data[0])  # todo: data[0]
 
-            for highlight in data.get("highlight_list", []):
-                word = highlight[0]
-                self.load_word_card_signal.emit(word)
-                cursor = self.english_edit.textCursor()
-                start = highlight[1]
-                end = highlight[2]
+        path = "./data/" + name + "_highlight.json"
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        for highlight in data.get("highlight_list", []):
+            word = highlight[0]
+            self.load_word_card_signal.emit(word)
+            cursor = self.english_edit.textCursor()
+            start = highlight[1]
+            end = highlight[2]
 
-                if 0 <= start <= end <= len(self.english_edit.toPlainText()):
-                    cursor.setPosition(start)
-                    cursor.setPosition(end, QTextCursor.KeepAnchor)
-                    highlight = self.add_highlight(cursor)
+            if 0 <= start <= end <= len(self.english_edit.toPlainText()):
+                cursor.setPosition(start)
+                cursor.setPosition(end, QTextCursor.KeepAnchor)
+                highlight = self.add_highlight(cursor)
+
+    def load_rtf_file(self, save_path):
+        file_path, _ = QFileDialog.getOpenFileName(
+            self, "选择RTF文件", "", "RTF Files (*.rtf);;All Files (*)"
+        )
+        with open(file_path) as infile:
+            content = infile.read()
+            text = rtf_to_text(content)
+
+        long_text = text.replace('‘', '\'').replace('’', '\'')
+        segments = split_text_by_line(long_text, max_length=6000)
+
+        with open(save_path, 'w', encoding='utf-8') as f:
+            json.dump(segments, f, ensure_ascii=False, indent=2)

@@ -4,11 +4,12 @@ from module import Project
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
                   HomeWindowPage, EnglishEditWidgetPage, ContainerWidgetPage,
                   WordCardPage, ProjectWidgetListPage)
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QFileDialog
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap, QAction, QShortcut, QKeySequence
 import json
 import base64
+from striprtf.striprtf import rtf_to_text
 
 
 class LingThread:
@@ -66,7 +67,7 @@ class LingThread:
         shortcut.activated.connect(self.save_current_project_info)
 
     def load_project_items(self):
-        with open("./data/project_items.json", 'r') as f:
+        with open("./data/project_items.json", 'r', encoding='utf-8') as f:
             json_data = json.load(f)
         for key, value in json_data.items():
             base64_data = value.get("image", "")
@@ -128,10 +129,11 @@ class LingThread:
     def save_current_project_info(self):
         if self.cur_project_item is not None:
             name = self.cur_project_item.data(Qt.UserRole)
-            path = os.path.join(self.save_path, name + ".json")
+            path = os.path.join(self.save_path, name + "_highlight.json")
             result = self.english_edit_page.to_dict()
             with open(path, 'w', encoding='utf-8') as f:
                 json.dump(result, f, ensure_ascii=False, indent=2)
+
             word_cards_json = {}
             for word, info in self.card_dict.items():
                 word_cards_json[word] = info.to_dict()
