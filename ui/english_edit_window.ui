@@ -129,9 +129,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>prev_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>english_edit_widget</receiver>
+   <slot>prev_page()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>641</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>114</x>
+     <y>708</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>next_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>english_edit_widget</receiver>
+   <slot>next_page()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>631</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>744</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>show_text_menu()</slot>
   <slot>load_rtf_file()</slot>
+  <slot>prev_page()</slot>
+  <slot>next_page()</slot>
  </slots>
 </ui>

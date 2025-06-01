@@ -56,6 +56,9 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+        self.current_page = 1
+        self.total_pages = 0
+        self.text_data = []
         self.highlight_dict = {}
         self.english_edit.setContextMenuPolicy(Qt.CustomContextMenu)
         self.english_edit.viewport().installEventFilter(self)
@@ -138,11 +141,11 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
         name = item.data(Qt.UserRole)
         path = "./data/" + name + ".json"
         if not os.path.exists(path):
-            self.load_rtf_file(path)
+            self.load_rtf_file(path)  #todo:
 
         with open(path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        self.english_edit.setPlainText(data[0])  # todo: data[0]
+            self.text_data = json.load(f)
+        self.english_edit.setPlainText(self.text_data[0])  # todo: data[0]
 
         path = "./data/" + name + "_highlight.json"
         with open(path, 'r', encoding='utf-8') as f:
@@ -169,6 +172,25 @@ class EnglishEditWidgetPage(QWidget, Ui_english_edit_widget):
 
         long_text = text.replace('‘', '\'').replace('’', '\'')
         segments = split_text_by_line(long_text, max_length=6000)
+        self.total_pages = len(segments)
 
         with open(save_path, 'w', encoding='utf-8') as f:
             json.dump(segments, f, ensure_ascii=False, indent=2)
+
+    def prev_page(self):
+        if self.current_page > 1:
+            self.current_page -= 1
+            self.update_display()
+
+    def next_page(self):
+        if self.current_page < self.total_pages:
+            self.current_page += 1
+            self.update_display()
+
+    def update_display(self):
+        self.english_edit.setText(self.text_data[self.current_page - 1])
+        # self.page_label.setText(f"第 {self.current_page} 页，共 {self.total_pages} 页")
+        self.prev_btn.setEnabled(self.current_page > 1)
+        self.next_btn.setEnabled(self.current_page < self.total_pages)
+        # self.page_input.clear()
+

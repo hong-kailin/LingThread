@@ -77,18 +77,14 @@ class Ui_english_edit_widget(object):
 
         self.horizontalLayout.addWidget(self.label_2)
 
-        self.load_rtf_btn = QPushButton(self.widget)
-        self.load_rtf_btn.setObjectName(u"load_rtf_btn")
-
-        self.horizontalLayout.addWidget(self.load_rtf_btn)
-
 
         self.verticalLayout.addWidget(self.widget)
 
 
         self.retranslateUi(english_edit_widget)
         self.english_edit.customContextMenuRequested.connect(english_edit_widget.show_text_menu)
-        self.load_rtf_btn.clicked.connect(english_edit_widget.load_rtf_file)
+        self.prev_btn.clicked.connect(english_edit_widget.prev_page)
+        self.next_btn.clicked.connect(english_edit_widget.next_page)
 
         QMetaObject.connectSlotsByName(english_edit_widget)
     # setupUi
@@ -99,6 +95,5 @@ class Ui_english_edit_widget(object):
         self.next_btn.setText(QCoreApplication.translate("english_edit_widget", u"\u4e0b\u4e00\u9875", None))
         self.label.setText(QCoreApplication.translate("english_edit_widget", u"\u8df3\u8f6c\u5230\u7b2c", None))
         self.label_2.setText(QCoreApplication.translate("english_edit_widget", u"\u9875", None))
-        self.load_rtf_btn.setText(QCoreApplication.translate("english_edit_widget", u"\u5bfc\u5165RTF\u6587\u4ef6", None))
     # retranslateUi
 
