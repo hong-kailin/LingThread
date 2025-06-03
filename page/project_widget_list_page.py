@@ -96,6 +96,10 @@ class ProjectWidgetListPage(QWidget, Ui_project_list):
         self.project_widget_list.setItemWidget(line_item, line_widget)
 
     def add_new_project(self, project):
+        self.add_existent_project(project)
+        project.save_new_project_info()
+
+    def add_existent_project(self, project):
         item = QListWidgetItem()
         item.setSizeHint(QSize(0, 90))
         item.setData(Qt.UserRole, project.name)
@@ -103,7 +107,6 @@ class ProjectWidgetListPage(QWidget, Ui_project_list):
 
         widget = ProjectListItem(project)
         self.project_widget_list.setItemWidget(item, widget)
-        project.save_new_project_info()
 
     def on_item_double_clicked(self, item):
         self.item_double_clicked_signal.emit(item)
