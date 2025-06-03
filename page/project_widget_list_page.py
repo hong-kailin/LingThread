@@ -102,7 +102,7 @@ class ProjectWidgetListPage(QWidget, Ui_project_list):
     def add_existent_project(self, project):
         item = QListWidgetItem()
         item.setSizeHint(QSize(0, 90))
-        item.setData(Qt.UserRole, project.name)
+        item.setData(Qt.UserRole, project)
         self.project_widget_list.addItem(item)
 
         widget = ProjectListItem(project)

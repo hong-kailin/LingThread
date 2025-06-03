@@ -2,4 +2,5 @@ from .main_window_page import MainWindowPage
 from .left_box_page import LeftBoxPage
 from .new_dialog_page import NewDialogPage
 from .project_widget_list_page import ProjectWidgetListPage
-
+from .contents_widget_page import ContentsWidgetPage
+from .main_widget_page import MainWidgetPage

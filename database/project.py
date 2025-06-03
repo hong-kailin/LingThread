@@ -50,14 +50,17 @@ class Project:
         self.contents = []
         self.highlight_words_per_content = []
 
-    def load_contents(self):
+    def load_contents(self, parent):
         json_path = os.path.join(self.save_path, self.name, "contents.json")
+        highlight_path = os.path.join(self.save_path, self.name, "highlights.json")
         if os.path.exists(json_path):
-            with open(json_path) as infile:
+            with open(json_path,  encoding='utf-8') as infile:
                 self.contents = json.load(infile)
+            with open(highlight_path,  encoding='utf-8') as infile:
+                self.highlight_words_per_content = json.load(infile)
         else:
             file_path, _ = QFileDialog.getOpenFileName(
-                self, "选择RTF文件", "", "RTF Files (*.rtf);;All Files (*)"
+                parent, "选择RTF文件", "", "RTF Files (*.rtf);;All Files (*)"
             )
             with open(file_path) as infile:
                 content = infile.read()
@@ -66,9 +69,13 @@ class Project:
             long_text = text.replace('‘', '\'').replace('’', '\'')
             self.contents = split_text_by_line(long_text, max_length=6000)
             self.total_pages = len(self.contents)
-
+            self.highlight_words_per_content = [{} for _ in range(self.total_pages)]
+            if not os.path.exists(os.path.dirname(json_path)):
+                os.makedirs(os.path.dirname(json_path))
             with open(json_path, 'w', encoding='utf-8') as f:
                 json.dump(self.contents, f, ensure_ascii=False, indent=2)
+            with open(highlight_path, 'w', encoding='utf-8') as f:
+                json.dump(self.highlight_words_per_content, f, ensure_ascii=False, indent=2)
 
     def save_new_project_info(self):
         json_data = {}

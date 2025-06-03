@@ -583,7 +583,7 @@ background-position: left center;
       <item>
        <widget class="QStackedWidget" name="stacked_widget">
         <widget class="QWidget" name="main_page"/>
-        <widget class="QWidget" name="edit_page"/>
+        <widget class="QWidget" name="contents_page"/>
         <widget class="QWidget" name="project_list_page"/>
        </widget>
       </item>
