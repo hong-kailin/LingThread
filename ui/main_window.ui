@@ -764,22 +764,6 @@ background-position: left center;
    </hints>
   </connection>
   <connection>
-   <sender>new_btn</sender>
-   <signal>clicked()</signal>
-   <receiver>main_window</receiver>
-   <slot>create_new_english_note()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>31</x>
-     <y>160</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-17</x>
-     <y>163</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>word_card_btn</sender>
    <signal>clicked()</signal>
    <receiver>main_window</receiver>
@@ -827,6 +811,22 @@ background-position: left center;
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>new_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>main_window</receiver>
+   <slot>create_new_project()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>34</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-24</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>show_hide_btn_name()</slot>
@@ -836,5 +836,6 @@ background-position: left center;
   <slot>show_hide_word_card()</slot>
   <slot>show_hide_sentence_card()</slot>
   <slot>show_hide_ai_chat_card()</slot>
+  <slot>create_new_project()</slot>
  </slots>
 </ui>

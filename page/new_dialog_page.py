@@ -41,7 +41,7 @@ class NewDialogPage(QDialog, Ui_new_dialog):
         self.name = self.name_edit.text()
         self.author = self.author_edit.text()
         if self.image_path and self.name and self.author:
-            self.create_new_project_signal.emit(self.image_path, self.name, self.author, self.time_labe_str)
+            self.create_new_project_signal.emit(self.image_path, self.name, self.author, self.time_label_str)
             self.accept()
         else:
             QMessageBox.warning(self, "警告", "名字不能为空！")

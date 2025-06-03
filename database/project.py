@@ -34,7 +34,7 @@ def split_text_by_line(text, max_length=6000):
 
 
 class Project:
-    def __init__(self, name, author, modified_time, image, path):
+    def __init__(self, name, author, modified_time, image, save_path):
         self.name = name
         self.author = author
         self.modified_time = modified_time
@@ -46,13 +46,12 @@ class Project:
                                              Qt.TransformationMode.SmoothTransformation)
         else:
             self.pixmap = image
-
+        self.save_path = save_path
         self.contents = []
         self.highlight_words_per_content = []
-        self.load_contents(path)
 
-    def load_contents(self, path):
-        json_path = os.path.join(path, self.name, "contents.json")
+    def load_contents(self):
+        json_path = os.path.join(self.save_path, self.name, "contents.json")
         if os.path.exists(json_path):
             with open(json_path) as infile:
                 self.contents = json.load(infile)
@@ -70,3 +69,29 @@ class Project:
 
             with open(json_path, 'w', encoding='utf-8') as f:
                 json.dump(self.contents, f, ensure_ascii=False, indent=2)
+
+    def save_new_project_info(self):
+        json_data = {}
+        project_info_json_path = os.path.join(self.save_path, "project_info.json")
+        if os.path.exists(project_info_json_path):
+            with open(project_info_json_path, 'r', encoding='utf-8') as f:
+                json_data = json.load(f)
+        image = self.pixmap.toImage()
+        byte_array = QByteArray()
+        buffer = QBuffer(byte_array)
+        buffer.open(QBuffer.OpenModeFlag.WriteOnly)
+        image.save(buffer, "PNG")
+        base64_data = base64.b64encode(byte_array).decode('utf-8')
+
+        info = {
+            "name": self.name,
+            "author": self.author,
+            "modified_time": self.modified_time,
+            "image": base64_data
+        }
+        json_data.update({self.name: info})
+        try:
+            with open(project_info_json_path, 'w', encoding='utf-8') as f:
+                json.dump(json_data, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            print(f"保存数据失败: {e}")

@@ -332,10 +332,10 @@ class Ui_main_window(object):
         self.close_app_btn.clicked.connect(main_window.close)
         self.minimize_btn.clicked.connect(main_window.showMinimized)
         self.about_btn.clicked.connect(main_window.show_hide_left_box)
-        self.new_btn.clicked.connect(main_window.create_new_english_note)
         self.word_card_btn.clicked.connect(main_window.show_hide_word_card)
         self.sentence_card_btn.clicked.connect(main_window.show_hide_sentence_card)
         self.ai_btn.clicked.connect(main_window.show_hide_ai_chat_card)
+        self.new_btn.clicked.connect(main_window.create_new_project)
 
         QMetaObject.connectSlotsByName(main_window)
     # setupUi

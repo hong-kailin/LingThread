@@ -76,6 +76,8 @@ class MainWindowPage(QWidget, Ui_main_window):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        # self.setAttribute(Qt.WA_TranslucentBackground)
         self.setupUi(self)
 
         self.left_grip = CustomEdgeGrip(self, Qt.LeftEdge)
@@ -162,7 +164,7 @@ class MainWindowPage(QWidget, Ui_main_window):
         self.animation.setEasingCurve(QEasingCurve.InOutQuart)
         self.animation.start()
 
-    def create_new_english_note(self):
+    def create_new_project(self):
         self.create_new_project_signal.emit()
 
     def show_hide_word_card(self):

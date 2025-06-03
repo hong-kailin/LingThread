@@ -8,7 +8,6 @@ class ProjectListItem(QWidget):
     def __init__(self, project, parent=None):
         super().__init__(parent)
         self.setup_ui(project)
-        project.save("./data/project_items.json")
 
     def setup_ui(self, project):
         layout = QHBoxLayout(self)
@@ -96,7 +95,7 @@ class ProjectWidgetListPage(QWidget, Ui_project_list):
         line_widget.setFrameShadow(QFrame.Sunken)
         self.project_widget_list.setItemWidget(line_item, line_widget)
 
-    def add_project(self, project):
+    def add_new_project(self, project):
         item = QListWidgetItem()
         item.setSizeHint(QSize(0, 90))
         item.setData(Qt.UserRole, project.name)
@@ -104,6 +103,7 @@ class ProjectWidgetListPage(QWidget, Ui_project_list):
 
         widget = ProjectListItem(project)
         self.project_widget_list.setItemWidget(item, widget)
+        project.save_new_project_info()
 
     def on_item_double_clicked(self, item):
         self.item_double_clicked_signal.emit(item)
