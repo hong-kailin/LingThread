@@ -1,7 +1,7 @@
 import sys
 import os
 from PySide6.QtWidgets import QApplication, QVBoxLayout
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QAction, QShortcut, QKeySequence
 from PySide6.QtCore import QEvent, QSize, Signal, Qt
 
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
@@ -18,6 +18,9 @@ class LingThread:
         self.main_window = MainWindowPage()
         self.setup_ui()
         self.load_existent_project_info()
+
+        shortcut = QShortcut(QKeySequence("Ctrl+S"), self.main_window)
+        shortcut.activated.connect(self.save_current_project_info)
 
     def setup_ui(self):
         v_layout = QVBoxLayout(self.main_window.left_hide_box)
@@ -82,7 +85,7 @@ class LingThread:
         # ==========
         v_layout_3 = QVBoxLayout(self.main_widget.content_widget)
         v_layout_3.setContentsMargins(0, 0, 0, 0)
-        self.contents_widget_page = ContentsWidgetPage(self.main_widget.content_widget)
+        self.contents_widget_page = ContentsWidgetPage(self.cur_project, self.main_widget.content_widget)
         v_layout_3.addWidget(self.contents_widget_page)
 
         # self.contents_widget_page.create_word_card_signal.connect(self.create_word_card)
@@ -90,9 +93,10 @@ class LingThread:
         # self.contents_widget_page.load_word_card_signal.connect(self.load_word_card)
         # ==========
         self.main_window.stacked_widget.setCurrentIndex(1)
-        self.contents_widget_page.load_content_info(self.cur_project.contents[0],
-                                                    self.cur_project.highlight_words_per_content[0])
 
+
+    def save_current_project_info(self):
+        self.cur_project.save_highlight_info()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

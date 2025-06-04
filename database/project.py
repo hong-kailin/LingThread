@@ -47,16 +47,17 @@ class Project:
         else:
             self.pixmap = image
         self.save_path = save_path
+        self.contents_path = os.path.join(self.save_path, self.name, "contents.json")
+        self.highlight_path = os.path.join(self.save_path, self.name, "highlights.json")
         self.contents = []
         self.highlight_words_per_content = []
+        self.total_pages = 0
 
     def load_contents(self, parent):
-        json_path = os.path.join(self.save_path, self.name, "contents.json")
-        highlight_path = os.path.join(self.save_path, self.name, "highlights.json")
-        if os.path.exists(json_path):
-            with open(json_path,  encoding='utf-8') as infile:
+        if os.path.exists(self.contents_path):
+            with open(self.contents_path, encoding='utf-8') as infile:
                 self.contents = json.load(infile)
-            with open(highlight_path,  encoding='utf-8') as infile:
+            with open(self.highlight_path, encoding='utf-8') as infile:
                 self.highlight_words_per_content = json.load(infile)
         else:
             file_path, _ = QFileDialog.getOpenFileName(
@@ -68,14 +69,15 @@ class Project:
 
             long_text = text.replace('‘', '\'').replace('’', '\'')
             self.contents = split_text_by_line(long_text, max_length=6000)
-            self.total_pages = len(self.contents)
+
             self.highlight_words_per_content = [{} for _ in range(self.total_pages)]
-            if not os.path.exists(os.path.dirname(json_path)):
-                os.makedirs(os.path.dirname(json_path))
-            with open(json_path, 'w', encoding='utf-8') as f:
+            if not os.path.exists(os.path.dirname(self.contents_path)):
+                os.makedirs(os.path.dirname(self.contents_path))
+            with open(self.contents_path, 'w', encoding='utf-8') as f:
                 json.dump(self.contents, f, ensure_ascii=False, indent=2)
-            with open(highlight_path, 'w', encoding='utf-8') as f:
+            with open(self.highlight_path, 'w', encoding='utf-8') as f:
                 json.dump(self.highlight_words_per_content, f, ensure_ascii=False, indent=2)
+        self.total_pages = len(self.contents)
 
     def save_new_project_info(self):
         json_data = {}
@@ -102,3 +104,10 @@ class Project:
                 json.dump(json_data, f, ensure_ascii=False, indent=2)
         except Exception as e:
             print(f"保存数据失败: {e}")
+
+    def add_highlight_info(self, page, word, start, end):
+        self.highlight_words_per_content[page][word] = [start, end]
+
+    def save_highlight_info(self):
+        with open(self.highlight_path, 'w', encoding='utf-8') as f:
+            json.dump(self.highlight_words_per_content, f, ensure_ascii=False, indent=2)

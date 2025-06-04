@@ -13,12 +13,10 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
     corresponding_word_card_show_signal = Signal(str)
     load_word_card_signal = Signal(str)
 
-    def __init__(self, parent=None):
+    def __init__(self, project, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.current_page = 1
-        self.total_pages = 0
-        self.text_data = []
+        self.project = project
         self.highlight_dict = {}
         self.content.setContextMenuPolicy(Qt.CustomContextMenu)
         self.content.viewport().installEventFilter(self)
@@ -27,6 +25,10 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
         self.highlight_format.setBackground(QColor(255, 245, 157))
         self.highlight_format.setUnderlineStyle(QTextCharFormat.SingleUnderline)
         self.highlight_format.setUnderlineColor(QColor(255, 179, 0))
+
+        self.current_page = 0
+        self.load_content_info(self.project.contents[self.current_page],
+                               self.project.highlight_words_per_content[self.current_page])
 
     def show_text_menu(self, pos):
         cursor = self.content.textCursor()
@@ -62,8 +64,10 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
 
     def add_highlight(self, cursor):
         new_cursor = self.content.textCursor()
-        new_cursor.setPosition(cursor.selectionStart())
-        new_cursor.setPosition(cursor.selectionEnd(), QTextCursor.KeepAnchor)
+        start = cursor.selectionStart()
+        end = cursor.selectionEnd()
+        new_cursor.setPosition(start)
+        new_cursor.setPosition(end, QTextCursor.KeepAnchor)
 
         extra_selection = QTextEdit.ExtraSelection()
         extra_selection.format = self.highlight_format
@@ -71,6 +75,8 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
 
         self.highlight_dict[new_cursor.selectedText().strip()] = extra_selection
         self.content.setExtraSelections(list(self.highlight_dict.values()))
+
+        self.project.add_highlight_info(self.current_page, new_cursor.selectedText().strip(), start, end)
 
     def eventFilter(self, obj, event):
         if event.type() == QEvent.MouseButtonRelease:
@@ -80,27 +86,11 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
                 self.corresponding_word_card_show_signal.emit(selected_text)
         return super().eventFilter(obj, event)
 
-    def save_cur_page_data(self):
-        highlight_list = []
-        page_index = 0
-        for key, highlight in self.highlight_dict.items():
-            highlight_start = highlight.cursor.selectionStart()
-            highlight_end = highlight.cursor.selectionEnd()
-            highlight_list.append([key, highlight_start, highlight_end])
-
-        return {
-            "page_index": page_index,
-            "highlight_list": highlight_list,
-        }
-
     def load_content_info(self, content, highlight_list):
         self.content.setPlainText(content)
-        for highlight in highlight_list:
-            word = highlight[0]
+        for word, [start, end] in highlight_list.items():
             self.load_word_card_signal.emit(word)
             cursor = self.content.textCursor()
-            start = highlight[1]
-            end = highlight[2]
 
             if 0 <= start <= end <= len(self.content.toPlainText()):
                 cursor.setPosition(start)
@@ -108,18 +98,19 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
                 self.add_highlight(cursor)
 
     def prev_page(self):
-        if self.current_page > 1:
+        if self.current_page > 0:
             self.current_page -= 1
             self.update_display()
 
     def next_page(self):
-        if self.current_page < self.total_pages:
+        if self.current_page < self.project.total_pages:
             self.current_page += 1
             self.update_display()
 
     def update_display(self):
-        self.content.setText(self.text_data[self.current_page - 1])
+        self.load_content_info(self.project.contents[self.current_page],
+                               self.project.highlight_words_per_content[self.current_page])
         # self.page_label.setText(f"第 {self.current_page} 页，共 {self.total_pages} 页")
-        self.prev_btn.setEnabled(self.current_page > 1)
-        self.next_btn.setEnabled(self.current_page < self.total_pages)
+        self.prev_btn.setEnabled(self.current_page > 0)
+        self.next_btn.setEnabled(self.current_page < self.project.total_pages)
         # self.page_input.clear()
