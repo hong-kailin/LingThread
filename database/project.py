@@ -57,6 +57,7 @@ class Project:
         if os.path.exists(self.contents_path):
             with open(self.contents_path, encoding='utf-8') as infile:
                 self.contents = json.load(infile)
+            self.total_pages = len(self.contents)
             with open(self.highlight_path, encoding='utf-8') as infile:
                 self.highlight_words_per_content = json.load(infile)
         else:
@@ -69,7 +70,7 @@ class Project:
 
             long_text = text.replace('‘', '\'').replace('’', '\'')
             self.contents = split_text_by_line(long_text, max_length=6000)
-
+            self.total_pages = len(self.contents)
             self.highlight_words_per_content = [{} for _ in range(self.total_pages)]
             if not os.path.exists(os.path.dirname(self.contents_path)):
                 os.makedirs(os.path.dirname(self.contents_path))
@@ -77,7 +78,7 @@ class Project:
                 json.dump(self.contents, f, ensure_ascii=False, indent=2)
             with open(self.highlight_path, 'w', encoding='utf-8') as f:
                 json.dump(self.highlight_words_per_content, f, ensure_ascii=False, indent=2)
-        self.total_pages = len(self.contents)
+
 
     def save_new_project_info(self):
         json_data = {}

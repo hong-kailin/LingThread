@@ -4,3 +4,5 @@ from .new_dialog_page import NewDialogPage
 from .project_widget_list_page import ProjectWidgetListPage
 from .contents_widget_page import ContentsWidgetPage
 from .main_widget_page import MainWidgetPage
+from .word_card_widget_page import WordCardWidgetPage
+from .word_card_container_page import WordCardContainerPage

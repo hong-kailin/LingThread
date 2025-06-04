@@ -4,8 +4,8 @@ from PySide6.QtWidgets import QApplication, QVBoxLayout
 from PySide6.QtGui import QPixmap, QAction, QShortcut, QKeySequence
 from PySide6.QtCore import QEvent, QSize, Signal, Qt
 
-from page import (MainWindowPage, LeftBoxPage, NewDialogPage,
-                  ProjectWidgetListPage, MainWidgetPage, ContentsWidgetPage)
+from page import (MainWindowPage, LeftBoxPage, NewDialogPage, ContentsWidgetPage,
+                  ProjectWidgetListPage, MainWidgetPage, WordCardContainerPage)
 from database import Project
 import json
 import base64
@@ -18,6 +18,7 @@ class LingThread:
         self.main_window = MainWindowPage()
         self.setup_ui()
         self.load_existent_project_info()
+        # self.all_word_card = WordCardDict(self.data_save_path)
 
         shortcut = QShortcut(QKeySequence("Ctrl+S"), self.main_window)
         shortcut.activated.connect(self.save_current_project_info)
@@ -45,6 +46,11 @@ class LingThread:
         self.main_window.show_hide_word_card_signal.connect(self.main_widget.show_hide_word_card)
         self.main_window.show_hide_sentence_card_signal.connect(self.main_widget.show_hide_sentence_card)
         self.main_window.show_hide_ai_chat_card_signal.connect(self.main_widget.show_hide_ai_chat_card)
+
+        v_layout_4 = QVBoxLayout(self.main_widget.word_card_widget)
+        v_layout_4.setContentsMargins(0, 0, 0, 0)
+        self.word_card_container_page = WordCardContainerPage(self.main_widget.word_card_widget, self.data_save_path)
+        v_layout_4.addWidget(self.word_card_container_page)
 
     def show(self):
         self.main_window.show()
@@ -88,15 +94,21 @@ class LingThread:
         self.contents_widget_page = ContentsWidgetPage(self.cur_project, self.main_widget.content_widget)
         v_layout_3.addWidget(self.contents_widget_page)
 
-        # self.contents_widget_page.create_word_card_signal.connect(self.create_word_card)
-        # self.contents_widget_page.corresponding_word_card_show_signal.connect(self.corresponding_word_card_show)
+        self.contents_widget_page.create_word_card_signal.connect(self.word_card_container_page.create_new_word_card)
+        # self.contents_widget_page.create_word_card_signal.connect(self.all_word_card.append)
+        self.contents_widget_page.corresponding_word_card_show_signal.connect(
+            self.word_card_container_page.corresponding_word_card_show)
         # self.contents_widget_page.load_word_card_signal.connect(self.load_word_card)
         # ==========
         self.main_window.stacked_widget.setCurrentIndex(1)
 
-
     def save_current_project_info(self):
         self.cur_project.save_highlight_info()
+        self.word_card_container_page.update_and_save_word_card_dict()
+        # for key, value in self.word_card_container_page.card_widget_dict.items():
+
+        # self.all_word_card.save(self.data_save_path)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
