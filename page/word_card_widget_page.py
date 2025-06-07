@@ -46,13 +46,13 @@ class WordCardWidgetPage(QFrame, Ui_word_card_widget):
         if event.button() == Qt.LeftButton:
             self.timer.stop()
             if time.time() - self.press_time < 2:
-                self.label.setStyleSheet("background-color: lightblue; font-size: 18px;")
+                self.label.setStyleSheet("background-color: rgb(17, 45, 78);")
         super().mouseReleaseEvent(event)
 
     def check_long_press(self):
         if time.time() - self.press_time >= 2:
             self.timer.stop()
-            self.label.setStyleSheet("background-color: lightgreen; font-size: 18px;")
+            self.label.setStyleSheet("background-color: rgb(63, 114, 175);")
             self.parser_word_signal.emit(self.word_card.word)
 
     def mean_height_change(self):
@@ -151,7 +151,8 @@ class WordCardWidgetPage(QFrame, Ui_word_card_widget):
         self.pronunciation_remember_edit.setPlainText(word_card.pron_r)
 
     def set_info_from_ai(self, info):
-        self.mean_edit.setPlainText(info['meaning'])
-        self.pronunciation_edit.setPlainText(info['phonetic'])
-        self.mean_remember_edit.setPlainText(info['mnemonic'])
-        self.pronunciation_remember_edit.setPlainText(info['pronunciation_tip'])
+        if info['word'] == self.word_card.word:
+            self.mean_edit.setPlainText(info['meaning'])
+            self.pronunciation_edit.setPlainText(info['phonetic'])
+            self.mean_remember_edit.setPlainText(info['mnemonic'])
+            self.pronunciation_remember_edit.setPlainText(info['pronunciation_tip'])

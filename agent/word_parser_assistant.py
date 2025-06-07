@@ -26,8 +26,10 @@ class WordParserAssistant(LLMAgent):
 
     def parser_word(self, word):
         self.word = word
+        if len(self.messages) == 2:
+            self.messages.pop()
         self.messages.append({"role": "user", "content": word})
-        self.run()
+        self.start()
 
     def run(self):
         if self.word is None:
