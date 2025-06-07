@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'contents_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -27,8 +27,16 @@ class Ui_contents_widget(object):
         contents_widget.resize(598, 667)
         contents_widget.setStyleSheet(u"#content {\n"
 "    background-color: transparent;\n"
+"	color: rgb(221, 221, 221);\n"
+"	font: 15pt \"Segoe UI\";\n"
 "}\n"
-"")
+"QPushButton { background-color: rgb(63, 114, 175); border: none;  border-radius: 5px; }\n"
+"QPushButton:hover { background-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; }\n"
+"QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; border-radius: 4px; }\n"
+"\n"
+"#page_line_edit{\n"
+"background-color: rgb(63, 114, 175); border: none; border-radius: 5px; \n"
+"}")
         self.verticalLayout = QVBoxLayout(contents_widget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.content = QTextEdit(contents_widget)
@@ -39,6 +47,7 @@ class Ui_contents_widget(object):
         sizePolicy.setHeightForWidth(self.content.sizePolicy().hasHeightForWidth())
         self.content.setSizePolicy(sizePolicy)
         self.content.setFrameShape(QFrame.Shape.NoFrame)
+        self.content.setReadOnly(True)
 
         self.verticalLayout.addWidget(self.content)
 
@@ -50,11 +59,15 @@ class Ui_contents_widget(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.prev_btn = QPushButton(self.widget)
         self.prev_btn.setObjectName(u"prev_btn")
+        self.prev_btn.setMinimumSize(QSize(100, 0))
+        self.prev_btn.setMaximumSize(QSize(100, 16777215))
 
         self.horizontalLayout.addWidget(self.prev_btn)
 
         self.next_btn = QPushButton(self.widget)
         self.next_btn.setObjectName(u"next_btn")
+        self.next_btn.setMinimumSize(QSize(100, 0))
+        self.next_btn.setMaximumSize(QSize(100, 16777215))
 
         self.horizontalLayout.addWidget(self.next_btn)
 
@@ -93,7 +106,7 @@ class Ui_contents_widget(object):
         contents_widget.setWindowTitle(QCoreApplication.translate("contents_widget", u"Form", None))
         self.prev_btn.setText(QCoreApplication.translate("contents_widget", u"\u4e0a\u4e00\u9875", None))
         self.next_btn.setText(QCoreApplication.translate("contents_widget", u"\u4e0b\u4e00\u9875", None))
-        self.label.setText(QCoreApplication.translate("contents_widget", u"\u8df3\u8f6c\u5230\u7b2c", None))
+        self.label.setText(QCoreApplication.translate("contents_widget", u"\u8df3\u8f6c\u5230\u7b2c         ", None))
         self.label_2.setText(QCoreApplication.translate("contents_widget", u"\u9875", None))
     # retranslateUi
 

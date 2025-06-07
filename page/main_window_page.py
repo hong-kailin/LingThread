@@ -175,3 +175,7 @@ class MainWindowPage(QWidget, Ui_main_window):
 
     def show_hide_ai_chat_card(self):
         self.show_hide_ai_chat_card_signal.emit()
+
+    def page_number_update(self, number):
+        info = "current page is " + str(number)
+        self.page_info.setText(info)

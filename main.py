@@ -106,7 +106,7 @@ class LingThread:
         self.contents_widget_page.create_word_card_signal.connect(self.word_card_container_page.create_new_word_card)
         self.contents_widget_page.corresponding_word_card_show_signal.connect(
             self.word_card_container_page.corresponding_word_card_show)
-
+        self.contents_widget_page.page_number_update_signal.connect(self.main_window.page_number_update)
         self.main_window.stacked_widget.setCurrentIndex(1)
 
     def save_current_project_info(self):

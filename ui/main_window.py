@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -293,15 +293,15 @@ class Ui_main_window(object):
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.label_4 = QLabel(self.bottom_line)
-        self.label_4.setObjectName(u"label_4")
+        self.page_info = QLabel(self.bottom_line)
+        self.page_info.setObjectName(u"page_info")
         font = QFont()
         font.setFamilies([u"Segoe UI"])
         font.setBold(False)
         font.setItalic(False)
-        self.label_4.setFont(font)
+        self.page_info.setFont(font)
 
-        self.horizontalLayout_3.addWidget(self.label_4)
+        self.horizontalLayout_3.addWidget(self.page_info)
 
         self.horizontalSpacer_2 = QSpacerItem(684, 17, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -358,7 +358,7 @@ class Ui_main_window(object):
         self.minimize_btn.setText("")
         self.maximize_restore_btn.setText("")
         self.close_app_btn.setText("")
-        self.label_4.setText(QCoreApplication.translate("main_window", u"By: \u6bd4\u98de\u9e1f\u8d35\u91cd\u7684\u591a_HKL", None))
+        self.page_info.setText(QCoreApplication.translate("main_window", u"By: \u6bd4\u98de\u9e1f\u8d35\u91cd\u7684\u591a_HKL", None))
         self.label_3.setText(QCoreApplication.translate("main_window", u"v1.0.0", None))
         self.label_5.setText("")
     # retranslateUi

@@ -618,7 +618,7 @@ background-position: left center;
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="page_info">
            <property name="font">
             <font>
              <family>Segoe UI</family>

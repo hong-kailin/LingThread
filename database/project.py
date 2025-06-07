@@ -68,7 +68,8 @@ class Project:
                 content = infile.read()
                 text = rtf_to_text(content)
 
-            long_text = text.replace('‘', '\'').replace('’', '\'')
+            long_text = (text.replace('‘', '\'').replace('’', '\'')
+                         .replace('\n', '\n     '))
             self.contents = split_text_by_line(long_text, max_length=6000)
             self.total_pages = len(self.contents)
             self.highlight_words_per_content = [{} for _ in range(self.total_pages)]

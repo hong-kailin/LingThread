@@ -156,3 +156,4 @@ class WordCardWidgetPage(QFrame, Ui_word_card_widget):
             self.pronunciation_edit.setPlainText(info['phonetic'])
             self.mean_remember_edit.setPlainText(info['mnemonic'])
             self.pronunciation_remember_edit.setPlainText(info['pronunciation_tip'])
+            self.label.setStyleSheet("background-color: rgb(17, 45, 78);")

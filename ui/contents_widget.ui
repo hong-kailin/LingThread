@@ -16,8 +16,16 @@
   <property name="styleSheet">
    <string notr="true">#content {
     background-color: transparent;
+	color: rgb(221, 221, 221);
+	font: 15pt &quot;Segoe UI&quot;;
 }
-</string>
+QPushButton { background-color: rgb(63, 114, 175); border: none;  border-radius: 5px; }
+QPushButton:hover { background-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; }
+QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; border-radius: 4px; }
+
+#page_line_edit{
+background-color: rgb(63, 114, 175); border: none; border-radius: 5px; 
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -30,6 +38,9 @@
      </property>
      <property name="frameShape">
       <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -50,6 +61,18 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="prev_btn">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>上一页</string>
         </property>
@@ -57,6 +80,18 @@
       </item>
       <item>
        <widget class="QPushButton" name="next_btn">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>下一页</string>
         </property>
@@ -77,7 +112,7 @@
          </size>
         </property>
         <property name="text">
-         <string>跳转到第</string>
+         <string>跳转到第         </string>
         </property>
        </widget>
       </item>

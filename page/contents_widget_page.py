@@ -5,13 +5,13 @@ from PySide6.QtCore import (Qt, QPropertyAnimation, Signal,
 from PySide6.QtGui import QCursor, QTextCursor, QTextCharFormat, QColor
 from PySide6.QtWidgets import QWidget, QMenu, QTextEdit, QFileDialog
 from ui import Ui_contents_widget
-import json
 
 
 class ContentsWidgetPage(QWidget, Ui_contents_widget):
     create_word_card_signal = Signal(str)
     corresponding_word_card_show_signal = Signal(str)
     load_word_card_signal = Signal(str)
+    page_number_update_signal = Signal(int)
 
     def __init__(self, project, parent=None):
         super().__init__(parent)
@@ -22,7 +22,7 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
         self.content.viewport().installEventFilter(self)
 
         self.highlight_format = QTextCharFormat()
-        self.highlight_format.setBackground(QColor(255, 245, 157))
+        self.highlight_format.setBackground(QColor(150, 20, 70))
         self.highlight_format.setUnderlineStyle(QTextCharFormat.SingleUnderline)
         self.highlight_format.setUnderlineColor(QColor(255, 179, 0))
 
@@ -110,7 +110,6 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
     def update_display(self):
         self.load_content_info(self.project.contents[self.current_page],
                                self.project.highlight_words_per_content[self.current_page])
-        # self.page_label.setText(f"第 {self.current_page} 页，共 {self.total_pages} 页")
         self.prev_btn.setEnabled(self.current_page > 0)
         self.next_btn.setEnabled(self.current_page < self.project.total_pages)
-        # self.page_input.clear()
+        self.page_number_update_signal.emit(self.current_page)
