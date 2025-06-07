@@ -5,9 +5,10 @@ from database import WordCardDict
 
 
 class WordCardContainerPage(QWidget, Ui_container_widget):
-    def __init__(self, parent=None, path=None):
+    def __init__(self, parent=None, path=None, word_parser_assistant=None):
         super().__init__(parent)
         self.setupUi(self)
+        self.word_parser_assistant = word_parser_assistant
         self.path = path
         self.card_widget_dict = {}
         self.all_word_card_dict = WordCardDict(path)
@@ -26,7 +27,7 @@ class WordCardContainerPage(QWidget, Ui_container_widget):
 
     def load_word_card(self, word_card):
         self.cur_word = word_card.word
-        card = WordCardWidgetPage(self, word_card.word)
+        card = WordCardWidgetPage(self, word_card.word, self.word_parser_assistant)
         card.set_info(word_card)
         insert_position = self.container_layout.count() - 1
         self.container_layout.insertWidget(insert_position, card)
@@ -34,7 +35,7 @@ class WordCardContainerPage(QWidget, Ui_container_widget):
 
     def create_new_word_card(self, word):
         self.cur_word = word
-        card = WordCardWidgetPage(self, word)
+        card = WordCardWidgetPage(self, word, self.word_parser_assistant)
         insert_position = self.container_layout.count() - 1
         self.container_layout.insertWidget(insert_position, card)
         self.card_widget_dict[word] = card
@@ -51,4 +52,3 @@ class WordCardContainerPage(QWidget, Ui_container_widget):
         for word, widget in self.card_widget_dict.items():
             self.all_word_card_dict.append(widget.to_word_card())
         self.all_word_card_dict.save(self.path)
-

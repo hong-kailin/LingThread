@@ -1,15 +1,20 @@
 from ui import Ui_word_card_widget
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPushButton,
                                QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
-from PySide6.QtCore import QEvent
+from PySide6.QtCore import QEvent, QTimer, Qt, Signal
 from database import WordCard
+import time
 
 
 class WordCardWidgetPage(QFrame, Ui_word_card_widget):
-    def __init__(self, parent, word):
+    parser_word_signal = Signal(str)
+
+    def __init__(self, parent, word, word_parser_assistant=None):
         super().__init__(parent)
         self.setupUi(self)
-
+        self.word_parser_assistant = word_parser_assistant
+        self.parser_word_signal.connect(self.word_parser_assistant.parser_word)
+        self.word_parser_assistant.return_result_signal.connect(self.set_info_from_ai)
         self.other_edit.installEventFilter(self)
         self.mean_edit.installEventFilter(self)
         self.pronunciation_edit.installEventFilter(self)
@@ -26,6 +31,29 @@ class WordCardWidgetPage(QFrame, Ui_word_card_widget):
 
         self.is_expanded = False
         self.is_editing = False
+        self.timer = QTimer(self)
+        self.label.mousePressEvent = self.label_mouse_press_event
+        self.label.mouseReleaseEvent = self.label_mouse_release_event
+        self.timer.timeout.connect(self.check_long_press)
+
+    def label_mouse_press_event(self, event):
+        if event.button() == Qt.LeftButton:
+            self.press_time = time.time()
+            self.timer.start(100)
+        super().mousePressEvent(event)
+
+    def label_mouse_release_event(self, event):
+        if event.button() == Qt.LeftButton:
+            self.timer.stop()
+            if time.time() - self.press_time < 2:
+                self.label.setStyleSheet("background-color: lightblue; font-size: 18px;")
+        super().mouseReleaseEvent(event)
+
+    def check_long_press(self):
+        if time.time() - self.press_time >= 2:
+            self.timer.stop()
+            self.label.setStyleSheet("background-color: lightgreen; font-size: 18px;")
+            self.parser_word_signal.emit(self.word_card.word)
 
     def mean_height_change(self):
         self.adjust_text_edit_height(self.mean_edit)
@@ -121,3 +149,9 @@ class WordCardWidgetPage(QFrame, Ui_word_card_widget):
         self.pronunciation_edit.setPlainText(word_card.pron)
         self.mean_remember_edit.setPlainText(word_card.mean_r)
         self.pronunciation_remember_edit.setPlainText(word_card.pron_r)
+
+    def set_info_from_ai(self, info):
+        self.mean_edit.setPlainText(info['meaning'])
+        self.pronunciation_edit.setPlainText(info['phonetic'])
+        self.mean_remember_edit.setPlainText(info['mnemonic'])
+        self.pronunciation_remember_edit.setPlainText(info['pronunciation_tip'])

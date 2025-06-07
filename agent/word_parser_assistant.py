@@ -1,5 +1,6 @@
 from .LLM_agent import LLMAgent
 import re
+from PySide6.QtCore import Signal
 
 
 class WordParserAssistant(LLMAgent):
@@ -16,36 +17,37 @@ class WordParserAssistant(LLMAgent):
       单词助记：[内容]
       发音助记：[内容]
       """
+    return_result_signal = Signal(dict)
 
     def __init__(self):
         super().__init__(self.prompt)
         self.word = None
-        self.finished.connect(self.get_result)
+        self.finished.connect(self.parse_result)
 
-    def set_word(self, word):
+    def parser_word(self, word):
         self.word = word
-        self.messages = ""
+        self.messages.append({"role": "user", "content": word})
+        self.run()
 
     def run(self):
         if self.word is None:
             pass
         super().run()
 
-    def get_result(self, response):
+    def parse_result(self, response):
         try:
             pattern = r"含义：(.*?)\n音标：(.*?)\n单词助记：(.*?)\n发音助记：(.*)"
             match = re.search(pattern, response, re.DOTALL)
-
             if not match:
                 raise ValueError("API返回格式异常，解析失败")
 
-            return {
+            result = {
                 "word": self.word,
                 "meaning": match.group(1).strip(),
                 "phonetic": match.group(2).strip(),
                 "mnemonic": match.group(3).strip(),
                 "pronunciation_tip": match.group(4).strip()
             }
-
+            self.return_result_signal.emit(result)
         except Exception as e:
-            return {"error": f"获取单词信息失败: {str(e)}"}
+            self.return_result_signal.emit({"error": f"获取单词信息失败: {str(e)}"})

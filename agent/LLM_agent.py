@@ -5,11 +5,11 @@ from PySide6.QtCore import QThread, Signal
 class LLMAgent(QThread):
     finished = Signal(str, bool)
 
-    def __init__(self, messages):
+    def __init__(self, base_prompt):
         super().__init__()
         self.client = OpenAI(api_key="sk-c8860ff4cb9246c28b3de26f0e00aff9",
                              base_url="https://api.deepseek.com")
-        self.messages = messages
+        self.messages = [{"role": "system", "content": base_prompt}]
 
     def run(self):
         try:
