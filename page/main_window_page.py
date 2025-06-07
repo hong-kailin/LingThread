@@ -73,6 +73,8 @@ class MainWindowPage(QWidget, Ui_main_window):
     show_hide_ai_chat_card_signal = Signal()
     show_hide_word_card_signal = Signal()
     show_hide_sentence_card_signal = Signal()
+    show_project_list_signal = Signal()
+    save_current_project_info_signal = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -119,9 +121,9 @@ class MainWindowPage(QWidget, Ui_main_window):
     def show_hide_btn_name(self, flag):
         if flag:
             width = 60
-            widthExtended = 240
+            widthExtended = 170
         else:
-            width = 240
+            width = 170
             widthExtended = 60
         self.animation = QPropertyAnimation(self.left_sider_bar, b"minimumWidth")
         self.animation.setDuration(self.time_amimation)
@@ -179,3 +181,9 @@ class MainWindowPage(QWidget, Ui_main_window):
     def page_number_update(self, number):
         info = "current page is " + str(number)
         self.page_info.setText(info)
+
+    def show_project_list(self):
+        self.show_project_list_signal.emit()
+
+    def save_current_project_info(self):
+        self.save_current_project_info_signal.emit()

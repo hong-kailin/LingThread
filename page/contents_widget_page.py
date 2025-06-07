@@ -78,6 +78,11 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
 
         self.project.add_highlight_info(self.current_page, new_cursor.selectedText().strip(), start, end)
 
+    def delete_highlight(self, word):
+        if word in self.highlight_dict:
+            del self.highlight_dict[word]
+            self.content.setExtraSelections(list(self.highlight_dict.values()))
+
     def eventFilter(self, obj, event):
         if event.type() == QEvent.MouseButtonRelease:
             cursor = self.content.textCursor()

@@ -1,5 +1,5 @@
 from ui import Ui_word_card_widget
-from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPushButton,
+from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPushButton, QMenu,
                                QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 from PySide6.QtCore import QEvent, QTimer, Qt, Signal
 from database import WordCard
@@ -8,10 +8,10 @@ import time
 
 class WordCardWidgetPage(QFrame, Ui_word_card_widget):
     parser_word_signal = Signal(str)
-
     def __init__(self, parent, word, word_parser_assistant=None):
         super().__init__(parent)
         self.setupUi(self)
+        self.parent = parent
         self.word_parser_assistant = word_parser_assistant
         self.parser_word_signal.connect(self.word_parser_assistant.parser_word)
         self.word_parser_assistant.return_result_signal.connect(self.set_info_from_ai)
@@ -35,6 +35,19 @@ class WordCardWidgetPage(QFrame, Ui_word_card_widget):
         self.label.mousePressEvent = self.label_mouse_press_event
         self.label.mouseReleaseEvent = self.label_mouse_release_event
         self.timer.timeout.connect(self.check_long_press)
+
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.show_context_menu)
+
+    def show_context_menu(self, pos):
+        menu = QMenu(self)
+        delete_action = menu.addAction("删除卡片")
+        delete_action.triggered.connect(self.delete_word_card)
+        menu.exec(self.mapToGlobal(pos))
+
+    def delete_word_card(self):
+        self.parent.delete_word_card(self.word_card.word)
+
 
     def label_mouse_press_event(self, event):
         if event.button() == Qt.LeftButton:

@@ -87,9 +87,7 @@ class Ui_main_window(object):
 "    background-position: center;\n"
 "}\n"
 "\n"
-"#main_page * {\n"
-"    background-image: none;\n"
-"}\n"
+"\n"
 "")
         self.horizontalLayout = QHBoxLayout(main_window)
         self.horizontalLayout.setSpacing(0)
@@ -152,14 +150,6 @@ class Ui_main_window(object):
         self.save_btn.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-save.png)")
 
         self.verticalLayout_2.addWidget(self.save_btn)
-
-        self.exit_btn = QPushButton(self.left_sider_bar)
-        self.exit_btn.setObjectName(u"exit_btn")
-        self.exit_btn.setMinimumSize(QSize(60, 45))
-        self.exit_btn.setMaximumSize(QSize(16777215, 45))
-        self.exit_btn.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-x.png);")
-
-        self.verticalLayout_2.addWidget(self.exit_btn)
 
         self.verticalSpacer = QSpacerItem(20, 250, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -336,6 +326,8 @@ class Ui_main_window(object):
         self.sentence_card_btn.clicked.connect(main_window.show_hide_sentence_card)
         self.ai_btn.clicked.connect(main_window.show_hide_ai_chat_card)
         self.new_btn.clicked.connect(main_window.create_new_project)
+        self.home_btn.clicked.connect(main_window.show_project_list)
+        self.save_btn.clicked.connect(main_window.save_current_project_info)
 
         QMetaObject.connectSlotsByName(main_window)
     # setupUi
@@ -344,12 +336,11 @@ class Ui_main_window(object):
         main_window.setWindowTitle(QCoreApplication.translate("main_window", u"Form", None))
         self.logo_label.setText("")
         self.left_title_label.setText(QCoreApplication.translate("main_window", u"LingThread", None))
-        self.left_description_label.setText(QCoreApplication.translate("main_window", u"Program / English Study App", None))
+        self.left_description_label.setText(QCoreApplication.translate("main_window", u"English/Program", None))
         self.hide_btn.setText(QCoreApplication.translate("main_window", u"Hide", None))
         self.home_btn.setText(QCoreApplication.translate("main_window", u"Home", None))
         self.new_btn.setText(QCoreApplication.translate("main_window", u"New", None))
         self.save_btn.setText(QCoreApplication.translate("main_window", u"Save", None))
-        self.exit_btn.setText(QCoreApplication.translate("main_window", u"Exit", None))
         self.about_btn.setText(QCoreApplication.translate("main_window", u"About", None))
         self.label_2.setText(QCoreApplication.translate("main_window", u"  LingThread - Learning is a process from disorder to order.", None))
         self.ai_btn.setText("")

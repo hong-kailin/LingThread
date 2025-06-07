@@ -36,7 +36,7 @@ class LingThread:
         v_layout_2.setContentsMargins(0, 0, 0, 0)
         self.project_widget_list = ProjectWidgetListPage(self.main_window.project_list_page)
         v_layout_2.addWidget(self.project_widget_list)
-        self.main_window.stacked_widget.setCurrentIndex(2)
+        self.main_window.stacked_widget.setCurrentIndex(0)
         self.main_window.create_new_project_signal.connect(self.create_new_project)
         self.project_widget_list.item_double_clicked_signal.connect(self.open_item_project)
 
@@ -48,6 +48,8 @@ class LingThread:
         self.main_window.show_hide_word_card_signal.connect(self.main_widget.show_hide_word_card)
         self.main_window.show_hide_sentence_card_signal.connect(self.main_widget.show_hide_sentence_card)
         self.main_window.show_hide_ai_chat_card_signal.connect(self.main_widget.show_hide_ai_chat_card)
+        self.main_window.show_project_list_signal.connect(self.show_project_list)
+        self.main_window.save_current_project_info_signal.connect(self.save_current_project_info)
 
         v_layout_4 = QVBoxLayout(self.main_widget.word_card_widget)
         v_layout_4.setContentsMargins(0, 0, 0, 0)
@@ -102,7 +104,7 @@ class LingThread:
         v_layout_3.setContentsMargins(0, 0, 0, 0)
         self.contents_widget_page = ContentsWidgetPage(self.cur_project, self.main_widget.content_widget)
         v_layout_3.addWidget(self.contents_widget_page)
-
+        self.word_card_container_page.delete_word_card_signal.connect(self.contents_widget_page.delete_highlight)
         self.contents_widget_page.create_word_card_signal.connect(self.word_card_container_page.create_new_word_card)
         self.contents_widget_page.corresponding_word_card_show_signal.connect(
             self.word_card_container_page.corresponding_word_card_show)
@@ -113,6 +115,8 @@ class LingThread:
         self.cur_project.save_highlight_info()
         self.word_card_container_page.update_and_save_word_card_dict()
 
+    def show_project_list(self):
+        self.main_window.stacked_widget.setCurrentIndex(2)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

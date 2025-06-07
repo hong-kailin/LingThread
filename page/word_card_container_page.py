@@ -2,9 +2,12 @@ from PySide6.QtWidgets import QWidget, QMenu, QTextEdit
 from ui import Ui_container_widget
 from .word_card_widget_page import WordCardWidgetPage
 from database import WordCardDict
+from PySide6.QtCore import QEvent, QTimer, Qt, Signal
 
 
 class WordCardContainerPage(QWidget, Ui_container_widget):
+    delete_word_card_signal = Signal(str)
+
     def __init__(self, parent=None, path=None, word_parser_assistant=None):
         super().__init__(parent)
         self.setupUi(self)
@@ -33,6 +36,12 @@ class WordCardContainerPage(QWidget, Ui_container_widget):
         self.container_layout.insertWidget(insert_position, card)
         self.card_widget_dict[word_card.word] = card
 
+    def delete_word_card(self, word):
+        self.card_widget_dict[word].deleteLater()
+        del self.card_widget_dict[word]
+        self.all_word_card_dict.delete(word)
+        self.delete_word_card_signal.emit(word)
+
     def create_new_word_card(self, word):
         self.cur_word = word
         card = WordCardWidgetPage(self, word, self.word_parser_assistant)
@@ -41,7 +50,7 @@ class WordCardContainerPage(QWidget, Ui_container_widget):
         self.card_widget_dict[word] = card
 
     def corresponding_word_card_show(self, word):
-        if self.cur_word is not None:
+        if self.cur_word is not None and self.cur_word in self.card_widget_dict:
             self.card_widget_dict[self.cur_word].collapse_card()
         if word in self.card_widget_dict:
             self.card_widget_dict[word].expand_card()

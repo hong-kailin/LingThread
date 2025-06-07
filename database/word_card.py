@@ -36,13 +36,18 @@ class WordCardDict:
         with open(word_card_list_path, 'w', encoding='utf-8') as f:
             json.dump(json_data, f, ensure_ascii=False, indent=2)
 
+    def delete(self, word):
+        if word in self.dict:
+            del self.dict[word]
+
     def create_from_json(self, path):
         word_card_json_path = os.path.join(path, "word_card.json")
         if os.path.exists(word_card_json_path):
             with open(word_card_json_path, 'r', encoding='utf-8') as f:
                 word_card_data = json.load(f)
             for key, value in word_card_data.items():
-                word_card = WordCard(key, value['mean'], value['mean_r'], value['pron'], value['pron_r'], value['other'])
+                word_card = WordCard(key, value['mean'], value['mean_r'], value['pron'], value['pron_r'],
+                                     value['other'])
                 self.append(word_card)
 
     def to_dict(self):
