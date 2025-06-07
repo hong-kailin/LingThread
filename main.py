@@ -5,7 +5,8 @@ from PySide6.QtGui import QPixmap, QAction, QShortcut, QKeySequence
 from PySide6.QtCore import QEvent, QSize, Signal, Qt
 
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage, ContentsWidgetPage,
-                  ProjectWidgetListPage, MainWidgetPage, WordCardContainerPage)
+                  ProjectWidgetListPage, MainWidgetPage, WordCardContainerPage,
+                  AiChatWidgetPage)
 from database import Project
 import json
 import base64
@@ -51,6 +52,12 @@ class LingThread:
         v_layout_4.setContentsMargins(0, 0, 0, 0)
         self.word_card_container_page = WordCardContainerPage(self.main_widget.word_card_widget, self.data_save_path)
         v_layout_4.addWidget(self.word_card_container_page)
+
+        v_layout_5 = QVBoxLayout(self.main_widget.ai_chat_widget)
+        v_layout_5.setContentsMargins(0, 0, 0, 0)
+        self.ai_chat_widget_page = AiChatWidgetPage(self.main_widget.ai_chat_widget)
+        v_layout_5.addWidget(self.ai_chat_widget_page)
+
 
     def show(self):
         self.main_window.show()

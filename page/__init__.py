@@ -6,3 +6,4 @@ from .contents_widget_page import ContentsWidgetPage
 from .main_widget_page import MainWidgetPage
 from .word_card_widget_page import WordCardWidgetPage
 from .word_card_container_page import WordCardContainerPage
+from .ai_chat_widget_page import AiChatWidgetPage
