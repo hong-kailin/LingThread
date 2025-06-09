@@ -1,10 +1,10 @@
-import os.path
-
+import asyncio
 from PySide6.QtCore import (Qt, QPropertyAnimation, Signal,
                             QEasingCurve, Signal, QEvent, QTimer)
 from PySide6.QtGui import QCursor, QTextCursor, QTextCharFormat, QColor
-from PySide6.QtWidgets import QWidget, QMenu, QTextEdit, QFileDialog
+from PySide6.QtWidgets import QWidget, QMenu, QTextEdit, QFileDialog, QMessageBox
 from ui import Ui_contents_widget
+from agent import Speaker
 
 
 class ContentsWidgetPage(QWidget, Ui_contents_widget):
@@ -17,6 +17,13 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
         super().__init__(parent)
         self.setupUi(self)
         self.project = project
+        # ====
+        self.is_playing = False
+        self.loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self.loop)
+        self.speaker = Speaker(self.loop)
+        self.speaker.finished.connect(self.on_speaker_finished)
+        # ====
         self.highlight_dict = {}
         self.content.setContextMenuPolicy(Qt.CustomContextMenu)
         self.content.viewport().installEventFilter(self)
@@ -53,7 +60,27 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
             """)
             create_action = menu.addAction("create word card")
             create_action.triggered.connect(lambda: self.create_word_card(cursor))
+            read_action = menu.addAction("read this sentence")
+            read_action.triggered.connect(lambda: self.read_chosen_content(cursor))
+            stop_read_action = menu.addAction("step to read")
+            stop_read_action.triggered.connect(self.stop_speaking)
             menu.exec(self.content.mapToGlobal(pos))
+
+    def read_chosen_content(self, cursor):
+        selected_text = cursor.selectedText().strip()
+        if not selected_text.strip():
+            QMessageBox.warning(self, "警告", "请先选择要朗读的文本")
+            return
+        self.is_playing = True
+        self.speaker.set_text(selected_text)
+        self.speaker.start()
+
+    def stop_speaking(self):
+        self.is_playing = False
+        self.speaker.stop()
+
+    def on_speaker_finished(self):
+        self.is_playing = False
 
     def create_word_card(self, cursor):
         selected_text = cursor.selectedText().strip()

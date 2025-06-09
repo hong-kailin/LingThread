@@ -118,6 +118,7 @@ class LingThread:
     def show_project_list(self):
         self.main_window.stacked_widget.setCurrentIndex(2)
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     LT = LingThread()
