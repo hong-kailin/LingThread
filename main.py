@@ -1,7 +1,7 @@
 import sys
 import os
 from PySide6.QtWidgets import QApplication, QVBoxLayout
-from PySide6.QtGui import QPixmap, QAction, QShortcut, QKeySequence
+from PySide6.QtGui import QPixmap, QAction, QShortcut, QKeySequence, QIcon
 from PySide6.QtCore import QEvent, QSize, Signal, Qt
 
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage, ContentsWidgetPage,
@@ -133,6 +133,7 @@ class LingThread:
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon("icon.ico"))
     LT = LingThread()
     LT.show()
     app.exec()
