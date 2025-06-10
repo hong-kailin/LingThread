@@ -9,6 +9,7 @@ from agent import Speaker
 
 class ContentsWidgetPage(QWidget, Ui_contents_widget):
     create_word_card_signal = Signal(str)
+    create_sentence_card_signal = Signal(str)
     corresponding_word_card_show_signal = Signal(str)
     load_word_card_signal = Signal(str)
     page_number_update_signal = Signal(int)
@@ -25,6 +26,7 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
         self.speaker.finished.connect(self.on_speaker_finished)
         # ====
         self.highlight_dict = {}
+        self.underline_dict = {}
         self.content.setContextMenuPolicy(Qt.CustomContextMenu)
         self.content.viewport().installEventFilter(self)
 
@@ -32,6 +34,10 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
         self.highlight_format.setBackground(QColor(150, 20, 70))
         self.highlight_format.setUnderlineStyle(QTextCharFormat.SingleUnderline)
         self.highlight_format.setUnderlineColor(QColor(255, 179, 0))
+
+        self.sentence_underline_format = QTextCharFormat()
+        self.sentence_underline_format.setUnderlineStyle(QTextCharFormat.SingleUnderline)
+        self.sentence_underline_format.setUnderlineColor(QColor(80, 179, 0))
 
         self.current_page = 0
         self.load_content_info(self.project.contents[self.current_page],
@@ -60,9 +66,11 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
             """)
             create_action = menu.addAction("create word card")
             create_action.triggered.connect(lambda: self.create_word_card(cursor))
+            create_sentence_action = menu.addAction("create sentence card")
+            create_sentence_action.triggered.connect(lambda: self.create_sentence_card(cursor))
             read_action = menu.addAction("read this sentence")
             read_action.triggered.connect(lambda: self.read_chosen_content(cursor))
-            stop_read_action = menu.addAction("step to read")
+            stop_read_action = menu.addAction("stop to read")
             stop_read_action.triggered.connect(self.stop_speaking)
             menu.exec(self.content.mapToGlobal(pos))
 
@@ -88,6 +96,28 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
             return
         self.create_word_card_signal.emit(selected_text)
         self.add_highlight(cursor)
+
+    def create_sentence_card(self, cursor):
+        selected_text = cursor.selectedText().strip()
+        if not selected_text:
+            return
+        self.create_sentence_card_signal.emit(selected_text)
+        self.add_sentence_underline(cursor)
+
+    def add_sentence_underline(self, cursor):
+        new_cursor = self.content.textCursor()
+        start = cursor.selectionStart()
+        end = cursor.selectionEnd()
+        new_cursor.setPosition(start)
+        new_cursor.setPosition(end, QTextCursor.KeepAnchor)
+
+        extra_selection = QTextEdit.ExtraSelection()
+        extra_selection.format = self.sentence_underline_format
+        extra_selection.cursor = new_cursor
+
+        self.underline_dict[new_cursor.selectedText().strip()] = extra_selection
+        self.content.setExtraSelections(list(self.underline_dict.values()))
+        self.project.add_underline_info(self.current_page, new_cursor.selectedText().strip(), start, end)
 
     def add_highlight(self, cursor):
         new_cursor = self.content.textCursor()

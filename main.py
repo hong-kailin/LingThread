@@ -6,8 +6,8 @@ from PySide6.QtCore import QEvent, QSize, Signal, Qt
 
 from page import (MainWindowPage, LeftBoxPage, NewDialogPage, ContentsWidgetPage,
                   ProjectWidgetListPage, MainWidgetPage, WordCardContainerPage,
-                  AiChatWidgetPage)
-from agent import WordParserAssistant
+                  AiChatWidgetPage, SentenceCardContainerPage)
+from agent import WordParserAssistant, SentenceTranslateAssistant
 from database import Project
 import json
 import base64
@@ -18,6 +18,7 @@ class LingThread:
         self.data_save_path = "./data"
         self.cur_project = None
         self.word_parser_assistant = WordParserAssistant()
+        self.sentence_translate_assistant = SentenceTranslateAssistant()
         self.main_window = MainWindowPage()
         self.setup_ui()
         self.load_existent_project_info()
@@ -63,6 +64,13 @@ class LingThread:
         self.ai_chat_widget_page = AiChatWidgetPage(self.main_widget.ai_chat_widget)
         v_layout_5.addWidget(self.ai_chat_widget_page)
 
+        v_layout_6 = QVBoxLayout(self.main_widget.sentence_card_widget)
+        v_layout_6.setContentsMargins(0, 0, 0, 0)
+        self.sentence_card_container_page = SentenceCardContainerPage(self.main_widget.sentence_card_widget,
+                                                                      self.data_save_path,
+                                                                      self.sentence_translate_assistant)
+        v_layout_6.addWidget(self.sentence_card_container_page)
+
     def show(self):
         self.main_window.show()
 
@@ -106,6 +114,7 @@ class LingThread:
         v_layout_3.addWidget(self.contents_widget_page)
         self.word_card_container_page.delete_word_card_signal.connect(self.contents_widget_page.delete_highlight)
         self.contents_widget_page.create_word_card_signal.connect(self.word_card_container_page.create_new_word_card)
+        self.contents_widget_page.create_sentence_card_signal.connect(self.sentence_card_container_page.create_new_sentence_card)
         self.contents_widget_page.corresponding_word_card_show_signal.connect(
             self.word_card_container_page.corresponding_word_card_show)
         self.contents_widget_page.page_number_update_signal.connect(self.main_window.page_number_update)
@@ -113,7 +122,9 @@ class LingThread:
 
     def save_current_project_info(self):
         self.cur_project.save_highlight_info()
+        self.cur_project.save_underline_info()
         self.word_card_container_page.update_and_save_word_card_dict()
+        self.sentence_card_container_page.update_and_save_sentence_card_dict()
 
     def show_project_list(self):
         self.main_window.stacked_widget.setCurrentIndex(2)

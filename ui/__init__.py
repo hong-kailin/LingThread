@@ -6,4 +6,5 @@ from .contents_widget import Ui_contents_widget
 from .main_widget import Ui_main_widget
 from .container_widget import Ui_container_widget
 from .word_card_widget import Ui_word_card_widget
+from .sentence_card_widget import Ui_sentence_card_widget
 from .ai_chat_widget import Ui_ai_chat_widget

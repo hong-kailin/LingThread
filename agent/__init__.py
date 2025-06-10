@@ -1,3 +1,4 @@
 from .english_chat_assistant import EnglishChatAssistant
 from .word_parser_assistant import WordParserAssistant
+from .sentence_translate_assistant import SentenceTranslateAssistant
 from .speaker import Speaker

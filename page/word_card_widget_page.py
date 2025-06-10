@@ -8,6 +8,7 @@ import time
 
 class WordCardWidgetPage(QFrame, Ui_word_card_widget):
     parser_word_signal = Signal(str)
+
     def __init__(self, parent, word, word_parser_assistant=None):
         super().__init__(parent)
         self.setupUi(self)
@@ -47,7 +48,6 @@ class WordCardWidgetPage(QFrame, Ui_word_card_widget):
 
     def delete_word_card(self):
         self.parent.delete_word_card(self.word_card.word)
-
 
     def label_mouse_press_event(self, event):
         if event.button() == Qt.LeftButton:
