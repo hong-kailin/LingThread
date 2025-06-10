@@ -34,7 +34,24 @@ class SentenceCardWidgetPage(QFrame, Ui_sentence_card_widget):
 
     def show_context_menu(self, pos):
         menu = QMenu(self)
-        delete_action = menu.addAction("删除卡片")
+        menu.setStyleSheet("""
+                        QMenu::item {
+                            color: black;
+                            padding: 6px 24px;
+                            background-color: transparent;
+                        }
+
+                        QMenu::item:selected {
+                            background-color: #e0e7ff;
+                        }
+
+                        QMenu::separator {
+                            height: 1px;
+                            background: #eee;
+                            margin: 4px 8px;
+                        }
+                    """)
+        delete_action = menu.addAction("detele card")
         delete_action.triggered.connect(self.delete_sentence_card)
         menu.exec(self.mapToGlobal(pos))
 
@@ -51,13 +68,13 @@ class SentenceCardWidgetPage(QFrame, Ui_sentence_card_widget):
         if event.button() == Qt.LeftButton:
             self.timer.stop()
             if time.time() - self.press_time < 2:
-                self.sentence.setStyleSheet("background-color: rgb(17, 45, 78);")
+                self.sentence.setStyleSheet("background-color: rgb(63, 114, 175);")
         super().mouseReleaseEvent(event)
 
     def check_long_press(self):
         if time.time() - self.press_time >= 2:
             self.timer.stop()
-            self.sentence.setStyleSheet("background-color: rgb(63, 114, 175);")
+            self.sentence.setStyleSheet("background-color: rgb(17, 45, 78);")
             self.translate_sentence_signal.emit(self.sentence_card.sentence)
 
     def translate_height_change(self):
@@ -126,4 +143,4 @@ class SentenceCardWidgetPage(QFrame, Ui_sentence_card_widget):
     def set_info_from_ai(self, info):
         if info['sentence'] == self.sentence_card.sentence:
             self.translate.setPlainText(info['meaning'])
-            self.sentence.setStyleSheet("background-color: rgb(17, 45, 78);")
+            self.sentence.setStyleSheet("background-color: rgb(63, 114, 175);")

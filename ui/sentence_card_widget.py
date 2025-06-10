@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'sentence_card_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -24,13 +24,13 @@ class Ui_sentence_card_widget(object):
             sentence_card_widget.setObjectName(u"sentence_card_widget")
         sentence_card_widget.resize(281, 98)
         sentence_card_widget.setStyleSheet(u"#sentence{\n"
-"	background-color:rgb(17, 45, 78);\n"
+"	background-color:rgb(63,114,175);\n"
 "	border-radius: 5px;\n"
 "     margin: 5px;\n"
 "     border: 1px solid #dee2e6;\n"
 "}\n"
 "#translate{\n"
-"	background-color:rgb(63,114,175);\n"
+"	background-color:rgb(17, 45, 78); \n"
 "	border-radius: 5px;\n"
 "     margin: 5px;\n"
 "     border: 1px solid #dee2e6;\n"

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'left_box.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -177,20 +177,19 @@ class Ui_left_box(object):
         self.wechat_qrcode.setText(QCoreApplication.translate("left_box", u"Wechat Qrcode", None))
         self.text_edit.setMarkdown(QCoreApplication.translate("left_box", u"**LingThread**\n"
 "\n"
-"An interface created using Python and PySide (support for PyQt), and with\n"
-"colors based on the Dracula theme created by Zeno Rocha.\n"
+"This is a desktop learning software created based on Python and PySide6, aiming\n"
+"to help everyone learn programming and English better, and implement ideas over\n"
+"the years through code.\n"
 "\n"
 "MIT License\n"
 "\n"
 "Created by: \u6bd4\u98de\u9e1f\u8d35\u91cd\u7684\u591a_HKL\n"
 "\n"
-"**Convert UI**\n"
+"**Project philosophy**\n"
 "\n"
-"pyside6-uic main.ui > ui_main.py\n"
+"Leaner is Creator\n"
 "\n"
-"**Convert QRC**\n"
-"\n"
-"pyside6-rcc resources.qrc -o resources_rc.py\n"
+"Learning itself is a process from disorder to order.\n"
 "\n"
 "", None))
         self.text_edit.setHtml(QCoreApplication.translate("left_box", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -201,14 +200,13 @@ class Ui_left_box(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#ff79c6;\">LingThread</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">An interface created using Python and PySide (support for PyQt), and with colors based on the Dracula theme created by Ze"
-                        "no Rocha.</span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Inter','-apple-system','BlinkMacSystemFont','Segoe UI','SF Pro SC','SF Pro Display','SF Pro Icons','PingFang SC','Hiragino Sa"
+                        "ns GB','Microsoft YaHei','Helvetica Neue','Helvetica','Arial','sans-serif'; color:#ffffff;\">This is a desktop learning software created based on Python and PySide6, aiming to help everyone learn programming and English better, and implement ideas over the years through code.</span></p>\n"
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">MIT License</span></p>\n"
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#bd93f9;\">Created by: \u6bd4\u98de\u9e1f\u8d35\u91cd\u7684\u591a_HKL</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#ff79c6;\">Convert UI</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; color:#ffffff;\">pyside6-uic main.ui &gt; ui_main.py</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; mar"
-                        "gin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#ff79c6;\">Convert QRC</span></p>\n"
-"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; color:#ffffff;\">pyside6-rcc resources.qrc -o resources_rc.py</span></p></body></html>", None))
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#ff79c6;\">Project philosophy</span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; mar"
+                        "gin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Leaner is Creator</span></p>\n"
+"<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Inter','-apple-system','BlinkMacSystemFont','Segoe UI','SF Pro SC','SF Pro Display','SF Pro Icons','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Helvetica Neue','Helvetica','Arial','sans-serif'; color:#ffffff;\">Learning itself is a process from disorder to order.</span></p></body></html>", None))
     # retranslateUi
 
