@@ -11,7 +11,6 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
     create_word_card_signal = Signal(str)
     create_sentence_card_signal = Signal(str)
     corresponding_word_card_show_signal = Signal(str)
-    load_word_card_signal = Signal(str)
     page_number_update_signal = Signal(int)
 
     def __init__(self, project, parent=None):
@@ -41,7 +40,8 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
 
         self.current_page = 0
         self.load_content_info(self.project.contents[self.current_page],
-                               self.project.highlight_words_per_content[self.current_page])
+                               self.project.highlight_words_per_content[self.current_page],
+                               self.project.underline_sentence_per_content[self.current_page])
 
     def show_text_menu(self, pos):
         cursor = self.content.textCursor()
@@ -116,7 +116,7 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
         extra_selection.cursor = new_cursor
 
         self.underline_dict[new_cursor.selectedText().strip()] = extra_selection
-        self.content.setExtraSelections(list(self.underline_dict.values()))
+        self.content.setExtraSelections(list(self.underline_dict.values()) + list(self.highlight_dict.values()))
         self.project.add_underline_info(self.current_page, new_cursor.selectedText().strip(), start, end)
 
     def add_highlight(self, cursor):
@@ -131,14 +131,19 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
         extra_selection.cursor = new_cursor
 
         self.highlight_dict[new_cursor.selectedText().strip()] = extra_selection
-        self.content.setExtraSelections(list(self.highlight_dict.values()))
+        self.content.setExtraSelections(list(self.underline_dict.values()) + list(self.highlight_dict.values()))
 
         self.project.add_highlight_info(self.current_page, new_cursor.selectedText().strip(), start, end)
 
     def delete_highlight(self, word):
         if word in self.highlight_dict:
             del self.highlight_dict[word]
-            self.content.setExtraSelections(list(self.highlight_dict.values()))
+            self.content.setExtraSelections(list(self.highlight_dict.values()) + list(self.underline_dict.values()))
+
+    def delete_underline(self, sentence):
+        if sentence in self.underline_dict:
+            del self.underline_dict[sentence]
+            self.content.setExtraSelections(list(self.highlight_dict.values()) + list(self.underline_dict.values()))
 
     def eventFilter(self, obj, event):
         if event.type() == QEvent.MouseButtonRelease:
@@ -148,16 +153,20 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
                 self.corresponding_word_card_show_signal.emit(selected_text)
         return super().eventFilter(obj, event)
 
-    def load_content_info(self, content, highlight_list):
+    def load_content_info(self, content, highlight_list, underline_list):
         self.content.setPlainText(content)
         for word, [start, end] in highlight_list.items():
-            self.load_word_card_signal.emit(word)
             cursor = self.content.textCursor()
-
             if 0 <= start <= end <= len(self.content.toPlainText()):
                 cursor.setPosition(start)
                 cursor.setPosition(end, QTextCursor.KeepAnchor)
                 self.add_highlight(cursor)
+        for sentence, [start, end] in underline_list.items():
+            cursor = self.content.textCursor()
+            if 0 <= start <= end <= len(self.content.toPlainText()):
+                cursor.setPosition(start)
+                cursor.setPosition(end, QTextCursor.KeepAnchor)
+                self.add_sentence_underline(cursor)
 
     def prev_page(self):
         if self.current_page > 0:
@@ -171,7 +180,8 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
 
     def update_display(self):
         self.load_content_info(self.project.contents[self.current_page],
-                               self.project.highlight_words_per_content[self.current_page])
+                               self.project.highlight_words_per_content[self.current_page],
+                               self.project.underline_sentence_per_content[self.current_page])
         self.prev_btn.setEnabled(self.current_page > 0)
         self.next_btn.setEnabled(self.current_page < self.project.total_pages)
         self.page_number_update_signal.emit(self.current_page)

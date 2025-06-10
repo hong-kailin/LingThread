@@ -113,6 +113,7 @@ class LingThread:
         self.contents_widget_page = ContentsWidgetPage(self.cur_project, self.main_widget.content_widget)
         v_layout_3.addWidget(self.contents_widget_page)
         self.word_card_container_page.delete_word_card_signal.connect(self.contents_widget_page.delete_highlight)
+        self.sentence_card_container_page.delete_sentence_card_signal.connect(self.contents_widget_page.delete_underline)
         self.contents_widget_page.create_word_card_signal.connect(self.word_card_container_page.create_new_word_card)
         self.contents_widget_page.create_sentence_card_signal.connect(self.sentence_card_container_page.create_new_sentence_card)
         self.contents_widget_page.corresponding_word_card_show_signal.connect(

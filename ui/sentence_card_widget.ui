@@ -72,5 +72,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>translate</sender>
+   <signal>textChanged()</signal>
+   <receiver>sentence_card_widget</receiver>
+   <slot>translate_height_change()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>121</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>84</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>translate_height_change()</slot>
+ </slots>
 </ui>

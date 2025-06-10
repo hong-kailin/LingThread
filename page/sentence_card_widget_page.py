@@ -28,8 +28,9 @@ class SentenceCardWidgetPage(QFrame, Ui_sentence_card_widget):
         self.sentence.mouseReleaseEvent = self.label_mouse_release_event
         self.timer.timeout.connect(self.check_long_press)
 
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.customContextMenuRequested.connect(self.show_context_menu)
+        self.translate.setContextMenuPolicy(Qt.PreventContextMenu)
+        self.sentence.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.sentence.customContextMenuRequested.connect(self.show_context_menu)
 
     def show_context_menu(self, pos):
         menu = QMenu(self)
@@ -38,7 +39,7 @@ class SentenceCardWidgetPage(QFrame, Ui_sentence_card_widget):
         menu.exec(self.mapToGlobal(pos))
 
     def delete_sentence_card(self):
-        self.parent.delete_sentence(self.sentence_card.sentence)
+        self.parent.delete_sentence_card(self.sentence_card.sentence)
 
     def label_mouse_press_event(self, event):
         if event.button() == Qt.LeftButton:
@@ -108,6 +109,7 @@ class SentenceCardWidgetPage(QFrame, Ui_sentence_card_widget):
         if not self.is_expanded or force:
             self.is_expanded = True
             self.translate.show()
+            self.translate_height_change()
 
     def collapse_card(self):
         if self.is_expanded and not self.is_editing:
@@ -119,7 +121,7 @@ class SentenceCardWidgetPage(QFrame, Ui_sentence_card_widget):
         return self.sentence_card
 
     def set_info(self, sentence_card):
-        self.sentence_card.sentence.setPlainText(sentence_card.translate)
+        self.translate.setPlainText(sentence_card.translate)
 
     def set_info_from_ai(self, info):
         if info['sentence'] == self.sentence_card.sentence:

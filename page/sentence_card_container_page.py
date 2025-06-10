@@ -34,16 +34,13 @@ class SentenceCardContainerPage(QWidget, Ui_container_widget):
         card.set_info(sentence_card)
         insert_position = self.container_layout.count() - 1
         self.container_layout.insertWidget(insert_position, card)
-        self.card_widget_dict[sentence_card.word] = card
+        self.card_widget_dict[sentence_card.sentence] = card
 
-    def delete_word_card(self, word):
-        self.card_widget_dict[word].deleteLater()
-        del self.card_widget_dict[word]
-        self.all_sentence_card_dict.delete(word)
-        self.delete_sentence_card_signal.emit(word)
-
-    def delete_sentence(self, sentence):
-        pass
+    def delete_sentence_card(self, sentence):
+        self.card_widget_dict[sentence].deleteLater()
+        del self.card_widget_dict[sentence]
+        self.all_sentence_card_dict.delete(sentence)
+        self.delete_sentence_card_signal.emit(sentence)
 
     def create_new_sentence_card(self, sentence):
         self.cur_sentence = sentence

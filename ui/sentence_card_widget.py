@@ -54,6 +54,7 @@ class Ui_sentence_card_widget(object):
 
 
         self.retranslateUi(sentence_card_widget)
+        self.translate.textChanged.connect(sentence_card_widget.translate_height_change)
 
         QMetaObject.connectSlotsByName(sentence_card_widget)
     # setupUi
