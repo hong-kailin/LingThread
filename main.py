@@ -122,8 +122,9 @@ class LingThread:
         self.main_window.stacked_widget.setCurrentIndex(1)
 
     def save_current_project_info(self):
-        self.cur_project.save_highlight_info()
-        self.cur_project.save_underline_info()
+        if self.cur_project is not None:
+            self.cur_project.save_highlight_info()
+            self.cur_project.save_underline_info()
         self.word_card_container_page.update_and_save_word_card_dict()
         self.sentence_card_container_page.update_and_save_sentence_card_dict()
 

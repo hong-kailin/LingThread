@@ -136,11 +136,13 @@ class ContentsWidgetPage(QWidget, Ui_contents_widget):
         self.project.add_highlight_info(self.current_page, new_cursor.selectedText().strip(), start, end)
 
     def delete_highlight(self, word):
+        self.project.delete_highlight_info(word, self.current_page)
         if word in self.highlight_dict:
             del self.highlight_dict[word]
             self.content.setExtraSelections(list(self.highlight_dict.values()) + list(self.underline_dict.values()))
 
     def delete_underline(self, sentence):
+        self.project.delete_underline_info(sentence, self.current_page)
         if sentence in self.underline_dict:
             del self.underline_dict[sentence]
             self.content.setExtraSelections(list(self.highlight_dict.values()) + list(self.underline_dict.values()))

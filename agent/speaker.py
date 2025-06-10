@@ -38,6 +38,7 @@ class Speaker(QThread):
         return self.temp_file.name
 
     async def _play_audio(self, audio_file):
+
         # 初始化pygame混音器
         pygame.mixer.init()
 
@@ -48,6 +49,7 @@ class Speaker(QThread):
             if not pygame.mixer.music.get_busy():
                 pygame.mixer.music.play()
             await asyncio.sleep(0.1)
+        self._stop_flag = False
 
     def run(self):
         try:

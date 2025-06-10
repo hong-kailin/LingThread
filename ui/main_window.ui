@@ -392,29 +392,6 @@ background-position: left center;
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="ai_btn">
-           <property name="minimumSize">
-            <size>
-             <width>28</width>
-             <height>28</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>28</width>
-             <height>28</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../resources.qrc">
-             <normaloff>:/icons/images/icons/cil-smile.png</normaloff>:/icons/images/icons/cil-smile.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="sentence_card_btn">
            <property name="minimumSize">
             <size>
@@ -772,22 +749,6 @@ background-position: left center;
    </hints>
   </connection>
   <connection>
-   <sender>ai_btn</sender>
-   <signal>clicked()</signal>
-   <receiver>main_window</receiver>
-   <slot>show_hide_ai_chat_card()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>808</x>
-     <y>21</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1041</x>
-     <y>215</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>new_btn</sender>
    <signal>clicked()</signal>
    <receiver>main_window</receiver>
@@ -832,6 +793,22 @@ background-position: left center;
     <hint type="destinationlabel">
      <x>-22</x>
      <y>341</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>close_app_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>main_window</receiver>
+   <slot>save_current_project_info()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>976</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1159</x>
+     <y>132</y>
     </hint>
    </hints>
   </connection>

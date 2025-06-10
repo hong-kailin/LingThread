@@ -125,6 +125,12 @@ class Project:
         with open(self.highlight_path, 'w', encoding='utf-8') as f:
             json.dump(self.highlight_words_per_content, f, ensure_ascii=False, indent=2)
 
+    def delete_highlight_info(self, word, page):
+        del self.highlight_words_per_content[page][word]
+
+    def delete_underline_info(self, sentence, page):
+        del self.underline_sentence_per_content[page][sentence]
+
     def add_underline_info(self, page, sentence, start, end):
         self.underline_sentence_per_content[page][sentence] = [start, end]
 
