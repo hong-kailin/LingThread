@@ -1,0 +1,23 @@
+{
+  "Philosopher": {
+    "mean": "[n. 哲学家；思想家]",
+    "mean_r": "[词根记忆：philo-（爱）+ soph（智慧）+ -er（人）= 爱智慧的人 → 哲学家]",
+    "pron": "[英式 /fɪˈlɒsəfə(r)/ 美式 /fɪˈlɑːsəfər/]",
+    "pron_r": "[类似发音的简单单词：sophomore（大学二年级学生）]",
+    "other": ""
+  },
+  "catalogue": {
+    "mean": "[n. 目录；一览表 v. 编入目录]",
+    "mean_r": "[拆分：cata（向下）+ logue（说）→ 按顺序向下说 → 目录]",
+    "pron": "[英式 /ˈkætəlɒɡ/ 美式 /ˈkætəlɔːɡ/]",
+    "pron_r": "[类似单词：dialogue（对话）]",
+    "other": ""
+  },
+  "no part of": {
+    "mean": "[adv. 一点也不；毫不]",
+    "mean_r": "[拆分记忆：no（没有）+ part（部分）+ of（的）→ 没有部分 → 毫不]",
+    "pron": "[英式 /nəʊ pɑːt əv/  美式 /noʊ pɑːrt əv/]",
+    "pron_r": "[类似发音的短语：no part in（不参与）]",
+    "other": ""
+  }
+}
