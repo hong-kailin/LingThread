@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -37,7 +37,7 @@ class Ui_main_window(object):
 "	background-color:rgb(37, 47, 82);\n"
 "}\n"
 "#bottom_line{\n"
-"	background-color:rgb(63, 114, 175);\n"
+"	background-color:rgb(20, 50, 150);\n"
 "}\n"
 "\n"
 "#bottom_line QLabel { \n"
@@ -66,8 +66,8 @@ class Ui_main_window(object):
 "	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
-"#top_line .QPushButton { background-color: rgba(255,"
-                        " 255, 255, 0); border: none;  border-radius: 5px; }\n"
+"#top_line .QPushButton { background-color: rgba(255, "
+                        "255, 255, 0); border: none;  border-radius: 5px; }\n"
 "#top_line .QPushButton:hover { background-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; }\n"
 "#top_line .QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; border-radius: 4px; }\n"
 "\n"
