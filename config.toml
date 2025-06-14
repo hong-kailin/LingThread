@@ -1,0 +1,6 @@
+[llm]
+model = "deepseek-chat"
+base_url = "https://api.deepseek.com"
+api_key = "sk-c8860ff4cb9246c28b3de26f0e00aff9"
+max_tokens = 4096
+temperature = 0.0

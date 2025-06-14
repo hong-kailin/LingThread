@@ -41,4 +41,8 @@ class SentenceTranslateAssistant(LLMAgent):
             }
             self.return_result_signal.emit(result)
         except Exception as e:
-            self.return_result_signal.emit({"error": f"获取单词信息失败: {str(e)}"})
+            result = {
+                "sentence": self.sentence,
+                "meaning": "error",
+            }
+            self.return_result_signal.emit(result)

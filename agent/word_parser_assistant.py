@@ -52,4 +52,11 @@ class WordParserAssistant(LLMAgent):
             }
             self.return_result_signal.emit(result)
         except Exception as e:
-            self.return_result_signal.emit({"error": f"获取单词信息失败: {str(e)}"})
+            result = {
+                "word": self.word,
+                "meaning": "error",
+                "phonetic": "error",
+                "mnemonic": "error",
+                "pronunciation_tip": "error"
+            }
+            self.return_result_signal.emit(result)
